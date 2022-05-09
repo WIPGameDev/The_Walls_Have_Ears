@@ -177,7 +177,7 @@ public class AI_Sight : MonoBehaviour
                 else
                     Gizmos.color = new Color(1, 0, 0, 0.2f);
 
-                float radius = Colliders[i].gameObject.GetComponent<MeshFilter>().mesh.bounds.size.x * 0.75f;
+                float radius = Colliders[i].gameObject.GetComponent<MeshFilter>().sharedMesh.bounds.size.x * 0.75f;
 
                 Gizmos.DrawSphere(Colliders[i].gameObject.transform.position, radius);
             }
