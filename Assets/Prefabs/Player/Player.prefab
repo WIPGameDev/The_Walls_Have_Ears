@@ -110,7 +110,7 @@ MonoBehaviour:
   walkSpeed: 4
   runSpeed: 6
   crouchMoveSpeed: 3
-  crouchingSpeed: 2
+  crouchingSpeed: 5
   crouchingHeight: 1
   gravityMultiplier: 1
   terminalVelocity: 90
@@ -191,6 +191,7 @@ MonoBehaviour:
     m_Bits: 128
   holdPositionTransform: {fileID: 3702183809947900176}
   holdCenteringForce: 50
+  throwingForce: 10
 --- !u!1 &6139241623295410135
 GameObject:
   m_ObjectHideFlags: 0
