@@ -132,16 +132,6 @@ public class PlayerController : MonoBehaviour
         characterController.Move(targetVelocity * Time.deltaTime);
     }
 
-    /*
-    private void OnControllerColliderHit(ControllerColliderHit hit)
-    {
-    }
-    void OnGUI()
-    {
-    }
-    */
-
-
     private void StartRunning()
     {
         if (!isCrouching)
