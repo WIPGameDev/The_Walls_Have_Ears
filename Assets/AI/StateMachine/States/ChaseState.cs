@@ -24,13 +24,7 @@ namespace Assets.FSM.States
             EnteredState = base.EnterState();
 
             if (EnteredState)
-            {
                 Debug.Log("Entered chase state");
-
-                Debug.Log("Add distance check, and then trigger kill player");
-
-                EnteredState = true;
-            }
 
             return EnteredState;
         }
