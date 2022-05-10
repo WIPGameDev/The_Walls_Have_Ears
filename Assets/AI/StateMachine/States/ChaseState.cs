@@ -13,6 +13,8 @@ namespace Assets.FSM.States
     {
         GameObject Player;
 
+        float AttackRange = 2f;
+
         public override void OnEnable()
         {
             base.OnEnable();
@@ -36,6 +38,12 @@ namespace Assets.FSM.States
                 Debug.Log("Updating chase state");
 
                 navMeshAgent.SetDestination(Player.transform.position);
+
+                //FINISH THIS, we can make this more dynamic by including the velocity 
+                if (Vector3.Distance(navMeshAgent.transform.position, navMeshAgent.destination) < AttackRange)
+                {
+                    fsm.EnterState(FSMStateType.ATTACK);
+                }
             }
         }
 
