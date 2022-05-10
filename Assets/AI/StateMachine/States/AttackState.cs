@@ -10,6 +10,8 @@ namespace Assets.FSM.States
     [CreateAssetMenu(fileName = "AttackState", menuName = "AI FSM State/States/Attack", order = 4)]
     public class AttackState : AbstractFMSState
     {
+        GameObject Player;
+
         public override void OnEnable()
         {
             base.OnEnable();
@@ -23,6 +25,8 @@ namespace Assets.FSM.States
             if (EnteredState)
                 Debug.Log("Entered attack state");
 
+            Player.GetComponent<PlayerController>().SendMessage("Attack");
+
             //FINISH THIS, trigger an attack (ani or whatever)
 
             return EnteredState;
@@ -31,9 +35,11 @@ namespace Assets.FSM.States
         public override void UpdateState()
         {
             if (EnteredState)
+            {
                 Debug.Log("Updating attack state");
-
-            //Probably redundant but needed
+                
+                //Probably redundant but needed
+            }
         }
 
         public override bool ExitState()
@@ -43,6 +49,12 @@ namespace Assets.FSM.States
             Debug.Log("Exit attack state");
 
             return true;
+        }
+
+        private void OnValidate()
+        {
+            if (Player == null)
+                Player = GameObject.FindGameObjectWithTag("Player");
         }
     }
 }
