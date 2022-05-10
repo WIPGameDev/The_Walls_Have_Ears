@@ -8,7 +8,7 @@ using UnityEngine.AI;
 
 namespace Assets.FSM.States
 {
-    [CreateAssetMenu(fileName = "ChaseState", menuName = "Practice AI/States/Chase", order = 3)]
+    [CreateAssetMenu(fileName = "ChaseState", menuName = "AI FSM State/States/Chase", order = 3)]
     class ChaseState : AbstractFMSState
     {
         GameObject Player;

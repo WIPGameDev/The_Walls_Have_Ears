@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Assets.FSM.States
 {
-    [CreateAssetMenu(fileName = "IdleState", menuName = "Practice AI/States/Idle", order = 1)]
+    [CreateAssetMenu(fileName = "IdleState", menuName = "AI FSM State/States/Idle", order = 1)]
     public class IdleState : AbstractFMSState
     {
         [SerializeField]

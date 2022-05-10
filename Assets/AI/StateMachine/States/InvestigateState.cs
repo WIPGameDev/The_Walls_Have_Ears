@@ -8,7 +8,7 @@ using UnityEngine.AI;
 
 namespace Assets.FSM.States
 {
-    [CreateAssetMenu(fileName = "InvestigateState", menuName = "Practice AI/States/Investigate", order = 2)]
+    [CreateAssetMenu(fileName = "InvestigateState", menuName = "AI FSM State/States/Investigate", order = 2)]
     class InvestigateState : AbstractFMSState
     {
         Vector3 investigativePoint;
