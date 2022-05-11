@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
 {
     private CharacterController characterController;
+    private ViewController viewController;
+    private InteractionController interactionController;
     [SerializeField] private Transform headTransform;
     private Vector3 headDefaultLocalPosition;
 
@@ -45,9 +48,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float terminalVelocity = 90f;
     [SerializeField] private float jumpHeight = 2f;
 
+    //[Header("Events")]
+
     void Awake()
     {
         characterController = GetComponent<CharacterController>();
+        viewController = GetComponentInChildren<ViewController>();
+        interactionController = GetComponentInChildren<InteractionController>();
         standingHeight = characterController.height;
         moveSpeed = walkSpeed;
         headDefaultLocalPosition = headTransform.localPosition;
@@ -206,7 +213,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
     /// <summary>
     /// A SphereCast right or left to check for collisions at the leaning positions to the sides of the player.
     /// </summary>
@@ -221,5 +227,19 @@ public class PlayerController : MonoBehaviour
             return false;
         }
         return true;
+    }
+
+    public void DisablePlayer ()
+    {
+        viewController.enabled = false;
+        interactionController.enabled = false;
+        this.enabled = false;
+    }
+
+    public void EnablePlayer()
+    {
+        viewController.enabled = true;
+        interactionController.enabled = true;
+        this.enabled = true;
     }
 }
