@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class AI_Sight : MonoBehaviour
+public class AI_Sight : AI_Sense_Base
 {
     NavMeshAgent navMeshAgent;
 
@@ -37,6 +37,11 @@ public class AI_Sight : MonoBehaviour
     HiveMind hiveMind;
     #endregion
 
+    private void Awake()
+    {
+        weight = 3;
+    }
+
     private void Update()
     {
         curTime += Time.deltaTime;
@@ -55,7 +60,7 @@ public class AI_Sight : MonoBehaviour
         {
             GameObject obj = Colliders[i].gameObject;
             if (IsInSight(obj))
-                hiveMind.DetectedLocation = obj.transform.position;
+                hiveMind.SetDetection(new AISenseData(gameObject.transform.position, weight));
         }
     }
 
