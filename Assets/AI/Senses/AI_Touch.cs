@@ -2,10 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AI_Touch : MonoBehaviour
+public class AI_Touch : AI_Sense_Base
 {
     GameObject Alien;
     HiveMind hiveMind;
+
+    private void Awake()
+    {
+        weight = 1;
+    }
 
     private void OnCollisionStay(Collision collision)
     {
@@ -13,10 +18,10 @@ public class AI_Touch : MonoBehaviour
 
         if (collision.gameObject.tag == "Player")
         {
-            #region hiveMind.DetectedLocation = collision.contacts[0].point;
+            #region Detect location
             try
             {
-                hiveMind.DetectedLocation = collision.contacts[0].point;
+                hiveMind.SetDetection(new AISenseData(collision.gameObject, collision.contacts[0].point, weight));
             }
             catch
             {

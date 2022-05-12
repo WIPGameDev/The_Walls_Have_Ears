@@ -60,7 +60,7 @@ public class AI_Sight : AI_Sense_Base
         {
             GameObject obj = Colliders[i].gameObject;
             if (IsInSight(obj))
-                hiveMind.SetDetection(new AISenseData(gameObject.transform.position, weight));
+                hiveMind.SetDetection(new AISenseData(obj, obj.transform.position, weight));
         }
     }
 

@@ -65,7 +65,7 @@ public class HiveMind : MonoBehaviour
             fsm = GameObject.FindGameObjectWithTag("Alien").GetComponent<FiniteStateMachine>();
     }
 
-    public Vector3 DetectedLocation //FINISH THIS, change the way this works so that I input a weight parameter  
+    Vector3 DetectedLocation //FINISH THIS, change the way this works so that I input a weight parameter  
     {
         set
         {
@@ -100,10 +100,14 @@ public class HiveMind : MonoBehaviour
     {
         if (primarySense.ifExists == false)
             primarySense = Sense;
-        else if (secondarySense.ifExists == false && primarySense.Object != Sense.Object)
-            secondarySense = Sense;
-        else
+        else if (primarySense.Object != Sense.Object)
         {
+            if (secondarySense.ifExists == false)
+            {
+                secondarySense = Sense;
+                return;
+            }
+
             if (primarySense.Weight <= Sense.Weight)
             {
                 secondarySense = primarySense;

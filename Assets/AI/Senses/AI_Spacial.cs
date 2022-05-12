@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AI_Spacial : MonoBehaviour
+public class AI_Spacial : AI_Sense_Base
 {
     [SerializeField]
     float Radius = 2;
@@ -20,6 +20,11 @@ public class AI_Spacial : MonoBehaviour
     float curTime;
 
     protected FiniteStateMachine fsm;
+
+    private void Awake()
+    {
+        weight = 4;
+    }
 
     private void Start()
     {

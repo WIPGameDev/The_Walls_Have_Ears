@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class AI_Hearing : MonoBehaviour
+public class AI_Hearing : AI_Sense_Base
 {
     public float Radius;
     
@@ -21,6 +21,11 @@ public class AI_Hearing : MonoBehaviour
     GameObject Alien;
     HiveMind hiveMind;
     #endregion
+
+    private void Awake()
+    {
+        weight = 2;
+    }
 
     private void Update()
     {
@@ -42,7 +47,7 @@ public class AI_Hearing : MonoBehaviour
             {
                 NavMeshHit hit;
                 if (NavMesh.SamplePosition(Colliders[i].gameObject.transform.position, out hit, 10, 1))
-                    hiveMind.DetectedLocation = hit.position;
+                    hiveMind.SetDetection(new AISenseData(Colliders[i].gameObject, hit.position, weight));
                 else
                     Debug.LogError(Colliders[count].gameObject.name + " couldn't find location on nav mesh");
             }
