@@ -56,7 +56,7 @@ public class GameController : MonoBehaviour
         UpdateScenes();
         if (Application.isEditor)
         {
-
+            Cursor.lockState = CursorLockMode.Locked;
         }
         else
         {

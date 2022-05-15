@@ -614,6 +614,7 @@ GameObject:
   m_Component:
   - component: {fileID: 771438521}
   - component: {fileID: 771438522}
+  - component: {fileID: 771438523}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -681,6 +682,18 @@ MonoBehaviour:
   OnGameOver:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &771438523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 771438520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbbf88bbc77ec8f42a5a48b18a85325c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &913124058
 GameObject:
   m_ObjectHideFlags: 0
@@ -1075,6 +1088,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 669583782, guid: 9105085a7ec30a846be42d9d8d76edbb, type: 3}
+      propertyPath: holdableMask.m_Bits
+      value: 192
+      objectReference: {fileID: 0}
     - target: {fileID: 6139241622456310944, guid: 9105085a7ec30a846be42d9d8d76edbb, type: 3}
       propertyPath: m_Name
       value: Player
