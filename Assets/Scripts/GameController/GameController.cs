@@ -57,7 +57,8 @@ public class GameController : MonoBehaviour
         if (Application.isEditor)
         {
 
-        } else
+        }
+        else
         {
             LoadMainMenu();
         }
@@ -103,15 +104,15 @@ public class GameController : MonoBehaviour
 
     public void LoadMainMenu()
     {
-        nextScene = "MainMenu";
-        StartCoroutine(LoadingMainMenu(currentScene, nextScene));
+        //nextScene = "MainMenu";
+        //StartCoroutine(LoadingMainMenu(currentScene, nextScene));
         Cursor.lockState = CursorLockMode.Confined;
     }
 
     public void StartNewGame()
     {
-        nextScene = "EntryArea";
-        StartCoroutine(LoadingLevel("MainMenu", "EntryArea", "StartMarker"));
+        //nextScene = "EntryArea";
+        //StartCoroutine(LoadingLevel("MainMenu", "EntryArea", "StartMarker"));
     }
 
     public void LoadLevel(string levelName, string markerName)
@@ -166,12 +167,16 @@ public class GameController : MonoBehaviour
 
     private IEnumerator LoadingMainMenu(string currentScene, string targetScene)
     {
+        gameState = GameState.LOADING;
         Coroutine loadingScene = StartCoroutine(LoadingScene(currentScene, targetScene));
         yield return loadingScene;
+        gameState = GameState.MENU;
+        UpdateScenes();
     }
 
     private IEnumerator LoadingLevel(string currentScene, string targetScene, string targetMarker)
     {
+        gameState = GameState.LOADING;
         Coroutine loadingScene = StartCoroutine(LoadingScene(currentScene, targetScene));
         yield return loadingScene;
         if (player != null)
@@ -183,6 +188,8 @@ public class GameController : MonoBehaviour
             }
             player.SetActive(true);
         }
+        gameState = GameState.PLAYING;
+        UpdateScenes();
     }
 
     private IEnumerator LoadingScene(string currentScene, string targetScene)
