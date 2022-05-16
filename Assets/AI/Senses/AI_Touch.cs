@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class AI_Touch : AI_Sense_Base
 {
-    GameObject Alien;
-    HiveMind hiveMind;
-
     private void Awake()
     {
         weight = 1;
@@ -29,14 +26,5 @@ public class AI_Touch : AI_Sense_Base
             }
             #endregion
         }
-    }
-
-    private void OnValidate()
-    {
-        if (Alien == null)
-            Alien = GameObject.FindGameObjectWithTag("Alien");
-
-        if (hiveMind == null)
-            hiveMind = GameObject.FindGameObjectWithTag("Hive mind").GetComponent<HiveMind>();
     }
 }

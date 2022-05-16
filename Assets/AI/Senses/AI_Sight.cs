@@ -32,11 +32,6 @@ public class AI_Sight : AI_Sense_Base
 
     float curTime = 0f;
 
-    #region Private variablels
-    GameObject Alien;
-    HiveMind hiveMind;
-    #endregion
-
     private void Awake()
     {
         weight = 3;
@@ -154,12 +149,6 @@ public class AI_Sight : AI_Sense_Base
 
     private void OnValidate()
     {
-        if (Alien == null)
-            Alien = GameObject.FindGameObjectWithTag("Alien");
-
-        if (hiveMind == null)
-            hiveMind = GameObject.FindGameObjectWithTag("Hive mind").GetComponent<HiveMind>();
-
         if (Segments < 3)
             Segments = 3;
         else if (Segments > 8)

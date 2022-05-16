@@ -17,11 +17,6 @@ public class AI_Hearing : AI_Sense_Base
 
     float curTime = 0f;
 
-    #region Private variablels
-    GameObject Alien;
-    HiveMind hiveMind;
-    #endregion
-
     private void Awake()
     {
         weight = 2;
@@ -62,14 +57,5 @@ public class AI_Hearing : AI_Sense_Base
     {
         Gizmos.color = new Color(1, 1, 0, 0.5f);
         Gizmos.DrawWireSphere(gameObject.transform.position, Radius);
-    }
-
-    private void OnValidate()
-    {
-        if (Alien == null)
-            Alien = GameObject.FindGameObjectWithTag("Alien");
-
-        if (hiveMind == null)
-            hiveMind = GameObject.FindGameObjectWithTag("Hive mind").GetComponent<HiveMind>();
     }
 }
