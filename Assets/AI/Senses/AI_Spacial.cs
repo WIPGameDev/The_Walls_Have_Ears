@@ -55,9 +55,6 @@ public class AI_Spacial : AI_Sense_Base
     {
         if (Radius < 1)
             Radius = 1;
-
-        if (fsm == null)
-            fsm = GameObject.FindGameObjectWithTag("Alien").GetComponent<FiniteStateMachine>();
     }
 
     private void OnDrawGizmos()
