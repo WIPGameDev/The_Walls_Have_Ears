@@ -233,6 +233,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bad0900d97d5dc4cb247088ac92c76d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weight: 1
 --- !u!1 &205896907
 GameObject:
   m_ObjectHideFlags: 0
@@ -1182,7 +1183,6 @@ GameObject:
   - component: {fileID: 1943801539}
   - component: {fileID: 1943801543}
   - component: {fileID: 1943801544}
-  - component: {fileID: 1943801545}
   m_Layer: 0
   m_Name: TempAI
   m_TagString: Alien
@@ -1308,20 +1308,3 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 84b6a30ef5b9c1249932fe3df6712d6f, type: 2}
   - {fileID: 11400000, guid: 57d76d12131ce79478e2cc947cc031c4, type: 2}
   DefaultState: 0
---- !u!114 &1943801545
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1943801535}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 37ecf00a4fe04f64d9bf1e4c0a5b7e55, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Radius: 2
-  detectLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  scanInterval: 0.1

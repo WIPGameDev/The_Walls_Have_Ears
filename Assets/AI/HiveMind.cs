@@ -71,7 +71,7 @@ public class HiveMind : MonoBehaviour
         {
             if (fsm != null)
             {
-                if (fsm.CurrentState.StateType != FSMStateType.CHASE)
+                if (fsm.CurrentState != null && fsm.CurrentState.StateType != FSMStateType.CHASE)
                 {
                     if (fsm.FSMStates.ContainsKey(FSMStateType.INVESTIGATE))
                     {
@@ -99,7 +99,10 @@ public class HiveMind : MonoBehaviour
     public void SetDetection(AISenseData Sense)
     {
         if (primarySense.ifExists == false)
+        {
             primarySense = Sense;
+            DetectedLocation = primarySense.Location;
+        }
         else if (primarySense.Object != Sense.Object)
         {
             if (secondarySense.ifExists == false)
@@ -117,5 +120,21 @@ public class HiveMind : MonoBehaviour
             else if (secondarySense.Weight <= Sense.Weight)
                 secondarySense = Sense;
         }
+    }
+
+    public bool NextCheck()
+    {
+        if (secondarySense.ifExists)
+        {
+            primarySense = secondarySense;
+
+            secondarySense = new AISenseData();
+            
+            DetectedLocation = primarySense.Location;
+
+            return true;
+        }
+
+        return false;
     }
 }

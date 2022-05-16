@@ -106,10 +106,11 @@ namespace Assets.FSM.States
                             }
                             else
                             {
-                                
-
-                                navMeshAgent.isStopped = true;
-                                fsm.EnterState(FSMStateType.IDLE);
+                                if (!hiveMind.NextCheck())
+                                {
+                                    navMeshAgent.isStopped = true;
+                                    fsm.EnterState(FSMStateType.IDLE);
+                                }
                             }
                         }
                     }

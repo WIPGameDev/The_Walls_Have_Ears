@@ -25,6 +25,7 @@ public abstract class AbstractFMSState : ScriptableObject
 {
     protected NavMeshAgent navMeshAgent;
     protected FiniteStateMachine fsm;
+    protected HiveMind hiveMind;
 
     public ExecutionState ExecutionState { get; protected set; }
     public FSMStateType StateType { get; protected set; }
@@ -54,16 +55,18 @@ public virtual bool ExitState()
     public virtual void SetNavMeshAgent(NavMeshAgent _navMeshAgent)
     {
         if (_navMeshAgent != null)
-        {
             navMeshAgent = _navMeshAgent;
-        }
     }
 
     public virtual void SetFSM(FiniteStateMachine _fsm)
     {
         if (_fsm != null)
-        {
             fsm = _fsm;
-        }
+    }
+
+    public virtual void SetHiveMind(HiveMind _hiveMind)
+    {
+        if (_hiveMind != null)
+            hiveMind = _hiveMind;
     }
 }
