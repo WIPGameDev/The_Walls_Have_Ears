@@ -14,7 +14,7 @@ public class AI_Sense_Base : MonoBehaviour
     protected GameObject Player;
 
 
-    private void OnValidate()
+    protected virtual void OnValidate()
     {
         if (Alien == null)
             Alien = GameObject.FindGameObjectWithTag("Alien");
