@@ -91,8 +91,10 @@ public class HiveMind : MonoBehaviour
                         Debug.LogError("FSM Doesn't contain investigative state");
                 }
                 else
-                    Debug.LogError("Hivemind FSM reference is null");
+                    Debug.LogError("FSM current state is null or is already in chase");
             }
+            else
+                Debug.LogError("Hivemind FSM reference is null");
         }
     }
 
