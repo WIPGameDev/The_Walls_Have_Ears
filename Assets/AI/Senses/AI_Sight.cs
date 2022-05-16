@@ -22,10 +22,12 @@ public class AI_Sight : AI_Sense_Base
     byte Segments = 4;
 
     [SerializeField]
-    protected LayerMask occlusionLayer;
+    protected LayerMask occlusionLayer; 
 
     [SerializeField]
     float scanInterval = 0.1f;
+
+    bool ifBlinded = false;
 
     [SerializeField]
     bool ifDebugging = true;
@@ -44,11 +46,14 @@ public class AI_Sight : AI_Sense_Base
 
     private void Update()
     {
-        curTime += Time.deltaTime;
-        if (curTime < scanInterval)
+        if (ifBlinded)
         {
-            Scan();
-            curTime = 0f;
+            curTime += Time.deltaTime;
+            if (curTime < scanInterval)
+            {
+                Scan();
+                curTime = 0f;
+            }
         }
     }
 
@@ -187,5 +192,10 @@ public class AI_Sight : AI_Sense_Base
                 Gizmos.DrawSphere(Colliders[i].gameObject.transform.position, radius);
             }
         }
+    }
+
+    public void SetBlind(bool blind)
+    {
+        ifBlinded = blind;
     }
 }
