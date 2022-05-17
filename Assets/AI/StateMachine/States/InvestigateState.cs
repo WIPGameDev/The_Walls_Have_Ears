@@ -23,6 +23,8 @@ namespace Assets.FSM.States
         [SerializeField]
         float searchDistance = 1;
 
+        AI_EchoLocation echoLocation;
+
         bool ifSearchingAround;
 
         List<Vector3> SearchLocations;
@@ -33,6 +35,12 @@ namespace Assets.FSM.States
         {
             base.OnEnable();
             StateType = FSMStateType.INVESTIGATE;
+        }
+
+        private void Start()
+        {
+            if (echoLocation == null)
+                echoLocation = fsm.gameObject.GetComponent<AI_EchoLocation>();
         }
 
         public override bool EnterState()
@@ -49,6 +57,11 @@ namespace Assets.FSM.States
                 SearchLocations.Clear();
 
                 navMeshAgent.isStopped = false;
+
+                if (echoLocation == null)
+                    Debug.Log("EchoLocate doesn't exist in investigate state");
+                else
+                    echoLocation.enabled = true;
                 #endregion
 
                 curNumberOfChecks = 0;
@@ -146,6 +159,8 @@ namespace Assets.FSM.States
             base.ExitState();
 
             Debug.Log("Exit investigative state");
+
+            echoLocation.enabled = false;
 
             return true;
         }

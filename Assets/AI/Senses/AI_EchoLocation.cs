@@ -24,6 +24,8 @@ public class AI_EchoLocation : AI_Sense_Base
     {
         if (Player == null)
             Player = GameObject.FindGameObjectWithTag("Player");
+
+        this.enabled = false;
     }
 
     private void Update()
