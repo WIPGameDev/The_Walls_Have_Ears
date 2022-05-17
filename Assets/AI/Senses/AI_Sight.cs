@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class AI_Sight : MonoBehaviour
+public class AI_Sight : AI_Sense_Base
 {
     NavMeshAgent navMeshAgent;
 
@@ -22,28 +22,33 @@ public class AI_Sight : MonoBehaviour
     byte Segments = 4;
 
     [SerializeField]
-    protected LayerMask occlusionLayer;
+    protected LayerMask occlusionLayer; 
 
     [SerializeField]
     float scanInterval = 0.1f;
+
+    bool ifBlinded = false;
 
     [SerializeField]
     bool ifDebugging = true;
 
     float curTime = 0f;
 
-    #region Private variablels
-    GameObject Alien;
-    HiveMind hiveMind;
-    #endregion
+    private void Awake()
+    {
+        weight = 3;
+    }
 
     private void Update()
     {
-        curTime += Time.deltaTime;
-        if (curTime < scanInterval)
+        if (ifBlinded)
         {
-            Scan();
-            curTime = 0f;
+            curTime += Time.deltaTime;
+            if (curTime < scanInterval)
+            {
+                Scan();
+                curTime = 0f;
+            }
         }
     }
 
@@ -55,7 +60,7 @@ public class AI_Sight : MonoBehaviour
         {
             GameObject obj = Colliders[i].gameObject;
             if (IsInSight(obj))
-                hiveMind.DetectedLocation = obj.transform.position;
+                hiveMind.SetDetection(new AISenseData(obj, obj.transform.position, weight));
         }
     }
 
@@ -149,12 +154,6 @@ public class AI_Sight : MonoBehaviour
 
     private void OnValidate()
     {
-        if (Alien == null)
-            Alien = GameObject.FindGameObjectWithTag("Alien");
-
-        if (hiveMind == null)
-            hiveMind = GameObject.FindGameObjectWithTag("Hive mind").GetComponent<HiveMind>();
-
         if (Segments < 3)
             Segments = 3;
         else if (Segments > 8)
@@ -182,5 +181,10 @@ public class AI_Sight : MonoBehaviour
                 Gizmos.DrawSphere(Colliders[i].gameObject.transform.position, radius);
             }
         }
+    }
+
+    public void SetBlind(bool blind)
+    {
+        ifBlinded = blind;
     }
 }

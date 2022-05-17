@@ -31,11 +31,14 @@ namespace Assets.FSM
 
             NavMeshAgent navMeshAgent = GetComponent<NavMeshAgent>();
 
+            HiveMind hiveMind = GameObject.FindGameObjectWithTag("Hive mind").GetComponent<HiveMind>();
+
             //Add each valid state
             foreach (AbstractFMSState state in validStates)
             {
                 state.SetFSM(this);
                 state.SetNavMeshAgent(navMeshAgent);
+                state.SetHiveMind(hiveMind); 
                 fsmStates.Add(state.StateType, state);
             }
         }

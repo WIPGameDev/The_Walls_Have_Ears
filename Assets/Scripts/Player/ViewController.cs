@@ -23,13 +23,18 @@ public class ViewController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
         bodyTarget = transform.parent;
     }
 
     // Update is called once per frame
     void Update()
     {
+        //Change this to something better for pausing the first person camera
+        if (Time.timeScale == 0f)
+        {
+            return;
+        }
+
         xInput = Input.GetAxisRaw(mouseXAxis);
         yInput = Input.GetAxisRaw(mouseYAxis);
 
