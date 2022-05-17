@@ -7,11 +7,6 @@ public class TransitionInteractable : LockableInteractable
     [SerializeField] private string transitionSceneTarget;
     [SerializeField] private string transitionMarkerTarget;
 
-    public override void Activate()
-    {
-        base.Activate();
-    }
-
     public override void OnActivation()
     {
         gameController.LoadLevel(transitionSceneTarget, transitionMarkerTarget);

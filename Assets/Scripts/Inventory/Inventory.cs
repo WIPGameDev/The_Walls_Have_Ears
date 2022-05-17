@@ -44,7 +44,7 @@ public class Inventory : MonoBehaviour
         InventoryItem usedItem;
         if (FindItem(key, out usedItem))
         {
-            if (!usedItem.LimitedUses)
+            if (usedItem.LimitedUses)
             {
                 usedItem.Uses -= 1;
                 if (usedItem.Uses == 0)
@@ -55,5 +55,19 @@ public class Inventory : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    private void OnGUI()
+    {
+        if (items != null)
+        {
+            GUI.Box(new Rect(10, 10, 100, 10 + 50 * items.Count), "Inventory");
+            int i = 1;
+            foreach (KeyValuePair<string, InventoryItem> item in items)
+            {
+                GUI.Label(new Rect(20, 40 * i, 80, 50), item.Key);
+                i++;
+            }
+        }
     }
 }

@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b376d6f2def175444b07ccffc0084cee, type: 3}
   m_Name: Test2Item
   m_EditorClassIdentifier: 
-  itemName: asd
-  uses: -1
+  itemName: Test2
+  uses: 1
+  limitedUses: 1

@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: TestItem
   m_EditorClassIdentifier: 
   itemName: Test
-  prefab: {fileID: 0}
+  uses: 1
+  limitedUses: 1
