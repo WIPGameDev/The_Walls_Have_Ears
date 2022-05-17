@@ -95,7 +95,7 @@ public class InteractionController : MonoBehaviour
     private IEnumerator CenterHeldObject()
     {
         Rigidbody rgdbdy = heldObject.GetComponent<Rigidbody>();
-        while (holding)
+        while (holding && rgdbdy != null)
         {
             float dist = Vector3.Distance(rgdbdy.position, holdPositionTransform.position);
             if (dist > 2f)

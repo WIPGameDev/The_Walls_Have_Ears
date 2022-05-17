@@ -18,5 +18,8 @@ public abstract class InteractableObject : MonoBehaviour
     {
         if (interactionEvent != null)
             interactionEvent.Invoke();
+        OnActivation();
     }
+
+    public abstract void OnActivation();
 }

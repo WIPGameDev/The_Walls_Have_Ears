@@ -9,6 +9,10 @@ public class Item : InteractableObject
     public override void Activate()
     {
         base.Activate();
+    }
+
+    public override void OnActivation()
+    {
         GameObject.FindObjectOfType<Inventory>().AddItem(inventoryItem);
         Destroy(gameObject);
     }
