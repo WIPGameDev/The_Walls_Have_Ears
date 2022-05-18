@@ -35,6 +35,8 @@ public class AI_EchoLocation : AI_Sense_Base
         {
             if (curTime >= scanInterval)
             {
+                Debug.Log("Start scan");
+
                 ifClicking = true;
 
                 curTime = 0;
@@ -51,6 +53,14 @@ public class AI_EchoLocation : AI_Sense_Base
         }
     }
 
+    private void OnEnable()
+    {
+        //Set defaults
+        ifClicking = false;
+
+        numScan = null;
+    }
+
     void Scan()
     {
         if (!Physics.Linecast(gameObject.transform.position, Player.transform.position))
@@ -58,9 +68,18 @@ public class AI_EchoLocation : AI_Sense_Base
 
         if (numScan is null)
         {
-            loggedLocation = Player.transform.position;
+            if (Player != null)
+            {
+                loggedLocation = Player.transform.position;
 
-            numScan = false;
+                numScan = false;
+            }
+            else
+            {
+                Debug.LogError("Player does not exist within " + gameObject.name);
+
+                this.enabled = false;
+            }
         }
         else if (numScan == false)
         {
@@ -75,20 +94,31 @@ public class AI_EchoLocation : AI_Sense_Base
             numScan = null;
 
             ifClicking = false;
+
+            Debug.Log("End scan");
         }
     }
 
     void CheckIfMoved()
     {
-        if (loggedLocation != Player.transform.position)
+        try
         {
-            numScan = null;
+            if (loggedLocation != Player.transform.position)
+            {
+                Debug.Log("End scan");
 
-            ifClicking = false;
+                numScan = null;
 
-            fsm.EnterState(FSMStateType.CHASE);
+                ifClicking = false;
 
-            this.enabled = false;
+                fsm.EnterState(FSMStateType.CHASE);
+
+                this.enabled = false;
+            }
+        }
+        catch
+        {
+            Debug.LogError("Error in checking if player has moved in " + gameObject.name);
         }
     }
 }
