@@ -103,7 +103,8 @@ public class AI_EchoLocation : AI_Sense_Base
     {
         try
         {
-            if (loggedLocation != Player.transform.position)
+            if (loggedLocation != Player.transform.position && 
+                !Physics.Linecast(gameObject.transform.position, Player.transform.position))
             {
                 Debug.Log("End scan");
 
