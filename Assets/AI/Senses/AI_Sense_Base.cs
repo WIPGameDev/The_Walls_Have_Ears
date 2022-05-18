@@ -20,7 +20,16 @@ public class AI_Sense_Base : MonoBehaviour
             Alien = GameObject.FindGameObjectWithTag("Alien");
 
         if (hiveMind == null)
-            hiveMind = GameObject.FindGameObjectWithTag("Hive mind").GetComponent<HiveMind>();
+        {
+            try
+            {
+                hiveMind = GameObject.FindGameObjectWithTag("Hive mind").GetComponent<HiveMind>();
+            }
+            catch
+            {
+                //Do nothing
+            }
+        }
 
         if (Alien != null && fsm == null)
             fsm = Alien.GetComponent<FiniteStateMachine>();
