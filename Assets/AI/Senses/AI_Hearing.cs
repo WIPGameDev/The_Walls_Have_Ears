@@ -49,7 +49,7 @@ public class AI_Hearing : AI_Sense_Base
                 {
                     navAgent.SetDestination(hit.position);
 
-                    if (navAgent.path.corners.Length < 1 || CalculatePathCost(navAgent.path) < Radius)
+                    if (navAgent.path.corners.Length <= 1 || CalculatePathCost(navAgent.path) < Radius)
                         hiveMind.SetDetection(new AISenseData(Colliders[i].gameObject, hit.position, weight));
                 }
                 else

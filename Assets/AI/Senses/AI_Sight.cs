@@ -41,7 +41,7 @@ public class AI_Sight : AI_Sense_Base
 
     private void Update()
     {
-        if (ifBlinded)
+        if (!ifBlinded)
         {
             curTime += Time.deltaTime;
             if (curTime < scanInterval)
@@ -152,8 +152,10 @@ public class AI_Sight : AI_Sense_Base
         return mesh;
     }
 
-    private void OnValidate()
+    protected override void OnValidate()
     {
+        base.OnValidate();
+
         if (Segments < 3)
             Segments = 3;
         else if (Segments > 8)

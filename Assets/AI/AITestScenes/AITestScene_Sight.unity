@@ -445,7 +445,7 @@ GameObject:
   - component: {fileID: 1112078735}
   - component: {fileID: 1112078734}
   - component: {fileID: 1112078733}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: TempPlayer
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -460,7 +460,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1112078731}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.56, y: 0.87, z: 4.28}
+  m_LocalPosition: {x: 1.5, y: 0.87, z: 4.28}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -942,7 +942,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6319236493189162912, guid: 616cbe89b484a3b4a9f9ddc067dcdfc9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.08
+      value: 0.81
       objectReference: {fileID: 0}
     - target: {fileID: 6319236493189162912, guid: 616cbe89b484a3b4a9f9ddc067dcdfc9, type: 3}
       propertyPath: m_LocalPosition.y
@@ -979,6 +979,14 @@ PrefabInstance:
     - target: {fileID: 6319236493189162912, guid: 616cbe89b484a3b4a9f9ddc067dcdfc9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6319236493189162913, guid: 616cbe89b484a3b4a9f9ddc067dcdfc9, type: 3}
+      propertyPath: ifDebugging
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6319236493189162913, guid: 616cbe89b484a3b4a9f9ddc067dcdfc9, type: 3}
+      propertyPath: occlusionLayer.m_Bits
+      value: 23
       objectReference: {fileID: 0}
     - target: {fileID: 6319236493189162915, guid: 616cbe89b484a3b4a9f9ddc067dcdfc9, type: 3}
       propertyPath: m_Name
