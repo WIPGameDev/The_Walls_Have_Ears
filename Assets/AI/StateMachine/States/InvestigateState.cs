@@ -160,7 +160,8 @@ namespace Assets.FSM.States
 
             Debug.Log("Exit investigative state");
 
-            echoLocation.enabled = false;
+            if (echoLocation != null)
+                echoLocation.enabled = false;
 
             return true;
         }
