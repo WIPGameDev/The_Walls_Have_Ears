@@ -65,4 +65,17 @@ public abstract class LockableInteractable : InteractableObject
         locked = false;
     }
 
+    public override void LoadSaveData(string json)
+    {
+        LockableSaveData data = JsonUtility.FromJson<LockableSaveData>(json);
+        this.locked = data.locked;
+    }
+
+    public override string GetSaveData()
+    {
+        LockableSaveData data = new LockableSaveData();
+        data.objectSceneID = this.ObjectSceneID;
+        data.locked = this.locked;
+        return JsonUtility.ToJson(data);
+    }
 }

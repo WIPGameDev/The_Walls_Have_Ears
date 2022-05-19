@@ -1,3 +1,6 @@
+using System;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -121,14 +124,25 @@ public class GameController : MonoBehaviour
         StartCoroutine(LoadingLevel(currentScene, nextScene, markerName));
     }
 
-    public void SaveCheckPoint()
+    public void SaveGame()
     {
-        Debug.Log("Save Checkpoint");
+        BinaryFormatter bf = new BinaryFormatter();
+        FileStream file = File.Create(Application.persistentDataPath + "/MySaveData.dat");
+        
+        bf.Serialize(file, "asd");
+        file.Close();
     }
 
-    public void LoadCheckPoint()
+    public void LoadGame()
     {
-        Debug.Log("Load Checkpoint");
+        if (File.Exists(Application.persistentDataPath + "/MySaveData.dat"))
+        {
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream file = File.Open(Application.persistentDataPath + "/MySaveData.dat", FileMode.Open);
+            //SaveData data = (SaveData)bf.Deserialize(file);
+            file.Close();
+        } else
+            Debug.LogError("There is no save data!");
     }
 
     public void PauseGame()
