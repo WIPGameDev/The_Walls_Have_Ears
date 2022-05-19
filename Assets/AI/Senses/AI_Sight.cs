@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -13,6 +11,12 @@ public class AI_Sight : AI_Sense_Base
     [SerializeField]
     float halfAngle = 10f;
 
+    [SerializeField]
+    bool ifDebugging = false;
+
+    [SerializeField]
+    Color DebugColour = new Color(1, 0, 0, 0.5f);
+
     Collider[] Colliders = new Collider[10];
 
     [SerializeField]
@@ -24,30 +28,85 @@ public class AI_Sight : AI_Sense_Base
     [SerializeField]
     protected LayerMask occlusionLayer; 
 
+    float scanTimer = 0f;
+
     [SerializeField]
     float scanInterval = 0.1f;
 
+    float blindTimer = 0f;
+
     bool ifBlinded = false;
 
-    [SerializeField]
-    bool ifDebugging = true;
+    VisionCone vc;
 
-    float curTime = 0f;
+    [Header("Turning variables")]
+    public float turnTime = 1f;
+    public float rotationHalfAngle = 15;
+    public float pauseTime = 0.5f;
+    private bool ifInversedRotation = false;
+    private float rotTimer;
+    private bool ifRotWait = false;
+    private float rotWaitTimer;
+    private Quaternion defaultRotation;
 
-    private void Awake()
+    private void OnEnable()
     {
+        vc.enabled = true;
+        
         weight = 3;
+    }
+
+    private void OnDisable()
+    {
+        vc.enabled = false;
+    }
+
+    private void Start()
+    {
+        defaultRotation = gameObject.transform.rotation;
     }
 
     private void Update()
     {
         if (!ifBlinded)
         {
-            curTime += Time.deltaTime;
-            if (curTime < scanInterval)
+            scanTimer += Time.deltaTime;
+            if (scanTimer >= scanInterval)
             {
                 Scan();
-                curTime = 0f;
+                scanTimer = 0f;
+            }
+
+            if (!ifRotWait)
+            {
+                rotTimer += Time.deltaTime;
+                
+                if (rotTimer >= turnTime)
+                {
+                    rotTimer = 0f;
+
+                    ifInversedRotation = !ifInversedRotation;
+
+                    ifRotWait = true;
+                }
+                else
+                {
+                    float y = (Time.deltaTime / turnTime) * rotationHalfAngle * 2 *
+                         ((ifInversedRotation) ? -1 : 1);
+
+                    gameObject.transform.Rotate(Vector3.up, y);
+                }
+            }
+            else
+            {
+                rotWaitTimer += Time.deltaTime;
+
+                if (rotWaitTimer >= pauseTime)
+                {
+                    ifRotWait = false;
+
+                    rotWaitTimer = 0;
+                }
             }
         }
     }
@@ -81,93 +140,35 @@ public class AI_Sight : AI_Sense_Base
         return true;
     }
 
-    Mesh CreateMesh()
-    {
-        Mesh mesh = new Mesh();
-
-        Vector3[] Vertices = new Vector3[Segments + 1];
-
-        #region Vertices
-        Vertices[0] = Vector3.zero;
-
-        Vector3 endPoint = Vector3.forward * Distance;
-
-        int rotation =  360 / Segments;
-
-        for (int i = 1; i <= Segments; i++)
-        {
-            Vertices[i] = Quaternion.Euler(0, 0, rotation * i) * Vector3.up * halfAngle + endPoint;
-        }
-        #endregion
-
-        #region Triangles
-        #region Code long 
-        int[] Triangles = new int[(Segments + Segments - 2) * 3];
-        int x = 0;
-        for (int i = 1; i <= Segments; i++)
-        {
-            Triangles[x++] = 0;
-
-            if (i != Segments)
-                Triangles[x++] = i + 1;
-            else
-                Triangles[x++] = 1;
-
-            Triangles[x++] = i;
-        }
-        #endregion
-
-        #region Circle
-        int k = 1;
-        int count = 1;
-        for (int i = 1; i <= Segments - 2; i++)
-        {
-            for (int j = 0; j < 3; j++)
-            {
-                Triangles[x++] = k;
-
-                if (j < 2)
-                {
-                    if (k + count <= Segments)
-                        k += count;
-                    else
-                    {
-                        if (k + count - Segments == 1)
-                            k = k + count++ - Segments;
-                        else
-                            k = k + ++count - Segments;
-                    }
-                }
-            }
-        }
-        #endregion
-        #endregion
-
-        mesh.vertices = Vertices;
-
-        mesh.triangles = Triangles;
-
-        mesh.RecalculateNormals();
-
-        return mesh;
-    }
-
     protected override void OnValidate()
     {
         base.OnValidate();
 
+        if (vc == null)
+            vc = GetComponentInChildren<VisionCone>();
+
         if (Segments < 3)
-            Segments = 3;
-        else if (Segments > 8)
-            Segments = 8;
+            vc.Segments = Segments = 3;
+        //else if (Segments > 8)
+        //    vc.Segments = Segments = 8;
+        else
+            vc.Segments = Segments;
+
+        vc.Distance = Distance;
+
+        vc.HalfAngle = halfAngle;
     }
 
     private void OnDrawGizmos()
     {
         if (ifDebugging)
         {
-            Gizmos.color = new Color(1, 0, 0, 0.5f);
-            Gizmos.DrawMesh(CreateMesh(), gameObject.transform.position, gameObject.transform.rotation);
+            if (!Application.isPlaying)
+            {
+                Gizmos.color = DebugColour;
+                Gizmos.DrawMesh(vc.CreateMesh(), gameObject.transform.position, gameObject.transform.rotation);
+            }
+
 
             int count = Physics.OverlapSphereNonAlloc(gameObject.transform.position, Distance, Colliders, detectLayer, QueryTriggerInteraction.Collide);
 
@@ -185,8 +186,12 @@ public class AI_Sight : AI_Sense_Base
         }
     }
 
-    public void SetBlind(bool blind)
+    public void SetBlind(bool Blind)
     {
-        ifBlinded = blind;
+        ifBlinded = Blind;
+    }
+    public void SetBlind(float Duration)
+    {
+
     }
 }
