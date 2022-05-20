@@ -63,8 +63,12 @@ public class AI_EchoLocation : AI_Sense_Base
 
     void Scan()
     {
-        if (!Physics.Linecast(gameObject.transform.position, Player.transform.position))
-            return;
+        RaycastHit hit;
+        if (Physics.Linecast(gameObject.transform.position, Player.transform.position, out hit))
+        {
+            if (hit.collider.gameObject != Player && hit.collider.gameObject != gameObject)
+                return;
+        }
 
         if (numScan is null)
         {
@@ -103,8 +107,7 @@ public class AI_EchoLocation : AI_Sense_Base
     {
         try
         {
-            if (loggedLocation != Player.transform.position && 
-                !Physics.Linecast(gameObject.transform.position, Player.transform.position))
+            if (loggedLocation != Player.transform.position)
             {
                 Debug.Log("End scan");
 

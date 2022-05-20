@@ -105,22 +105,21 @@ public class HiveMind : MonoBehaviour
             primarySense = Sense;
             DetectedLocation = primarySense.Location;
         }
-        else if (primarySense.Object != Sense.Object)
+        else
         {
-            if (secondarySense.ifExists == false)
-            {
-                secondarySense = Sense;
-                return;
-            }
-
             if (primarySense.Weight <= Sense.Weight)
             {
                 secondarySense = primarySense;
                 primarySense = Sense;
                 DetectedLocation = primarySense.Location;
             }
-            else if (secondarySense.Weight <= Sense.Weight)
-                secondarySense = Sense;
+            else
+            {
+                if (secondarySense.ifExists == false)
+                    secondarySense = Sense;
+                else if (secondarySense.Weight <= Sense.Weight)
+                    secondarySense = Sense;
+            }
         }
     }
 

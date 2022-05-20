@@ -32,7 +32,7 @@ public class VisionCone : MonoBehaviour
     {
         Mesh mesh = new Mesh();
 
-        Vector3[] Vertices = new Vector3[segments + 1];
+        Vector3[] Vertices = new Vector3[segments + 2];
 
         #region Vertices
         Vertices[0] = Vector3.zero;
@@ -45,11 +45,15 @@ public class VisionCone : MonoBehaviour
         {
             Vertices[i] = Quaternion.Euler(0, 0, rotation * i) * Vector3.up * halfAngle + endPoint;
         }
+
+        Vertices[segments + 1] = endPoint;
         #endregion
 
         #region Triangles
         #region Code long 
-        int[] Triangles = new int[(segments + segments - 2) * 3];
+        //int[] Triangles = new int[(segments + segments - 2) * 3];
+        int[] Triangles = new int[segments * 6];
+
         int x = 0;
         for (int i = 1; i <= segments; i++)
         {
@@ -65,6 +69,15 @@ public class VisionCone : MonoBehaviour
         #endregion
 
         #region Circle
+        //something
+        for (int i = 1; i <= segments; i++)
+        {
+            Triangles[x++] = i;
+
+            Triangles[x++] = (i < segments) ? i + 1 : 1;
+
+            Triangles[x++] = segments + 1;
+        }
         //int k = 1;
         //int count = 1;
         //for (int i = 1; i <= segments - 2; i++)

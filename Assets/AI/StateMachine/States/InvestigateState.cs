@@ -37,12 +37,6 @@ namespace Assets.FSM.States
             StateType = FSMStateType.INVESTIGATE;
         }
 
-        private void Start()
-        {
-            if (echoLocation == null)
-                echoLocation = fsm.gameObject.GetComponent<AI_EchoLocation>();
-        }
-
         public override bool EnterState()
         {
             EnteredState = base.EnterState();
@@ -59,7 +53,16 @@ namespace Assets.FSM.States
                 navMeshAgent.isStopped = false;
 
                 if (echoLocation == null)
-                    Debug.Log("EchoLocate doesn't exist in investigate state");
+                {
+                    try
+                    {
+                        echoLocation = fsm.gameObject.GetComponent<AI_EchoLocation>();
+                    }
+                    catch
+                    {
+                        Debug.LogError(name + " Can not find echo location");
+                    }
+                }
                 else
                     echoLocation.enabled = true;
                 #endregion
@@ -185,7 +188,19 @@ namespace Assets.FSM.States
                 else
                     numberOfChecks = numberOfSearchAreas;
             }
-            #endregion
+# endregion
+
+            if (echoLocation == null && fsm != null)
+            {
+                try
+                {
+                    echoLocation = fsm.gameObject.GetComponent<AI_EchoLocation>();
+                }
+                catch
+                {
+                    Debug.LogError(name + " Can not find echo location");
+                }
+            }
         }
 
         public Vector3 InvestigativePoint
