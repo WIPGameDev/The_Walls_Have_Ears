@@ -1,4 +1,3 @@
-using Assets.FSM;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -18,8 +17,6 @@ public class AI_Spacial : AI_Sense_Base
     float scanInterval = 0.1f;
 
     float curTime;
-
-    protected FiniteStateMachine fsm;
 
     private void Awake()
     {
@@ -47,12 +44,17 @@ public class AI_Spacial : AI_Sense_Base
 
         if (count != 0)
         {
-            fsm.EnterState(FSMStateType.CHASE);
+            if (fsm != null)
+                fsm.EnterState(FSMStateType.CHASE);
+            else
+                Debug.LogError("FSM doesn't exist within " + name);
         }
     }
 
-    private void OnValidate()
+    protected override void OnValidate()
     {
+        base.OnValidate();
+
         if (Radius < 1)
             Radius = 1;
     }

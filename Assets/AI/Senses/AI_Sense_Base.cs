@@ -17,7 +17,16 @@ public class AI_Sense_Base : MonoBehaviour
     protected virtual void OnValidate()
     {
         if (Alien == null)
-            Alien = GameObject.FindGameObjectWithTag("Alien");
+        {
+            try
+            {
+                Alien = GameObject.FindGameObjectWithTag("Alien");
+            }
+            catch
+            {
+                Debug.LogError(name + " Can not find Alien");
+            }
+        }
 
         if (hiveMind == null)
         {
@@ -27,14 +36,32 @@ public class AI_Sense_Base : MonoBehaviour
             }
             catch
             {
-                //Do nothing
+                Debug.LogError(name + " Can not find hive mind");
             }
         }
 
         if (Alien != null && fsm == null)
-            fsm = Alien.GetComponent<FiniteStateMachine>();
+        {
+            try
+            {
+                fsm = Alien.GetComponent<FiniteStateMachine>();
+            }
+            catch
+            {
+                Debug.LogError(name + " Can not find fsm");
+            }
+        }
 
         if (Player == null)
-            Player = GameObject.FindGameObjectWithTag("Player");
+        {
+            try
+            {
+                Player = GameObject.FindGameObjectWithTag("Player");
+            }
+            catch
+            {
+                Debug.LogError(name + " Can not find player");
+            }
+        }
     }
 }

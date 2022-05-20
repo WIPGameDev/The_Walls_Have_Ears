@@ -237,7 +237,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 947473295}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.92, y: 2.5961103, z: 3.59}
+  m_LocalPosition: {x: -4.59, y: 2.5961103, z: 3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -359,10 +359,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37ecf00a4fe04f64d9bf1e4c0a5b7e55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Radius: 2.5
+  weight: 4
+  Radius: 2
   detectLayer:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 256
   scanInterval: 0.1
 --- !u!1 &1134556664
 GameObject:
@@ -581,7 +582,7 @@ GameObject:
   - component: {fileID: 2069238958}
   - component: {fileID: 2069238957}
   - component: {fileID: 2069238956}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: TempPlayer
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -596,7 +597,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2069238954}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.97, y: 2.86, z: 2.7}
+  m_LocalPosition: {x: -3, y: 2.86, z: 2.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
