@@ -31,6 +31,7 @@ public class GameController : MonoBehaviour
 
     [SerializeField] private GameObject loadingScreen;
     [SerializeField] private GameObject pauseMenu;
+    [SerializeField] private GameObject saveAndLoadMenu;
 
     public UnityEvent OnGameStart;
     public UnityEvent OnGameLoading;
@@ -179,12 +180,17 @@ public class GameController : MonoBehaviour
             LoadSavedLevel(gameSaveData.savedScene);
             player.transform.SetPositionAndRotation(gameSaveData.playerPosition, gameSaveData.playerRotation);
             player.SetActive(true);
-            LoadSceneSaveData();
         } 
         else
         {
             Debug.LogError("There is no save data!");
         }
+    }
+
+    public string[] GetSavesList ()
+    {
+        string path = Application.persistentDataPath + "/";
+        return Directory.GetFiles(path);
     }
 
     public void PauseGame()
@@ -199,6 +205,23 @@ public class GameController : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         pauseMenu.SetActive(false);
+        saveAndLoadMenu.SetActive(false);
+        Time.timeScale = 1f;
+        gameState = GameState.PLAYING;
+    }
+
+    public void ShowSaveAndLoadMenu ()
+    {
+        Time.timeScale = 0f;
+        Cursor.lockState = CursorLockMode.Confined;
+        saveAndLoadMenu.SetActive(true);
+        gameState = GameState.PAUSED;
+    }
+
+    public void HideSaveAndLoadMenu()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        saveAndLoadMenu.SetActive(false);
         Time.timeScale = 1f;
         gameState = GameState.PLAYING;
     }
@@ -226,8 +249,8 @@ public class GameController : MonoBehaviour
         gameState = GameState.LOADING;
         Coroutine loadingScene = StartCoroutine(LoadingScene(currentScene, targetScene));
         yield return loadingScene;
-        gameState = GameState.MENU;
         UpdateScenes();
+        gameState = GameState.MENU;
     }
 
     private IEnumerator LoadingSaveGameScene (string currentScene, string targetScene)
@@ -235,6 +258,9 @@ public class GameController : MonoBehaviour
         gameState = GameState.LOADING;
         Coroutine loadingScene = StartCoroutine(LoadingScene(currentScene, targetScene));
         yield return loadingScene;
+        UpdateScenes();
+        LoadSceneSaveData();
+        ResumeGame();
         gameState = GameState.PLAYING;
     }
 
@@ -254,8 +280,8 @@ public class GameController : MonoBehaviour
             player.SetActive(true);
         }
         LoadSceneSaveData();
-        gameState = GameState.PLAYING;
         UpdateScenes();
+        gameState = GameState.PLAYING;
     }
 
     private IEnumerator LoadingScene(string currentScene, string targetScene)

@@ -4,28 +4,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public abstract class InteractableObject : MonoBehaviour, ISaveable
+public abstract class InteractableObject : Interactable, ISaveable
 {
-    [SerializeField] [HideInInspector] private string objectSceneID = Guid.NewGuid().ToString();
-    [SerializeField] protected UnityEvent interactionEvent;
-
-    protected GameController gameController;
+    [SerializeField] private string objectSceneID = Guid.NewGuid().ToString();
 
     public string ObjectSceneID { get => objectSceneID; }
-
-    void Start()
-    {
-        gameController = FindObjectOfType<GameController>();
-    }
-
-    public virtual void Activate()
-    {
-        if (interactionEvent != null)
-            interactionEvent.Invoke();
-        OnActivation();
-    }
-
-    public abstract void OnActivation();
 
     public abstract ObjectSaveData GetSaveData();
 
