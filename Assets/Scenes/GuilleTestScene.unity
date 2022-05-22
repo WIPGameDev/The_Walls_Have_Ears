@@ -1618,11 +1618,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcc89020e7231674b84ebfbe0c4d361b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectSceneID: 976f547f-889e-47a3-9ec0-05f650f27cc0
   interactionEvent:
     m_PersistentCalls:
       m_Calls: []
-  locked: 1
-  keyItem: {fileID: 11400000, guid: a57a60b888a86c045a772fa71b31129a, type: 2}
+  locked: 0
+  keyItem: {fileID: 0}
   blockedEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -2052,6 +2053,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e1a9ffd05800884baae853c60d778bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectSceneID: ed8f5b8d-c3bb-43f9-b4fc-8ed90444e9d7
   interactionEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -2114,6 +2116,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3aab12a6b3cd98418200653eac840eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectSceneID: a579464f-26f7-4eb0-bbe2-61a9a516f4c5
   timelimit: 0
   entered:
     m_PersistentCalls:
@@ -2331,6 +2334,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 772b05edb64a7684ab0503002d5cdc6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectSceneID: 2e6ff380-0324-49d3-bb87-cfea29ae2987
   interactionEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -3095,6 +3099,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e1a9ffd05800884baae853c60d778bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectSceneID: f29db0e1-e02b-43c9-905f-98f6227e0781
   interactionEvent:
     m_PersistentCalls:
       m_Calls: []

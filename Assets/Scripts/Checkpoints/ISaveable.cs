@@ -6,9 +6,7 @@ public interface ISaveable
 {
     string ObjectSceneID { get; }
 
-    string GetSaveData();
+    ObjectSaveData GetSaveData();
 
-    void LoadSaveData(string json);
-
-    string GetObjectID();
+    void LoadSaveData(ObjectSaveData objectSaveData);
 }

@@ -18,6 +18,7 @@ public enum GameState
 
 public class GameController : MonoBehaviour
 {
+    private GameSaveData gameSaveData;
     public static bool isGamePaused = false;
 
     [SerializeField] private GameState gameState = GameState.PLAYING;
@@ -26,6 +27,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private string nextScene;
 
     [SerializeField] private GameObject player;
+    [SerializeField] private Inventory playerInventory;
 
     [SerializeField] private GameObject loadingScreen;
     [SerializeField] private GameObject pauseMenu;
@@ -50,8 +52,8 @@ public class GameController : MonoBehaviour
     public GameObject PauseMenu { get => pauseMenu; }
 
     void Awake()
-    { 
-
+    {
+        gameSaveData = new GameSaveData();
     }
 
     void Start()
@@ -124,25 +126,65 @@ public class GameController : MonoBehaviour
         StartCoroutine(LoadingLevel(currentScene, nextScene, markerName));
     }
 
-    public void SaveGame()
+    private void LoadSavedLevel(string levelName)
     {
-        BinaryFormatter bf = new BinaryFormatter();
-        FileStream file = File.Create(Application.persistentDataPath + "/MySaveData.dat");
-        
-        bf.Serialize(file, "asd");
-        file.Close();
+        nextScene = levelName;
+        StartCoroutine(LoadingSaveGameScene(currentScene, nextScene));
     }
 
-    public void LoadGame()
+    public void UpdateSceneSaveData ()
     {
-        if (File.Exists(Application.persistentDataPath + "/MySaveData.dat"))
+        LevelController level = FindObjectOfType<LevelController>();
+        if (SceneManager.sceneCount > 1 && level != null)
         {
-            BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Open(Application.persistentDataPath + "/MySaveData.dat", FileMode.Open);
-            //SaveData data = (SaveData)bf.Deserialize(file);
-            file.Close();
-        } else
+            Scene scene = SceneManager.GetSceneAt(1);
+            gameSaveData.StoreSceneData(level.GetLevelSaveData());
+        }
+    }
+
+    public void LoadSceneSaveData ()
+    {
+        LevelController level = FindObjectOfType<LevelController>();
+        if (SceneManager.sceneCount > 1 && level != null)
+        {
+            Scene scene = SceneManager.GetSceneAt(1);
+            if (gameSaveData.ContainsScene(scene))
+            {
+                level.LoadLevelSaveData(gameSaveData.GetSceneData(scene));
+            }
+        }
+    }
+
+    public void SaveGame(string saveFileName)
+    {
+        UpdateSceneSaveData();
+        gameSaveData.playerPosition = player.transform.position;
+        gameSaveData.playerRotation = player.transform.rotation;
+        gameSaveData.items = playerInventory.Items;
+        gameSaveData.savedScene = currentScene;
+        string savejson = JsonUtility.ToJson(gameSaveData);
+        string path = Application.persistentDataPath + "/" + saveFileName + ".json";
+        File.WriteAllText(path, savejson);
+    }
+
+    public void LoadGame(string saveFileName)
+    {
+        string savejson;
+        string path = Application.persistentDataPath + "/" + saveFileName + ".json";
+        if ( File.Exists(path) )
+        {
+            savejson = File.ReadAllText(path);
+            gameSaveData = JsonUtility.FromJson<GameSaveData>(savejson);
+            playerInventory.Items = gameSaveData.items;
+            LoadSavedLevel(gameSaveData.savedScene);
+            player.transform.SetPositionAndRotation(gameSaveData.playerPosition, gameSaveData.playerRotation);
+            player.SetActive(true);
+            LoadSceneSaveData();
+        } 
+        else
+        {
             Debug.LogError("There is no save data!");
+        }
     }
 
     public void PauseGame()
@@ -179,7 +221,7 @@ public class GameController : MonoBehaviour
         }
     }
 
-    private IEnumerator LoadingMainMenu(string currentScene, string targetScene)
+    private IEnumerator LoadingMainMenu (string currentScene, string targetScene)
     {
         gameState = GameState.LOADING;
         Coroutine loadingScene = StartCoroutine(LoadingScene(currentScene, targetScene));
@@ -188,9 +230,18 @@ public class GameController : MonoBehaviour
         UpdateScenes();
     }
 
+    private IEnumerator LoadingSaveGameScene (string currentScene, string targetScene)
+    {
+        gameState = GameState.LOADING;
+        Coroutine loadingScene = StartCoroutine(LoadingScene(currentScene, targetScene));
+        yield return loadingScene;
+        gameState = GameState.PLAYING;
+    }
+
     private IEnumerator LoadingLevel(string currentScene, string targetScene, string targetMarker)
     {
         gameState = GameState.LOADING;
+        UpdateSceneSaveData();
         Coroutine loadingScene = StartCoroutine(LoadingScene(currentScene, targetScene));
         yield return loadingScene;
         if (player != null)
@@ -202,6 +253,7 @@ public class GameController : MonoBehaviour
             }
             player.SetActive(true);
         }
+        LoadSceneSaveData();
         gameState = GameState.PLAYING;
         UpdateScenes();
     }

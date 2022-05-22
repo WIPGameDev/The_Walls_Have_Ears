@@ -10,7 +10,7 @@ public class LevelController : MonoBehaviour
 {
     string save;
 
-    public string GetLevelSaveData ()
+    public SceneSaveData GetLevelSaveData ()
     {
         ISaveable[] saveables;
         SceneSaveData saveData = new SceneSaveData();
@@ -19,24 +19,22 @@ public class LevelController : MonoBehaviour
         saveData.scene = SceneManager.GetSceneAt(1);
 
         saveables = FindObjectsOfType<MonoBehaviour>(true).OfType<ISaveable>().ToArray();
-        saveData.objects = new string[saveables.Length];
+        saveData.objects = new ObjectSaveData[saveables.Length];
         for (int i = 0; i < saveables.Length; i++)
         {
             saveData.objects[i] = saveables[i].GetSaveData();
         }
-        return JsonUtility.ToJson(saveData);
+        return saveData;
     }
 
-    public void LoadLevelSaveData (string save)
+    public void LoadLevelSaveData (SceneSaveData saveData)
     {
         Dictionary<string,ISaveable> saveables;
-        SceneSaveData saveData = JsonUtility.FromJson<SceneSaveData>(save);
-        saveables = FindObjectsOfType<MonoBehaviour>(true).OfType<ISaveable>().ToDictionary(p => p.GetObjectID());
+        saveables = FindObjectsOfType<MonoBehaviour>(true).OfType<ISaveable>().ToDictionary(p => p.ObjectSceneID);
 
-        foreach (string data in saveData.objects)
+        foreach (ObjectSaveData objectSaveData in saveData.objects)
         {
-            ObjectSaveData objectSaveData = JsonUtility.FromJson<ObjectSaveData>(data);
-            saveables[objectSaveData.objectSceneID].LoadSaveData(data);
+            saveables[objectSaveData.objectSceneID].LoadSaveData(objectSaveData);
         }
     }
 }

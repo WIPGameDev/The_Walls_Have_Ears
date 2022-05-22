@@ -56,11 +56,10 @@ public class DoorInteractable : LockableInteractable
         }
     }
 
-    public override void LoadSaveData(string json)
+    public override void LoadSaveData (ObjectSaveData objectSaveData)
     {
-        DoorSaveData data = JsonUtility.FromJson<DoorSaveData>(json);
-        this.locked = data.locked;
-        this.opened = data.opened;
+        this.locked = objectSaveData.locked;
+        this.opened = objectSaveData.opened;
         if (opened)
         {
             targetTransform.SetPositionAndRotation(openTransform.position, openTransform.rotation);
@@ -71,12 +70,12 @@ public class DoorInteractable : LockableInteractable
         }
     }
 
-    public override string GetSaveData()
+    public override ObjectSaveData GetSaveData()
     {
-        DoorSaveData data = new DoorSaveData();
-        data.objectSceneID = this.ObjectSceneID;
-        data.locked = this.locked;
-        data.opened = opened;
-        return JsonUtility.ToJson(data);
+        ObjectSaveData objectSaveData = new ObjectSaveData();
+        objectSaveData.objectSceneID = this.ObjectSceneID;
+        objectSaveData.locked = this.locked;
+        objectSaveData.opened = opened;
+        return objectSaveData;
     }
 }

@@ -40,22 +40,16 @@ public class Trigger : MonoBehaviour, ISaveable
         exited.Invoke();
     }
 
-    public string GetSaveData()
+    public ObjectSaveData GetSaveData()
     {
-        TriggerSaveData data = new TriggerSaveData();
+        ObjectSaveData data = new ObjectSaveData();
         data.objectSceneID = this.ObjectSceneID;
         data.isActive = gameObject.activeInHierarchy;
-        return JsonUtility.ToJson(data);
+        return data;
     }
 
-    public void LoadSaveData(string json)
+    public void LoadSaveData(ObjectSaveData objectSaveData)
     {
-        TriggerSaveData data = JsonUtility.FromJson<TriggerSaveData>(json);
-        gameObject.SetActive(data.isActive);
-    }
-
-    public string GetObjectID()
-    {
-        return objectSceneID;
+        gameObject.SetActive(objectSaveData.isActive);
     }
 }

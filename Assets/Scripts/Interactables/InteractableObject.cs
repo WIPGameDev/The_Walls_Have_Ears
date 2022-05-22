@@ -27,12 +27,7 @@ public abstract class InteractableObject : MonoBehaviour, ISaveable
 
     public abstract void OnActivation();
 
-    public virtual string GetObjectID()
-    {
-        return objectSceneID;
-    }
+    public abstract ObjectSaveData GetSaveData();
 
-    public abstract string GetSaveData();
-
-    public abstract void LoadSaveData(string json);
+    public abstract void LoadSaveData(ObjectSaveData objectSaveData);
 }

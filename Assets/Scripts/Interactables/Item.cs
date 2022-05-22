@@ -17,17 +17,16 @@ public class Item : InteractableObject
         gameObject.SetActive(false);
     }
 
-    public override void LoadSaveData(string json)
+    public override void LoadSaveData (ObjectSaveData objectSaveData)
     {
-        ItemSaveData data = JsonUtility.FromJson<ItemSaveData>(json);
-        gameObject.SetActive(data.isActive);
+        gameObject.SetActive(objectSaveData.isActive);
     }
 
-    public override string GetSaveData()
+    public override ObjectSaveData GetSaveData()
     {
-        ItemSaveData data = new ItemSaveData();
+        ObjectSaveData data = new ObjectSaveData();
         data.objectSceneID = this.ObjectSceneID;
         data.isActive = gameObject.activeInHierarchy;
-        return JsonUtility.ToJson(data);
+        return data;
     }
 }
