@@ -14,6 +14,7 @@ public struct AISenseData
 
     byte weight;
 
+
     public AISenseData(GameObject Object, Vector3 Location, byte Weight)
     {
         ifExists = true;
@@ -58,6 +59,23 @@ public class HiveMind : MonoBehaviour
     AISenseData primarySense = new AISenseData();
 
     AISenseData secondarySense = new AISenseData();
+
+    public Dictionary<sbyte, List<PatrolPoints>> patrolPoints = new Dictionary<sbyte, List<PatrolPoints>>();
+
+    private void OnEnable()
+    {
+        sbyte[][] count = new sbyte[4][];
+
+        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Patrol point"))
+        {
+            PatrolPoints pp = obj.GetComponent<PatrolPoints>();
+
+            if (!patrolPoints.ContainsKey(pp.floor))
+                patrolPoints.Add(pp.floor, new List<PatrolPoints>());
+
+            patrolPoints[pp.floor].Add(pp);
+        }
+    }
 
     private void OnValidate()
     {

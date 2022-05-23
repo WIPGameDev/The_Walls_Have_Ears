@@ -16,6 +16,7 @@ public enum ExecutionState
 public enum FSMStateType
 {
     IDLE,
+    PATROL,
     INVESTIGATE,
     CHASE,
     ATTACK,

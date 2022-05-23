@@ -31,7 +31,6 @@ namespace Assets.FSM.States
                 totalDuration = 0f;
             }
 
-            EnteredState = true;
             return EnteredState;
         }
 

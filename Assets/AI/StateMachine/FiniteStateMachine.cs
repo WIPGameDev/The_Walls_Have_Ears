@@ -23,6 +23,16 @@ namespace Assets.FSM
 
         Vector3 detectedPoint;
 
+        #region return values
+        bool ifToReturn = false;
+
+        float returnTime;
+
+        float returnTimer;
+
+        AbstractFMSState previousState;
+        #endregion
+
         public void Awake()
         {
             currentState = null;
@@ -54,6 +64,20 @@ namespace Assets.FSM
             if (currentState != null)
             {
                 currentState.UpdateState();
+
+                if (ifToReturn)
+                {
+                    returnTimer += Time.deltaTime;
+
+                    if (returnTimer >= returnTime)
+                    {
+                        ifToReturn = false;
+
+                        returnTime = returnTimer = 0;
+
+                        EnterState(previousState);
+                    }
+                }
             }
         }
 
@@ -77,6 +101,22 @@ namespace Assets.FSM
 
                 EnterState(nextState);
             }
+        }
+        public void EnterState(FSMStateType stateType, float TimeToReturn)
+        {
+            if (fsmStates.ContainsKey(stateType))
+            {
+                previousState = currentState;
+
+                AbstractFMSState nextState = fsmStates[stateType];
+
+                EnterState(nextState);
+
+                ifToReturn = true;
+                
+                returnTime = TimeToReturn;
+            }
+
         }
         #endregion
 

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Alien
   - Hive mind
+  - Patrol point
   layers:
   - Default
   - TransparentFX
@@ -17,7 +18,7 @@ TagManager:
   - Holdable
   - Player
   - Sound
-  - 
+  - PatrolPoint
   - 
   - 
   - 
