@@ -55,4 +55,27 @@ public class DoorInteractable : LockableInteractable
             yield return new WaitForEndOfFrame();
         }
     }
+
+    public override void LoadSaveData (ObjectSaveData objectSaveData)
+    {
+        this.locked = objectSaveData.locked;
+        this.opened = objectSaveData.opened;
+        if (opened)
+        {
+            targetTransform.SetPositionAndRotation(openTransform.position, openTransform.rotation);
+        }
+        else
+        {
+            targetTransform.SetPositionAndRotation(closeTransform.position, closeTransform.rotation);
+        }
+    }
+
+    public override ObjectSaveData GetSaveData()
+    {
+        ObjectSaveData objectSaveData = new ObjectSaveData();
+        objectSaveData.objectSceneID = this.ObjectSceneID;
+        objectSaveData.locked = this.locked;
+        objectSaveData.opened = opened;
+        return objectSaveData;
+    }
 }

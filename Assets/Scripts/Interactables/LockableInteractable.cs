@@ -65,4 +65,16 @@ public abstract class LockableInteractable : InteractableObject
         locked = false;
     }
 
+    public override void LoadSaveData (ObjectSaveData objectSaveData)
+    {
+        this.locked = objectSaveData.locked;
+    }
+
+    public override ObjectSaveData GetSaveData()
+    {
+        ObjectSaveData objectSaveData = new ObjectSaveData();
+        objectSaveData.objectSceneID = this.ObjectSceneID;
+        objectSaveData.locked = this.locked;
+        return objectSaveData;
+    }
 }

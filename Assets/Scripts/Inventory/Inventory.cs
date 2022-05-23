@@ -7,6 +7,8 @@ public class Inventory : MonoBehaviour
 {
     [SerializeField] private Dictionary<string, InventoryItem> items;
 
+    public Dictionary<string, InventoryItem> Items { get => items; set => items = value; }
+
     private void Awake()
     {
         items = new Dictionary<string, InventoryItem>();
@@ -70,4 +72,6 @@ public class Inventory : MonoBehaviour
             }
         }
     }
+    /*
+    */
 }
