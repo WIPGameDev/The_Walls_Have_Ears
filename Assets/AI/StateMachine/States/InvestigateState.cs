@@ -23,6 +23,8 @@ namespace Assets.FSM.States
         [SerializeField]
         float searchDistance = 1;
 
+        AI_EchoLocation echoLocation;
+
         bool ifSearchingAround;
 
         List<Vector3> SearchLocations;
@@ -49,6 +51,20 @@ namespace Assets.FSM.States
                 SearchLocations.Clear();
 
                 navMeshAgent.isStopped = false;
+
+                if (echoLocation == null)
+                {
+                    try
+                    {
+                        echoLocation = fsm.gameObject.GetComponent<AI_EchoLocation>();
+                    }
+                    catch
+                    {
+                        Debug.LogError(name + " Can not find echo location");
+                    }
+                }
+                else
+                    echoLocation.enabled = true;
                 #endregion
 
                 curNumberOfChecks = 0;
@@ -147,6 +163,9 @@ namespace Assets.FSM.States
 
             Debug.Log("Exit investigative state");
 
+            if (echoLocation != null)
+                echoLocation.enabled = false;
+
             return true;
         }
 
@@ -169,7 +188,19 @@ namespace Assets.FSM.States
                 else
                     numberOfChecks = numberOfSearchAreas;
             }
-            #endregion
+# endregion
+
+            if (echoLocation == null && fsm != null)
+            {
+                try
+                {
+                    echoLocation = fsm.gameObject.GetComponent<AI_EchoLocation>();
+                }
+                catch
+                {
+                    Debug.LogError(name + " Can not find echo location");
+                }
+            }
         }
 
         public Vector3 InvestigativePoint
