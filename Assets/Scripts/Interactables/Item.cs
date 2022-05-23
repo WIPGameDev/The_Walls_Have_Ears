@@ -14,6 +14,19 @@ public class Item : InteractableObject
     public override void OnActivation()
     {
         GameObject.FindObjectOfType<Inventory>().AddItem(inventoryItem);
-        Destroy(gameObject);
+        gameObject.SetActive(false);
+    }
+
+    public override void LoadSaveData (ObjectSaveData objectSaveData)
+    {
+        gameObject.SetActive(objectSaveData.isActive);
+    }
+
+    public override ObjectSaveData GetSaveData()
+    {
+        ObjectSaveData data = new ObjectSaveData();
+        data.objectSceneID = this.ObjectSceneID;
+        data.isActive = gameObject.activeInHierarchy;
+        return data;
     }
 }
