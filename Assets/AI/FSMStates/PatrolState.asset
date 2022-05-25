@@ -16,3 +16,4 @@ MonoBehaviour:
   detectLayer:
     serializedVersion: 2
     m_Bits: 1024
+  MaxMovementTime: 30

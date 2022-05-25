@@ -14,6 +14,11 @@ public class PatrolState : AbstractFMSState
     [SerializeField]
     LayerMask detectLayer;
 
+    [SerializeField]
+    float MaxMovementTime = 30f;
+
+    float timeMoving = 0f;
+
     public override void OnEnable()
     {
         base.OnEnable();
@@ -31,10 +36,10 @@ public class PatrolState : AbstractFMSState
 
             float storedDist = float.MaxValue;
 
-            for (int i = 0; i < hiveMind.patrolPoints[floor].Count ; i++)
+            for (int i = 0; i < hiveMind.patrolPoints[floor].Count; i++)
             {
                 float dist = Vector3.Distance(navMeshAgent.transform.position, hiveMind.patrolPoints[floor][i].transform.position);
-                
+
                 if (dist < storedDist)
                 {
                     storedDist = dist;
@@ -48,22 +53,18 @@ public class PatrolState : AbstractFMSState
                 return false;
             }
 
-            byte rng = (byte)Random.Range(0, hiveMind.patrolPoints[floor][index].linkedPoints.Count);
-
-            PatrolPoints pp = hiveMind.patrolPoints[floor][index].linkedPoints[rng].GetComponent<PatrolPoints>();
-
-            for (int i = 0; i < hiveMind.patrolPoints[floor].Count; i++)
+            if (hiveMind.patrolPoints[floor][index].linkedPoints.Count == 0)
             {
-                if (hiveMind.patrolPoints[floor][i] == pp)
-                {
-                    index = (byte)i;
-                    break;
-                }
+                Debug.LogError(hiveMind.patrolPoints[floor][index].name + " does not contain any linked points");
+                return false;
             }
+
+            byte rng = (byte)Random.Range(0, hiveMind.patrolPoints[floor][index].linkedPoints.Count);
 
             NavMeshHit hit;
 
-            NavMesh.SamplePosition(hiveMind.patrolPoints[floor][index].gameObject.transform.position, out hit, 10, NavMesh.AllAreas);
+            NavMesh.SamplePosition(hiveMind.patrolPoints[floor][index].linkedPoints[rng].transform.position, 
+                out hit, 10, NavMesh.AllAreas);
 
             navMeshAgent.SetDestination(hit.position);
 
@@ -79,11 +80,16 @@ public class PatrolState : AbstractFMSState
         {
             Debug.Log("Updating patrol state");
 
-            if (Vector3.Distance(navMeshAgent.transform.position, navMeshAgent.destination) < 1)
+            timeMoving += Time.deltaTime;
+
+            if (timeMoving >= MaxMovementTime)
             {
-                fsm.EnterState(FSMStateType.IDLE, 1f);
-                
+                EnterState();
+                timeMoving = 0;
             }
+
+            if (Vector3.Distance(navMeshAgent.transform.position, navMeshAgent.destination) < 1)
+                fsm.EnterState(FSMStateType.IDLE, 1f);
         }
     }
 

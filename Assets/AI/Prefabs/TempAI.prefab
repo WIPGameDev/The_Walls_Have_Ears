@@ -137,10 +137,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   validStates:
   - {fileID: 11400000, guid: a05ebf21b1b1ecb409fdb7b5b4a9f05a, type: 2}
+  - {fileID: 11400000, guid: 7547d322359fbec4491a85a7eb68b1db, type: 2}
   - {fileID: 11400000, guid: 8c7ca5ab8cdbe7a4f93ff73063ff2499, type: 2}
   - {fileID: 11400000, guid: 84b6a30ef5b9c1249932fe3df6712d6f, type: 2}
   - {fileID: 11400000, guid: 57d76d12131ce79478e2cc947cc031c4, type: 2}
-  DefaultState: 0
+  DefaultState: 1
 --- !u!114 &3740632146939395211
 MonoBehaviour:
   m_ObjectHideFlags: 0
