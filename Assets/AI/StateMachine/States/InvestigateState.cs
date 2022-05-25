@@ -81,6 +81,8 @@ namespace Assets.FSM.States
         {
             if (EnteredState)
             {
+                base.UpdateState();
+
                 Debug.Log("Updating investigative state");
 
                 if (!ifSearchingAround)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -33,6 +34,8 @@ namespace Assets.FSM
         AbstractFMSState previousState;
         #endregion
 
+        TextMeshPro tMesh;
+
         public void Awake()
         {
             currentState = null;
@@ -51,6 +54,8 @@ namespace Assets.FSM
                 state.SetHiveMind(hiveMind); 
                 fsmStates.Add(state.StateType, state);
             }
+
+            tMesh = GetComponentInChildren<TextMeshPro>();
         }
 
         private void Start()
@@ -150,6 +155,11 @@ namespace Assets.FSM
             {
                 return fsmStates;
             }
+        }
+
+        public void SetLabel(string text)
+        {
+            tMesh.text = text;
         }
     }
 }

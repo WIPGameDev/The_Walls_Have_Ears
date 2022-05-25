@@ -44,9 +44,12 @@ public abstract class AbstractFMSState : ScriptableObject
         return (navMeshAgent != null);
     }
 
-    public abstract void UpdateState();
+    public virtual void UpdateState()
+    {
+        fsm.SetLabel(name);
+    }
 
-public virtual bool ExitState()
+    public virtual bool ExitState()
     {
         ExecutionState = ExecutionState.COMPLETED;
 

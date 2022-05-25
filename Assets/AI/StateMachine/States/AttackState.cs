@@ -34,11 +34,11 @@ namespace Assets.FSM.States
 
         public override void UpdateState()
         {
+            base.UpdateState();
+
             if (EnteredState)
             {
                 Debug.Log("Updating attack state");
-                
-                //Probably redundant but needed
             }
         }
 
