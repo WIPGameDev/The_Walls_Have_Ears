@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -26,7 +27,7 @@ public class AI_Sight : AI_Sense_Base
     byte Segments = 4;
 
     [SerializeField]
-    protected LayerMask occlusionLayer; 
+    protected LayerMask occlusionLayer;
 
     float scanTimer = 0f;
 
@@ -38,6 +39,8 @@ public class AI_Sight : AI_Sense_Base
     bool ifBlinded = false;
 
     VisionCone vc;
+
+    TextMeshPro tMesh;
 
     [Header("Turning variables")]
     public float turnTime = 1f;
@@ -52,8 +55,12 @@ public class AI_Sight : AI_Sense_Base
     private void OnEnable()
     {
         vc.enabled = true;
-        
+
         weight = 3;
+
+        tMesh = GetComponentInChildren<TextMeshPro>();
+
+        tMesh.text = "false";
     }
 
     private void OnDisable()
@@ -71,6 +78,7 @@ public class AI_Sight : AI_Sense_Base
         if (!ifBlinded)
         {
             scanTimer += Time.deltaTime;
+
             if (scanTimer >= scanInterval)
             {
                 Scan();
@@ -80,7 +88,7 @@ public class AI_Sight : AI_Sense_Base
             if (!ifRotWait)
             {
                 rotTimer += Time.deltaTime;
-                
+
                 if (rotTimer >= turnTime)
                 {
                     rotTimer = 0f;
@@ -118,10 +126,18 @@ public class AI_Sight : AI_Sense_Base
         for (int i = 0; i < count; i++)
         {
             GameObject obj = Colliders[i].gameObject;
+
+            tMesh.text = obj.name;
+
             if (IsInSight(obj))
+            {
                 hiveMind.SetDetection(new AISenseData(obj, obj.transform.position, weight));
+                tMesh.text = "true";
+            }
+            else
+                tMesh.text = "false";
         }
-    }
+    } 
 
     public bool IsInSight(GameObject obj)
     {
