@@ -156,6 +156,16 @@ public class GameController : MonoBehaviour
         }
     }
 
+    public void SaveCheckPoint ()
+    {
+        SaveGame("CheckPoint");
+    }
+
+    public void LoadCheckPoint ()
+    {
+        LoadGame("CheckPoint");
+    }
+
     public void SaveGame(string saveFileName)
     {
         UpdateSceneSaveData();

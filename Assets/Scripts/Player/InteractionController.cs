@@ -28,7 +28,14 @@ public class InteractionController : MonoBehaviour
             RaycastHit result;
             if (Physics.Raycast(transform.position, transform.forward, out result, interactionDistance, interactableMask))
             {
-                result.transform.gameObject.SendMessage("Activate");
+                result.transform.gameObject.SendMessageUpwards("Activate");
+                /*
+                Interactable interactable = result.transform.GetComponent<Interactable>();
+                if (interactable != null)
+                {
+                    interactable.Activate();
+                }
+                */
             }
         }
 

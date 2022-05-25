@@ -59,6 +59,7 @@ public class Inventory : MonoBehaviour
         return false;
     }
 
+    /*
     private void OnGUI()
     {
         if (items != null)
@@ -72,6 +73,5 @@ public class Inventory : MonoBehaviour
             }
         }
     }
-    /*
     */
 }

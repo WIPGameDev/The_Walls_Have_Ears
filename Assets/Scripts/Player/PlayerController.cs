@@ -113,8 +113,14 @@ public class PlayerController : MonoBehaviour
             {
                 targetVelocity.y = -10f;
             }
-        } else
+        }
+        else
         {
+            //Check if we are hitting the ceiling while moving upwards, if so sets velocity in y axis to 0.
+            if ((characterController.collisionFlags & CollisionFlags.Above) != 0 && targetVelocity.y > 0)
+            {
+                targetVelocity.y = 0f;
+            }
             //Gravity acceleration
             targetVelocity.y += Physics.gravity.y * gravityMultiplier * Time.deltaTime;
         }
