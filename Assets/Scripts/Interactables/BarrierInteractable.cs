@@ -39,8 +39,6 @@ public class BarrierInteractable : LockableInteractable
 
     public override ObjectSaveData GetSaveData()
     {
-        AnimatorStateInfo animatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
-        Debug.Log(animatorStateInfo.normalizedTime);
         ObjectSaveData objectSaveData = new ObjectSaveData();
         objectSaveData.objectSceneID = this.ObjectSceneID;
         objectSaveData.locked = this.locked;
