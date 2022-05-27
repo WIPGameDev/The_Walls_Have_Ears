@@ -1758,17 +1758,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 669583782, guid: 9105085a7ec30a846be42d9d8d76edbb, type: 3}
-      propertyPath: holdableMask.m_Bits
-      value: 192
-      objectReference: {fileID: 0}
     - target: {fileID: 6139241622456310944, guid: 9105085a7ec30a846be42d9d8d76edbb, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 6139241622456310944, guid: 9105085a7ec30a846be42d9d8d76edbb, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6139241622456310947, guid: 9105085a7ec30a846be42d9d8d76edbb, type: 3}
       propertyPath: m_RootOrder
@@ -1813,10 +1805,6 @@ PrefabInstance:
     - target: {fileID: 6139241622456310947, guid: 9105085a7ec30a846be42d9d8d76edbb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6139241624014789461, guid: 9105085a7ec30a846be42d9d8d76edbb, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9105085a7ec30a846be42d9d8d76edbb, type: 3}

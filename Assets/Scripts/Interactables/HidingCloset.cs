@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Animations;
+using Cinemachine;
 
 [RequireComponent(typeof(Animator))]
 public class HidingCloset : Interactable
@@ -34,27 +35,15 @@ public class HidingCloset : Interactable
     public override void OnActivation()
     {
         hiding = true;
-        StartCoroutine(Hiding());
-
-    }
-
-    private IEnumerator Hiding()
-    {
-        Coroutine coroutine = StartCoroutine(PositionPlayer());
-        yield return coroutine;
+        PlayerController playerController = FindObjectOfType<PlayerController>();
+        ViewController viewController = FindObjectOfType<ViewController>();
+        playerController.enabled = false;
+        viewController.enabled = false;
+        CinemachineVirtualCamera closetCamera = cameraTransform.GetComponent<CinemachineVirtualCamera>();
+        
+        Transform playerTransform = playerController.transform;
+        Transform viewTransform = viewController.transform;
         AnimationPlayableUtilities.PlayClip(GetComponent<Animator>(), entryClip, out playableGraph);
-    }
-
-    private IEnumerator PositionPlayer ()
-    {
-        Transform player = FindObjectOfType<PlayerController>().transform;
-        if (player != null)
-        {
-            while (true)
-            {
-                yield return new WaitForEndOfFrame();
-            }
-        }
     }
 
     private void OnDestroy()

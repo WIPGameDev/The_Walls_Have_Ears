@@ -6,13 +6,11 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/The House.unity
-    guid: 3b272a413befb4e41acde77424cc3a65
-    path: Assets/Scenes/GuilleTestScene.unity
-    guid: 2853126482431ab48a4e8196c2820594
-  - enabled: 1
     path: Assets/Scenes/GuilleTestScene 1.unity
     guid: 6219010aeacc50d40ad0e5a1953d32e1
+  - enabled: 1
+    path: Assets/Scenes/The House.unity
+    guid: 3b272a413befb4e41acde77424cc3a65
   - enabled: 1
     path: Assets/Scenes/GuilleTestScene 2.unity
     guid: 31fb03d981fbd29409bc6c768dcbc46a
