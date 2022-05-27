@@ -77,10 +77,9 @@ public class HiveMind : MonoBehaviour
         }
     }
 
-    private void OnValidate()
+    private void Start()
     {
-        if (fsm == null)
-            fsm = GameObject.FindGameObjectWithTag("Alien").GetComponent<FiniteStateMachine>();
+        fsm = GameObject.FindGameObjectWithTag("Alien").GetComponent<FiniteStateMachine>();
     }
 
     Vector3 DetectedLocation //FINISH THIS, change the way this works so that I input a weight parameter  

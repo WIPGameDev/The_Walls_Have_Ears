@@ -15,27 +15,26 @@ public class AI_EchoLocation : AI_Sense_Base
 
     Vector3 loggedLocation = new Vector3();
 
-    private void Awake()
+    protected override void Start()
     {
-        weight = 4;
-    }
-
-    private void Start()
-    {
-        if (Player == null)
-            Player = GameObject.FindGameObjectWithTag("Player");
+        base.Start();
 
         this.enabled = false;
+
+        weight = 4;
     }
 
     private void Update()
     {
+        if (Player == null)
+            Player = GameObject.FindGameObjectWithTag("Player");
+
         curTime += Time.deltaTime;
         if (!ifClicking)
         {
             if (curTime >= scanInterval)
             {
-                Debug.Log("Start scan");
+                Debug.Log("Start echo-scan");
 
                 ifClicking = true;
 

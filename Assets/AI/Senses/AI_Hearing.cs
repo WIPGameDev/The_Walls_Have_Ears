@@ -20,10 +20,20 @@ public class AI_Hearing : AI_Sense_Base
 
     NavMeshAgent navAgent;
 
+
+    protected override void Start()
+    {
+        base.Start();
+       
+        if (navAgent == null)
+            navAgent = GetComponent<NavMeshAgent>();
+        
+        navAgent.isStopped = true;
+    }
+
     private void Awake()
     {
         weight = 2;
-        navAgent.isStopped = true;
     }
 
     private void Update()
@@ -117,13 +127,5 @@ public class AI_Hearing : AI_Sense_Base
     {
         Gizmos.color = new Color(1, 1, 0, 0.5f);
         Gizmos.DrawWireSphere(gameObject.transform.position, Radius);
-    }
-
-    protected override void OnValidate()
-    {
-        base.OnValidate();
-
-        if (navAgent == null)
-            navAgent = GetComponent<NavMeshAgent>();
     }
 }

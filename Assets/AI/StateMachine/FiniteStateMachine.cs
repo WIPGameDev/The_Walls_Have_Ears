@@ -84,6 +84,10 @@ namespace Assets.FSM
                     }
                 }
             }
+            else
+            {
+                SetLabel("No current state");
+            }
         }
 
         #region EnterState
@@ -160,6 +164,10 @@ namespace Assets.FSM
         public void SetLabel(string text)
         {
             tMesh.text = text;
+        }
+        public void AddLavel(string text)
+        {
+            tMesh.text += text;
         }
     }
 }

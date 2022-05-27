@@ -18,14 +18,16 @@ public class AI_Spacial : AI_Sense_Base
 
     float curTime;
 
+    protected override void Start()
+    {
+        base.Start();
+
+        curTime = scanInterval;
+    }
+
     private void Awake()
     {
         weight = 4;
-    }
-
-    private void Start()
-    {
-        curTime = scanInterval;
     }
 
     private void Update()
@@ -51,17 +53,15 @@ public class AI_Spacial : AI_Sense_Base
         }
     }
 
-    protected override void OnValidate()
-    {
-        base.OnValidate();
-
-        if (Radius < 1)
-            Radius = 1;
-    }
-
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.black;
         Gizmos.DrawWireSphere(gameObject.transform.position, Radius);
+    }
+
+    private void OnValidate()
+    {
+        if (Radius < 1)
+            Radius = 1;
     }
 }

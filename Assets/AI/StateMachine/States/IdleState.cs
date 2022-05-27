@@ -38,8 +38,6 @@ namespace Assets.FSM.States
         {
             if (EnteredState)
             {
-                base.UpdateState();
-
                 totalDuration += Time.deltaTime;
 
                 Debug.Log("Updating idle state");

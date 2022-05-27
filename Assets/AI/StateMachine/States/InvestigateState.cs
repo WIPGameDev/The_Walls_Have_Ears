@@ -81,8 +81,6 @@ namespace Assets.FSM.States
         {
             if (EnteredState)
             {
-                base.UpdateState();
-
                 Debug.Log("Updating investigative state");
 
                 if (!ifSearchingAround)
@@ -190,7 +188,7 @@ namespace Assets.FSM.States
                 else
                     numberOfChecks = numberOfSearchAreas;
             }
-# endregion
+            # endregion
 
             if (echoLocation == null && fsm != null)
             {

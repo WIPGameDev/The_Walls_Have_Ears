@@ -33,7 +33,8 @@ namespace Assets.FSM.States
 
         public override void UpdateState()
         {
-            base.UpdateState();
+            if (Player == null)
+                Player = GameObject.FindGameObjectWithTag("Player");
 
             if (EnteredState)
             {
@@ -57,12 +58,6 @@ namespace Assets.FSM.States
             Debug.Log("Exit chase state");
 
             return true;
-        }
-
-        private void OnValidate()
-        {
-            if (Player == null)
-                Player = GameObject.FindGameObjectWithTag("Player");
         }
     }
 }
