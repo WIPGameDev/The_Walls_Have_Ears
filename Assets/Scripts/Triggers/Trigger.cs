@@ -6,6 +6,7 @@ using UnityEngine.Events;
 
 public class Trigger : MonoBehaviour, ISaveable
 {
+    protected GameController gameController;
     [SerializeField] [HideInInspector] protected string objectSceneID = Guid.NewGuid().ToString();
     private float stayTime = 0f;
     [SerializeField] private float timelimit = 0f;
@@ -16,13 +17,18 @@ public class Trigger : MonoBehaviour, ISaveable
 
     public string ObjectSceneID { get => objectSceneID; }
 
-    void OnTriggerEnter(Collider other)
+    protected virtual void Start ()
+    {
+        gameController = FindObjectOfType<GameController>();
+    }
+
+    protected virtual void OnTriggerEnter(Collider other)
     {
         stayTime = 0f;
         entered.Invoke();
     }
 
-    void OnTriggerStay(Collider other)
+    protected virtual void OnTriggerStay(Collider other)
     {
         if (timelimit > 0f)
         {
@@ -35,12 +41,12 @@ public class Trigger : MonoBehaviour, ISaveable
         }
     }
 
-    void OnTriggerExit(Collider other)
+    protected virtual void OnTriggerExit(Collider other)
     {
         exited.Invoke();
     }
 
-    public ObjectSaveData GetSaveData()
+    public virtual ObjectSaveData GetSaveData()
     {
         ObjectSaveData data = new ObjectSaveData();
         data.objectSceneID = this.ObjectSceneID;
@@ -48,8 +54,13 @@ public class Trigger : MonoBehaviour, ISaveable
         return data;
     }
 
-    public void LoadSaveData(ObjectSaveData objectSaveData)
+    public virtual void LoadSaveData(ObjectSaveData objectSaveData)
     {
         gameObject.SetActive(objectSaveData.isActive);
+    }
+
+    public void SaveCheckPoint ()
+    {
+        gameController.SaveCheckPoint();
     }
 }

@@ -9,7 +9,7 @@ public abstract class Interactable : MonoBehaviour
 
     protected GameController gameController;
 
-    void Start()
+    protected virtual void Start()
     {
         gameController = FindObjectOfType<GameController>();
     }
