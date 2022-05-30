@@ -83,7 +83,10 @@ public class HidingCloset : Interactable
 
     private void DestroyGraph ()
     {
-        playableGraph.Destroy();
+        if (playableGraph.IsValid())
+        {
+            playableGraph.Destroy();
+        }
     }
 
     private void OnDisable()

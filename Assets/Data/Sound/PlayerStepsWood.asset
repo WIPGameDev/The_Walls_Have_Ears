@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d53a0e5e9f491d49a45a62839eeae19, type: 3}
+  m_Name: PlayerStepsWood
+  m_EditorClassIdentifier: 
+  groundTag: Wood
+  landingSound: {fileID: 8300000, guid: cfaa1aecc36842f4d85a12857c69790d, type: 3}
+  steps:
+  - {fileID: 8300000, guid: 653062c9ecd5d4f448cd0d59b4ba1269, type: 3}
+  - {fileID: 8300000, guid: 617cb9096de1248458ac5c7daae4c455, type: 3}
+  - {fileID: 8300000, guid: dfdde11ac73f08445b3e71798fdc3489, type: 3}
+  - {fileID: 8300000, guid: 78e2577c9f792e943b5e1a4b670536db, type: 3}
+  - {fileID: 8300000, guid: 1d4a8ed0362ca0743a35722986b3a1e8, type: 3}
+  - {fileID: 8300000, guid: df223c07441f8dc46979fe67c6bd6d51, type: 3}
+  - {fileID: 8300000, guid: 196e66560b4b4ca47b1d4f2858678089, type: 3}
+  - {fileID: 8300000, guid: 8ea69d372e505fb49af44398804d157d, type: 3}
+  - {fileID: 8300000, guid: 4379264729b5c0b4b87c3bfea128756a, type: 3}
+  - {fileID: 8300000, guid: 653062c9ecd5d4f448cd0d59b4ba1269, type: 3}

@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d53a0e5e9f491d49a45a62839eeae19, type: 3}
+  m_Name: PlayerStepsWater
+  m_EditorClassIdentifier: 
+  groundTag: Water
+  landingSound: {fileID: 8300000, guid: 94eade6445166574cbb16ed1341b1bc8, type: 3}
+  steps:
+  - {fileID: 8300000, guid: 645190c467427654399a70aa8b075937, type: 3}
+  - {fileID: 8300000, guid: a1fc99368e4a52643a28db9d193a0881, type: 3}
+  - {fileID: 8300000, guid: 6ea80664e2a1c5549be5675760ceb317, type: 3}
+  - {fileID: 8300000, guid: b2ab5f5494d08e048b5e87c3cfe86914, type: 3}
+  - {fileID: 8300000, guid: 5cf12a7d0d1aa334db84af6a859b3432, type: 3}
+  - {fileID: 8300000, guid: 94eade6445166574cbb16ed1341b1bc8, type: 3}
+  - {fileID: 8300000, guid: 97fb24a11c4ae4c4ba344b83314be0ef, type: 3}
+  - {fileID: 8300000, guid: c19013e29760215438b06c99489ac473, type: 3}
+  - {fileID: 8300000, guid: 81d8aa4177d09a242aac496c6867e871, type: 3}
+  - {fileID: 8300000, guid: 290763fe73862f04580bbc0937c0d5c4, type: 3}
+  - {fileID: 8300000, guid: 90b57c7471bea8c4cad8b55e370cd21f, type: 3}

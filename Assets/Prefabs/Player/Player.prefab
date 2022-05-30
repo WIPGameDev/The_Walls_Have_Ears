@@ -85,9 +85,10 @@ GameObject:
   m_Component:
   - component: {fileID: 6139241622456310947}
   - component: {fileID: 6139241622456310949}
+  - component: {fileID: 1302496352}
   - component: {fileID: 6139241622456310946}
   - component: {fileID: 6139241622952340571}
-  - component: {fileID: 1302496352}
+  - component: {fileID: 1302496353}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -129,53 +130,6 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6139241622456310946
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6139241622456310944}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ffc10324a98fbc4d967c2143e6547fc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  headTransform: {fileID: 6139241623140291832}
-  whatIsCollidable:
-    serializedVersion: 2
-    m_Bits: 1
-  jumpKey: Jump
-  crouchKey: Crouch
-  runKey: Run
-  leanKey: Lean
-  canRun: 1
-  canJump: 1
-  canCrouch: 1
-  walkSpeed: 4
-  runSpeed: 6
-  crouchMoveSpeed: 3
-  crouchingSpeed: 5
-  crouchingHeight: 1
-  gravityMultiplier: 1
-  terminalVelocity: 90
-  jumpHeight: 2
---- !u!114 &6139241622952340571
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6139241622456310944}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d10649d0eacab1f43b5c363a04acd4e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  head: {fileID: 0}
-  playerDead:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!82 &1302496352
 AudioSource:
   m_ObjectHideFlags: 0
@@ -185,9 +139,9 @@ AudioSource:
   m_GameObject: {fileID: 6139241622456310944}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: acab960cede12e04589bb5425c8209ae, type: 2}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -272,6 +226,76 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &6139241622456310946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6139241622456310944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ffc10324a98fbc4d967c2143e6547fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  headTransform: {fileID: 6139241623140291832}
+  whatIsCollidable:
+    serializedVersion: 2
+    m_Bits: 1
+  jumpKey: Jump
+  crouchKey: Crouch
+  runKey: Run
+  leanKey: Lean
+  canRun: 1
+  canJump: 1
+  canCrouch: 1
+  walkSpeed: 4
+  runSpeed: 6
+  crouchMoveSpeed: 3
+  crouchingSpeed: 5
+  crouchingHeight: 1
+  gravityMultiplier: 1
+  terminalVelocity: 90
+  jumpHeight: 2
+--- !u!114 &6139241622952340571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6139241622456310944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d10649d0eacab1f43b5c363a04acd4e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  head: {fileID: 0}
+  playerDead:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &1302496353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6139241622456310944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d66e60c80678e042b012e4446eae6e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  forestAudioClips: {fileID: 11400000, guid: 82a6e95ddbc96f84092acb70849914f1, type: 2}
+  concreteAudioClips: {fileID: 11400000, guid: bf132d81c04c72942b2b11148490d2ff, type: 2}
+  woodAudioClips: {fileID: 11400000, guid: 588603a3b8e01fc459360d9b38702729, type: 2}
+  waterAudioClips: {fileID: 11400000, guid: 2ac5611e1c8f13e48ac63ab64e4f8c0e, type: 2}
+  checkDistance: 2
+  checkMask:
+    serializedVersion: 2
+    m_Bits: 1
+  crouchCadence: 0.5
+  walkCadence: 0.4
+  runCadence: 0.2
 --- !u!1 &6139241623140291833
 GameObject:
   m_ObjectHideFlags: 0
@@ -380,7 +404,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.3333334, y: 1}
+    m_SensorSize: {x: 2.2894738, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
