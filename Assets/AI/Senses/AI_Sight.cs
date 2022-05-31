@@ -143,7 +143,9 @@ public class AI_Sight : AI_Sense_Base
                     tMesh.text = "hiveMind is null";
                 else
                 {
-                    hiveMind.SetDetection(new AISenseData(obj, obj.transform.position, weight));
+                    NavMeshHit hit;
+                    NavMesh.SamplePosition(obj.transform.position, out hit, 1, 1);
+                    hiveMind.SetDetection(new AISenseData(obj, hit.position, weight));
                     tMesh.text = "true";
                 }
             }
