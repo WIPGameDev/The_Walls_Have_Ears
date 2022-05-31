@@ -9,13 +9,20 @@ public class PatrolState : AbstractFMSState
     [SerializeField]
     sbyte floor = 0;
     
-    byte index;
+    byte localIndex;
+    
+    byte globalIndex;
+
+    byte previousIndex = 255;
 
     [SerializeField]
     LayerMask detectLayer;
 
     [SerializeField]
     float MaxMovementTime = 30f;
+
+    [SerializeField]
+    float waitTime = 1.5f;
 
     float timeMoving = 0f;
 
@@ -32,7 +39,7 @@ public class PatrolState : AbstractFMSState
         if (EnteredState)
         {
 
-            index = 255;
+            globalIndex = 200;
 
             float storedDist = float.MaxValue;
 
@@ -43,27 +50,19 @@ public class PatrolState : AbstractFMSState
                 if (dist < storedDist)
                 {
                     storedDist = dist;
-                    index = (byte)i;
+                    globalIndex = (byte)i;
                 }
             }
 
-            if (index == 255)
+            if (globalIndex == 255)
             {
                 Debug.LogError("Failed to enter patrol state: index = 255");
                 return false;
             }
 
-            if (hiveMind.patrolPoints[floor][index].linkedPoints.Count == 0)
-            {
-                Debug.LogError(hiveMind.patrolPoints[floor][index].name + " does not contain any linked points");
-                return false;
-            }
-
-            byte rng = (byte)Random.Range(0, hiveMind.patrolPoints[floor][index].linkedPoints.Count);
-
             NavMeshHit hit;
 
-            NavMesh.SamplePosition(hiveMind.patrolPoints[floor][index].linkedPoints[rng].transform.position, 
+            NavMesh.SamplePosition(hiveMind.patrolPoints[floor][globalIndex].transform.position, 
                 out hit, 10, NavMesh.AllAreas);
 
             navMeshAgent.SetDestination(hit.position);
@@ -72,6 +71,58 @@ public class PatrolState : AbstractFMSState
         }
 
         return EnteredState;
+    }
+
+    public override bool ReEnterState(AbstractFMSState state)
+    {
+        localIndex = 255;
+
+        NavMeshHit hit;
+
+        if (hiveMind.patrolPoints[floor][globalIndex].linkedPoints.Count == 1)
+        {
+            localIndex = 0;
+        }
+        else
+        {
+            if (hiveMind.patrolPoints[floor][globalIndex].linkedPoints.Count == 2)
+            {
+                localIndex = 0;
+
+                if (hiveMind.patrolPoints[floor][globalIndex] != hiveMind.patrolPoints[floor][0])
+                    localIndex = 1;
+            }
+            else
+            {
+                System.Random rng = new System.Random();
+
+                if (previousIndex != 255)
+                {
+                    byte foundIndex = 255;
+
+                    foundIndex = (byte)hiveMind.patrolPoints[floor][globalIndex].linkedPoints.IndexOf(hiveMind.patrolPoints[floor][previousIndex].gameObject);
+                    do
+                    {
+                        localIndex = (byte)rng.Next(hiveMind.patrolPoints[floor][globalIndex].linkedPoints.Count);
+                    } while (localIndex == foundIndex);
+
+                }
+                else
+                    localIndex = (byte)rng.Next(hiveMind.patrolPoints[floor][globalIndex].linkedPoints.Count);
+            }
+        }
+
+        previousIndex = globalIndex;
+
+        NavMesh.SamplePosition(hiveMind.patrolPoints[floor][globalIndex].linkedPoints[localIndex].transform.position,
+               out hit, 10, NavMesh.AllAreas);
+        navMeshAgent.SetDestination(hit.position);
+
+        globalIndex = (byte)hiveMind.patrolPoints[floor].IndexOf(hiveMind.patrolPoints[floor][globalIndex].linkedPoints[localIndex].GetComponent<PatrolPoints>());
+
+        timeMoving = 0;
+
+        return true;
     }
 
     public override void UpdateState()
@@ -88,8 +139,8 @@ public class PatrolState : AbstractFMSState
                 timeMoving = 0;
             }
 
-            if (Vector3.Distance(navMeshAgent.transform.position, navMeshAgent.destination) < 1)
-                fsm.EnterState(FSMStateType.IDLE, 1f);
+            if (Vector3.Distance(navMeshAgent.transform.position, navMeshAgent.destination) < 1f)
+                fsm.EnterState(FSMStateType.IDLE, waitTime);
         }
     }
 
