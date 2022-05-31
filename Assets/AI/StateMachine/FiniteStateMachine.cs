@@ -80,7 +80,7 @@ namespace Assets.FSM
 
                         returnTime = returnTimer = 0;
 
-                        EnterState(previousState);
+                        ReEnterState(previousState);
                     }
                 }
             }
@@ -125,7 +125,28 @@ namespace Assets.FSM
                 
                 returnTime = TimeToReturn;
             }
+        }
 
+        public void ReEnterState(AbstractFMSState nextState)
+        {
+            if (nextState == null)
+                return;
+
+            if (currentState != null)
+                currentState.ExitState();
+
+            currentState = nextState;
+            currentState.ReEnterState(previousState);
+        }
+
+        public void ReEnterState(FSMStateType stateType)
+        {
+            if (fsmStates.ContainsKey(stateType))
+            {
+                AbstractFMSState nextState = fsmStates[stateType];
+
+                ReEnterState(nextState);
+            }
         }
         #endregion
 
@@ -163,7 +184,13 @@ namespace Assets.FSM
 
         public void SetLabel(string text)
         {
-            tMesh.text = text;
+            try
+            {
+                tMesh.text = text;
+            }
+            catch
+            {
+            }
         }
         public void AddLavel(string text)
         {
