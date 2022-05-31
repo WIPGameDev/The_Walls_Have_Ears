@@ -25,7 +25,7 @@ namespace Assets.FSM.States
             if (EnteredState)
                 Debug.Log("Entered attack state");
 
-            Player.GetComponent<PlayerController>().SendMessage("Attack");
+            Player.SendMessage("Attacked");
 
             //FINISH THIS, trigger an attack (ani or whatever)
 
