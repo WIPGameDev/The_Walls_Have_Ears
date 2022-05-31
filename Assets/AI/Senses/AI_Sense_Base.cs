@@ -13,8 +13,7 @@ public class AI_Sense_Base : MonoBehaviour
     protected FiniteStateMachine fsm;
     protected GameObject Player;
 
-
-    protected virtual void OnValidate()
+    protected virtual void Start()
     {
         if (Alien == null)
         {
@@ -24,7 +23,7 @@ public class AI_Sense_Base : MonoBehaviour
             }
             catch
             {
-                Debug.LogError(name + " Can not find Alien");
+                print(name + " Can not find Alien");
             }
         }
 
@@ -36,7 +35,8 @@ public class AI_Sense_Base : MonoBehaviour
             }
             catch
             {
-                Debug.LogError(name + " Can not find hive mind");
+                //Debug.LogError(name + " Can not find hive mind");
+                print(name + " Can not find hive mind");
             }
         }
 
@@ -48,7 +48,7 @@ public class AI_Sense_Base : MonoBehaviour
             }
             catch
             {
-                Debug.LogError(name + " Can not find fsm");
+                print(name + " Can not find fsm");
             }
         }
 
@@ -60,7 +60,7 @@ public class AI_Sense_Base : MonoBehaviour
             }
             catch
             {
-                Debug.LogError(name + " Can not find player");
+                print(name + " Can not find player");
             }
         }
     }

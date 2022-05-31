@@ -7,6 +7,10 @@ TagManager:
   - Alien
   - Hive mind
   - Patrol point
+  - Concrete
+  - Water
+  - Leaves
+  - Wood
   layers:
   - Default
   - TransparentFX

@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -26,7 +27,7 @@ public class AI_Sight : AI_Sense_Base
     byte Segments = 4;
 
     [SerializeField]
-    protected LayerMask occlusionLayer; 
+    protected LayerMask occlusionLayer;
 
     float scanTimer = 0f;
 
@@ -38,6 +39,8 @@ public class AI_Sight : AI_Sense_Base
     bool ifBlinded = false;
 
     VisionCone vc;
+
+    TextMeshPro tMesh;
 
     [Header("Turning variables")]
     public float turnTime = 1f;
@@ -52,8 +55,6 @@ public class AI_Sight : AI_Sense_Base
     private void OnEnable()
     {
         vc.enabled = true;
-        
-        weight = 3;
     }
 
     private void OnDisable()
@@ -61,9 +62,23 @@ public class AI_Sight : AI_Sense_Base
         vc.enabled = false;
     }
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
+
         defaultRotation = gameObject.transform.rotation;
+
+        tMesh = GetComponentInChildren<TextMeshPro>();
+
+        vc = GetComponentInChildren<VisionCone>();
+        
+        vc.enabled = true;
+
+        vc.Distance = Distance;
+
+        vc.HalfAngle = halfAngle;
+
+        weight = 3;
     }
 
     private void Update()
@@ -71,6 +86,7 @@ public class AI_Sight : AI_Sense_Base
         if (!ifBlinded)
         {
             scanTimer += Time.deltaTime;
+
             if (scanTimer >= scanInterval)
             {
                 Scan();
@@ -80,7 +96,7 @@ public class AI_Sight : AI_Sense_Base
             if (!ifRotWait)
             {
                 rotTimer += Time.deltaTime;
-                
+
                 if (rotTimer >= turnTime)
                 {
                     rotTimer = 0f;
@@ -118,10 +134,25 @@ public class AI_Sight : AI_Sense_Base
         for (int i = 0; i < count; i++)
         {
             GameObject obj = Colliders[i].gameObject;
+
+            tMesh.text = obj.name;
+
             if (IsInSight(obj))
-                hiveMind.SetDetection(new AISenseData(obj, obj.transform.position, weight));
+            {
+                if (hiveMind == null)
+                    tMesh.text = "hiveMind is null";
+                else
+                {
+                    NavMeshHit hit;
+                    NavMesh.SamplePosition(obj.transform.position, out hit, 1, 1);
+                    hiveMind.SetDetection(new AISenseData(obj, hit.position, weight));
+                    tMesh.text = "true";
+                }
+            }
+            else
+                tMesh.text = "false";
         }
-    }
+    } 
 
     public bool IsInSight(GameObject obj)
     {
@@ -140,17 +171,15 @@ public class AI_Sight : AI_Sense_Base
         return true;
     }
 
-    protected override void OnValidate()
+    protected void OnValidate()
     {
-        base.OnValidate();
-
         if (vc == null)
             vc = GetComponentInChildren<VisionCone>();
 
         if (Segments < 3)
             vc.Segments = Segments = 3;
-        //else if (Segments > 8)
-        //    vc.Segments = Segments = 8;
+        else if (Segments > 128)
+            vc.Segments = Segments = 128;
         else
             vc.Segments = Segments;
 

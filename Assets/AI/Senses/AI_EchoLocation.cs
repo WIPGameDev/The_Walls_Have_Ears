@@ -15,27 +15,26 @@ public class AI_EchoLocation : AI_Sense_Base
 
     Vector3 loggedLocation = new Vector3();
 
-    private void Awake()
+    protected override void Start()
     {
-        weight = 4;
-    }
-
-    private void Start()
-    {
-        if (Player == null)
-            Player = GameObject.FindGameObjectWithTag("Player");
+        base.Start();
 
         this.enabled = false;
+
+        weight = 4;
     }
 
     private void Update()
     {
+        if (Player == null)
+            Player = GameObject.FindGameObjectWithTag("Player");
+
         curTime += Time.deltaTime;
         if (!ifClicking)
         {
             if (curTime >= scanInterval)
             {
-                Debug.Log("Start scan");
+                Debug.Log("Start echo-scan");
 
                 ifClicking = true;
 
@@ -68,40 +67,62 @@ public class AI_EchoLocation : AI_Sense_Base
         {
             if (hit.collider.gameObject != Player && hit.collider.gameObject != gameObject)
                 return;
-        }
 
-        if (numScan is null)
-        {
-            if (Player != null)
-            {
-                loggedLocation = Player.transform.position;
-
-                numScan = false;
-            }
-            else
-            {
-                Debug.LogError("Player does not exist within " + gameObject.name);
-
-                this.enabled = false;
-            }
-        }
-        else if (numScan == false)
-        {
-            CheckIfMoved();
-
-            numScan = true;
-        }
-        else
-        {
-            CheckIfMoved();
-
-            numScan = null;
+            Debug.Log("End scan");
 
             ifClicking = false;
 
-            Debug.Log("End scan");
+            fsm.EnterState(FSMStateType.CHASE);
+
+            this.enabled = false;
         }
+
+
     }
+
+    #region Old Scan
+    //void Scan()
+    //{
+    //    RaycastHit hit;
+    //    if (Physics.Linecast(gameObject.transform.position, Player.transform.position, out hit))
+    //    {
+    //        if (hit.collider.gameObject != Player && hit.collider.gameObject != gameObject)
+    //            return;
+    //    }
+
+    //    if (numScan is null)
+    //    {
+    //        if (Player != null)
+    //        {
+    //            loggedLocation = Player.transform.position;
+
+    //            numScan = false;
+    //        }
+    //        else
+    //        {
+    //            Debug.LogError("Player does not exist within " + gameObject.name);
+
+    //            this.enabled = false;
+    //        }
+    //    }
+    //    else if (numScan == false)
+    //    {
+    //        CheckIfMoved();
+
+    //        numScan = true;
+    //    }
+    //    else
+    //    {
+    //        CheckIfMoved();
+
+    //        numScan = null;
+
+    //        ifClicking = false;
+
+    //        Debug.Log("End scan");
+    //    }
+    //}
+    #endregion
 
     void CheckIfMoved()
     {

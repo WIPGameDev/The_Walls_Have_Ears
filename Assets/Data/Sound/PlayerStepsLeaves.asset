@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d53a0e5e9f491d49a45a62839eeae19, type: 3}
+  m_Name: PlayerStepsLeaves
+  m_EditorClassIdentifier: 
+  groundTag: Leaves
+  landingSound: {fileID: 8300000, guid: bada4a88a855e3840bc9a57624e7b885, type: 3}
+  steps:
+  - {fileID: 8300000, guid: a063d287793f543439ba9aa3804c4d94, type: 3}
+  - {fileID: 8300000, guid: c5f18fc240e05f24e91dbbc4ecf4db75, type: 3}
+  - {fileID: 8300000, guid: 5b3ce20a72b8f6148add94cac6ec59ea, type: 3}
+  - {fileID: 8300000, guid: bada4a88a855e3840bc9a57624e7b885, type: 3}
+  - {fileID: 8300000, guid: 432825b214e6a6d49ab6ed68e08e4e63, type: 3}
+  - {fileID: 8300000, guid: ee47a3299dddbd542aec04a21ed66f77, type: 3}

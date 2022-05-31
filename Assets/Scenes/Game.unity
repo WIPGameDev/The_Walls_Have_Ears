@@ -1441,7 +1441,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1032101731}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: -5.03, y: -0.37, z: 3.56}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1758,9 +1758,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 669583782, guid: 9105085a7ec30a846be42d9d8d76edbb, type: 3}
-      propertyPath: holdableMask.m_Bits
-      value: 192
+    - target: {fileID: 1302496352, guid: 9105085a7ec30a846be42d9d8d76edbb, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6139241622456310944, guid: 9105085a7ec30a846be42d9d8d76edbb, type: 3}
       propertyPath: m_Name
@@ -1772,15 +1772,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6139241622456310947, guid: 9105085a7ec30a846be42d9d8d76edbb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -5.03
       objectReference: {fileID: 0}
     - target: {fileID: 6139241622456310947, guid: 9105085a7ec30a846be42d9d8d76edbb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.5
+      value: -0.87
       objectReference: {fileID: 0}
     - target: {fileID: 6139241622456310947, guid: 9105085a7ec30a846be42d9d8d76edbb, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 3.56
       objectReference: {fileID: 0}
     - target: {fileID: 6139241622456310947, guid: 9105085a7ec30a846be42d9d8d76edbb, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2217,7 +2217,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1863115121}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 771438522}
+        m_TargetAssemblyTypeName: GameController, Assembly-CSharp
+        m_MethodName: LoadCheckPoint
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1863115121
 MonoBehaviour:
   m_ObjectHideFlags: 0

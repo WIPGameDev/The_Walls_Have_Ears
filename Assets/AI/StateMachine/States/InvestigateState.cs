@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 namespace Assets.FSM.States
 {
@@ -17,6 +18,9 @@ namespace Assets.FSM.States
         sbyte numberOfSearchAreas = 3;
 
         [SerializeField]
+        float searchTimer = 1f;
+
+        [SerializeField]
         sbyte numberOfChecks = 0;
         sbyte curNumberOfChecks;
 
@@ -27,7 +31,7 @@ namespace Assets.FSM.States
 
         bool ifSearchingAround;
 
-        List<Vector3> SearchLocations;
+        List<Vector3> SearchLocations = new List<Vector3>();
 
         sbyte randomIndex;
 
@@ -57,6 +61,7 @@ namespace Assets.FSM.States
                     try
                     {
                         echoLocation = fsm.gameObject.GetComponent<AI_EchoLocation>();
+                        echoLocation.enabled = true;
                     }
                     catch
                     {
@@ -83,13 +88,18 @@ namespace Assets.FSM.States
             {
                 Debug.Log("Updating investigative state");
 
+                #region not searching 
                 if (!ifSearchingAround)
                 {
+                    fsm.SetLabel(Vector3.Distance(navMeshAgent.transform.position, navMeshAgent.destination).ToString());
                     if (Vector3.Distance(navMeshAgent.transform.position, investigativePoint) < 1f)
                     {
+                        fsm.SetLabel("Enters if statement");
+
                         ifSearchingAround = true;
 
                         FindSearchAreas();
+                        fsm.SetLabel("Found search areas");
 
                         System.Random rng = new System.Random();
 
@@ -100,6 +110,8 @@ namespace Assets.FSM.States
                         navMeshAgent.SetDestination(investigativePoint);
                     }
                 }
+                #endregion
+                #region searching
                 else
                 {
                     if (navMeshAgent.destination != SearchLocations[randomIndex])
@@ -115,10 +127,27 @@ namespace Assets.FSM.States
                             {
                                 sbyte curIndex = randomIndex;
                                 System.Random rng = new System.Random();
+
+                                byte loopCount = 0;
+
+                                bool loopBreak = false;
+
                                 do
                                 {
                                     randomIndex = Convert.ToSByte(rng.Next(SearchLocations.Count()));
-                                } while (randomIndex == curIndex);
+
+                                    if (++loopCount >= 32)
+                                        fsm.EnterState(FSMStateType.IDLE); //FINISH THIS, have a return state or something
+
+                                    if (randomIndex != curIndex)
+                                    {
+                                        navMeshAgent.isStopped = true;
+
+                                        fsm.EnterState(FSMStateType.IDLE, searchTimer);
+
+                                        loopBreak = true;
+                                    }
+                                } while (!loopBreak);
                             }
                             else
                             {
@@ -131,27 +160,56 @@ namespace Assets.FSM.States
                         }
                     }
                 }
+                #endregion
             }
         }
 
         private void FindSearchAreas()
         {
-            for (int i = 1; i <= numberOfSearchAreas; i++)
+            fsm.SetLabel("Entered function to find search areas");
+            
+            if (SearchLocations == null)
+                fsm.SetLabel("Search locations is null");
+            else
+                fsm.SetLabel(SearchLocations.Count().ToString());
+
+            #region old random locations
+            //for (int i = 1; i <= numberOfSearchAreas; i++)
+            //{
+            //    float rotation = (360f / numberOfSearchAreas) * i;
+
+            //    Vector3 searchPoint = ((Quaternion.Euler(0, 0, rotation) * Vector3.forward) * searchDistance) + investigativePoint;
+
+            //    NavMeshHit hitResult;
+
+            //    if (NavMesh.SamplePosition(searchPoint, out hitResult, searchDistance * 2, 1))
+            //    {
+            //        if (!SearchLocations.Contains(hitResult.position))
+            //            SearchLocations.Add(hitResult.position);
+            //    }
+            //}
+            #endregion
+            #region new random locations
+            System.Random rng = new System.Random();
+
+            for (int i = 0; i < numberOfSearchAreas; i++)
             {
-                float rotation = (360f / numberOfSearchAreas) * i;
+                Vector3 randomLocation = new Vector3(rng.Next(2, (int)searchDistance), 0, rng.Next(2, (int)searchDistance));
 
-                Vector3 searchPoint = (Quaternion.Euler(0, rotation, 0) * investigativePoint) * searchDistance;
+                randomLocation += investigativePoint;
+                //fsm.SetLabel("In for loop");
 
-                NavMeshHit hitResult;
-
-                if (NavMesh.SamplePosition(searchPoint, out hitResult, searchDistance * 2, 1))
+                NavMeshHit hit;
+                if (NavMesh.SamplePosition(randomLocation, out hit, searchDistance, 1))
                 {
-                    if (!SearchLocations.Contains(hitResult.position))
-                        SearchLocations.Add(hitResult.position);
+                    //fsm.SetLabel(randomLocation.ToString());
+                    SearchLocations.Add(hit.position);
+                    fsm.SetLabel("found search location");
                 }
             }
+            #endregion
 
-            Debug.Log("Number of search locations " + SearchLocations.Count);
+            fsm.SetLabel("Number of search locations " + SearchLocations.Count);
 
             if (SearchLocations.Count != numberOfChecks)
                 numberOfChecks = Convert.ToSByte(SearchLocations.Count / 1.5f);
@@ -183,12 +241,15 @@ namespace Assets.FSM.States
                 numberOfChecks = Convert.ToSByte(numberOfSearchAreas / 1.5f);
             else if (numberOfChecks < numberOfSearchAreas && numberOfChecks < 1)
             {
-                if (numberOfChecks < 1)
-                    numberOfChecks = 1;
+                if (numberOfChecks < 2)
+                    numberOfChecks = 2;
                 else
                     numberOfChecks = numberOfSearchAreas;
             }
-# endregion
+            # endregion
+
+            if (searchTimer < 1f)
+                searchTimer = 1f;
 
             if (echoLocation == null && fsm != null)
             {

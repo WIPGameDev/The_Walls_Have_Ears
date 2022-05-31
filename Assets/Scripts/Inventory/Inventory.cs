@@ -16,12 +16,18 @@ public class Inventory : MonoBehaviour
 
     public void AddItem (InventoryItem newItem)
     {
-        items.TryAdd(newItem.ItemName, newItem);
+        if (newItem != null)
+        {
+            items.TryAdd(newItem.ItemName, newItem);
+        }
     }
 
     public void RemoveItem (InventoryItem removeItem)
     {
-        items.Remove(removeItem.ItemName);
+        if (removeItem != null)
+        {
+            items.Remove(removeItem.ItemName);
+        }
     }
 
     public bool FindItem (string key, out InventoryItem invItem)
@@ -59,6 +65,7 @@ public class Inventory : MonoBehaviour
         return false;
     }
 
+    /*
     private void OnGUI()
     {
         if (items != null)
@@ -72,6 +79,5 @@ public class Inventory : MonoBehaviour
             }
         }
     }
-    /*
     */
 }

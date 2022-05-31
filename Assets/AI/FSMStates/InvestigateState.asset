@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: InvestigateState
   m_EditorClassIdentifier: 
   numberOfSearchAreas: 8
+  searchTimer: 1.5
   numberOfChecks: 5
-  searchDistance: 1
+  searchDistance: 5

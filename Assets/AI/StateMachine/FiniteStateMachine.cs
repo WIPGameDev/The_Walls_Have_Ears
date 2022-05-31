@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -33,6 +34,8 @@ namespace Assets.FSM
         AbstractFMSState previousState;
         #endregion
 
+        TextMeshPro tMesh;
+
         public void Awake()
         {
             currentState = null;
@@ -51,6 +54,8 @@ namespace Assets.FSM
                 state.SetHiveMind(hiveMind); 
                 fsmStates.Add(state.StateType, state);
             }
+
+            tMesh = GetComponentInChildren<TextMeshPro>();
         }
 
         private void Start()
@@ -75,9 +80,13 @@ namespace Assets.FSM
 
                         returnTime = returnTimer = 0;
 
-                        EnterState(previousState);
+                        ReEnterState(previousState);
                     }
                 }
+            }
+            else
+            {
+                SetLabel("No current state");
             }
         }
 
@@ -116,7 +125,28 @@ namespace Assets.FSM
                 
                 returnTime = TimeToReturn;
             }
+        }
 
+        public void ReEnterState(AbstractFMSState nextState)
+        {
+            if (nextState == null)
+                return;
+
+            if (currentState != null)
+                currentState.ExitState();
+
+            currentState = nextState;
+            currentState.ReEnterState(previousState);
+        }
+
+        public void ReEnterState(FSMStateType stateType)
+        {
+            if (fsmStates.ContainsKey(stateType))
+            {
+                AbstractFMSState nextState = fsmStates[stateType];
+
+                ReEnterState(nextState);
+            }
         }
         #endregion
 
@@ -150,6 +180,21 @@ namespace Assets.FSM
             {
                 return fsmStates;
             }
+        }
+
+        public void SetLabel(string text)
+        {
+            try
+            {
+                tMesh.text = text;
+            }
+            catch
+            {
+            }
+        }
+        public void AddLavel(string text)
+        {
+            tMesh.text += text;
         }
     }
 }
