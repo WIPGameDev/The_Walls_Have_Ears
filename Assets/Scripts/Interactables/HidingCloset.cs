@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Animations;
+using UnityEngine.Audio;
 using Cinemachine;
 
-[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(Animator), typeof(AudioSource))]
 public class HidingCloset : Interactable
 {
     private bool hiding = false;
@@ -15,7 +16,8 @@ public class HidingCloset : Interactable
     [SerializeField] private Transform exteriorTransform;
 
     protected Animator animator;
-    protected PlayableGraph playableGraph;
+    protected AudioSource audioSource;
+    //protected PlayableGraph playableGraph;
     protected CinemachineVirtualCamera closetCamera;
     protected PlayerController playerController;
     protected ViewController viewController;
@@ -27,13 +29,14 @@ public class HidingCloset : Interactable
     {
         animator = GetComponent<Animator>();
         closetCamera = cameraTransform.GetComponent<CinemachineVirtualCamera>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     protected override void Start()
     {
         base.Start();
-        playableGraph = PlayableGraph.Create();
-        playableGraph.SetTimeUpdateMode(DirectorUpdateMode.GameTime);
+        //playableGraph = PlayableGraph.Create();
+        //playableGraph.SetTimeUpdateMode(DirectorUpdateMode.GameTime);
     }
 
     public override void OnActivation()
@@ -55,20 +58,28 @@ public class HidingCloset : Interactable
         playerTransform.gameObject.SetActive(false);
         playerTransform.SetPositionAndRotation(exteriorTransform.position, exteriorTransform.rotation);
         viewTransform.rotation = Quaternion.identity;
-
-        AnimationPlayableUtilities.PlayClip(GetComponent<Animator>(), entryClip, out playableGraph);
+        
+        //AnimationPlayableUtilities.PlayClip(GetComponent<Animator>(), entryClip, out playableGraph);
         this.enabled = true;
+        animator.SetTrigger("Hide");
     }
 
     public virtual void ExitCloset ()
     {
         this.enabled = false;
         hiding = false;
-        AnimationPlayableUtilities.PlayClip(GetComponent<Animator>(), exitClip, out playableGraph);
+        //AnimationPlayableUtilities.PlayClip(GetComponent<Animator>(), exitClip, out playableGraph);
         playerController.enabled = true;
         viewController.enabled = true;
         playerController.gameObject.SetActive(true);
-    } 
+        animator.SetTrigger("Exit");
+    }
+
+    public void PlaySound (AudioClip clip)
+    {
+        audioSource.clip = clip;
+        audioSource.Play();
+    }
 
     private void Update()
     {
@@ -83,10 +94,10 @@ public class HidingCloset : Interactable
 
     private void DestroyGraph ()
     {
-        if (playableGraph.IsValid())
-        {
-            playableGraph.Destroy();
-        }
+        //if (playableGraph.IsValid())
+        //{
+        //    playableGraph.Destroy();
+        //}
     }
 
     private void OnDisable()

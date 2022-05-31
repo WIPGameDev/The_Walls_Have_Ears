@@ -2,9 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
 public class Item : InteractableObject
 {
     [SerializeField] private InventoryItem inventoryItem;
+    private AudioSource audioSource;
+    [SerializeField] private AudioClip collisionSound;
+
+    void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
 
     public override void Activate()
     {
@@ -28,5 +36,10 @@ public class Item : InteractableObject
         data.objectSceneID = this.ObjectSceneID;
         data.isActive = gameObject.activeInHierarchy;
         return data;
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        audioSource.Play();
     }
 }
