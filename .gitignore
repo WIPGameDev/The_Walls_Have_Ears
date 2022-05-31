@@ -73,3 +73,35 @@ crashlytics-build.properties
 
 NOT_Lonely/
 Assets/NOT_Lonely.meta
+Morgue Room PBR/
+FreeLabAssets/
+Models/
+Assets/FreeLabAssets.meta
+Assets/Models.meta
+Assets/Monstah.controller
+Assets/Monstah.controller.meta
+Assets/Monster with idle.fbx
+Assets/Monster with idle.fbx.meta
+Assets/Morgue Room PBR.meta
+Assets/New Terrain.asset
+Assets/New Terrain.asset.meta
+Assets/NewLayer 1.terrainlayer
+Assets/NewLayer 1.terrainlayer.meta
+Assets/NewLayer 2.terrainlayer
+Assets/NewLayer 2.terrainlayer.meta
+Assets/NewLayer 3.terrainlayer
+Assets/NewLayer 3.terrainlayer.meta
+Assets/NewLayer.terrainlayer
+Assets/NewLayer.terrainlayer.meta
+Assets/Scenes/The School.meta
+Assets/Scenes/The School.unity
+Assets/Scenes/The School/NavMesh.asset
+Assets/Scenes/The School/NavMesh.asset.meta
+ProjectSettings/EditorBuildSettings.asset
+ProjectSettings/InputManager.asset
+ProjectSettings/Packages/com.unity.probuilder/Settings.json
+ProjectSettings/Packages/com.unity.progrids/Settings.json
+Assets/Scenes/The School.unity
+ProjectSettings/EditorBuildSettings.asset
+ProjectSettings/InputManager.asset
+ProjectSettings/Packages/com.unity.probuilder/Settings.json
