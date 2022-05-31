@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     private CharacterController characterController;
     private ViewController viewController;
     private InteractionController interactionController;
+    private PlayerAudioSource playerAudioSource;
     [SerializeField] private Transform headTransform;
     private Vector3 headDefaultLocalPosition;
 
@@ -43,10 +44,18 @@ public class PlayerController : MonoBehaviour
     private float standingHeight;
 
     [Header("Jump")]
+    private bool wasGrounded = true;
     private float yVelocity = 0f;
     [SerializeField] private float gravityMultiplier = 1f;
     [SerializeField] private float terminalVelocity = 90f;
     [SerializeField] private float jumpHeight = 2f;
+
+    public Vector3 Velocity { get => characterController.velocity; }
+    public bool Grounded { get => characterController.isGrounded; }
+    public bool Landed { get => characterController.isGrounded; }
+    public bool IsRunning { get => isRunning; }
+    public bool IsCrouching { get => isCrouching; }
+    public bool IsWalking { get => !isCrouching && !isRunning; }
 
     //[Header("Events")]
 
@@ -55,6 +64,7 @@ public class PlayerController : MonoBehaviour
         characterController = GetComponent<CharacterController>();
         viewController = GetComponentInChildren<ViewController>();
         interactionController = GetComponentInChildren<InteractionController>();
+        playerAudioSource = GetComponentInChildren<PlayerAudioSource>();
         standingHeight = characterController.height;
         moveSpeed = walkSpeed;
         headDefaultLocalPosition = headTransform.localPosition;
@@ -109,13 +119,27 @@ public class PlayerController : MonoBehaviour
             if (Input.GetButtonDown(jumpKey) && canJump)
             {
                 targetVelocity.y = Mathf.Sqrt(jumpHeight * Mathf.Abs(Physics.gravity.y * gravityMultiplier * 2.0f));
-            } else
+            } 
+            else
             {
                 targetVelocity.y = -10f;
+                if (wasGrounded)
+                {
+                    if (targetVelocity.x != 0 || targetVelocity.z != 0)
+                    {
+                        playerAudioSource.Step();
+                    }
+                }
+                else
+                {
+                    wasGrounded = true;
+                    playerAudioSource.Land();
+                }
             }
         }
         else
         {
+            wasGrounded = false;
             //Check if we are hitting the ceiling while moving upwards, if so sets velocity in y axis to 0.
             if ((characterController.collisionFlags & CollisionFlags.Above) != 0 && targetVelocity.y > 0)
             {
@@ -150,6 +174,7 @@ public class PlayerController : MonoBehaviour
         if (!isCrouching)
         {
             isRunning = true;
+            playerAudioSource.RunCadence();
             moveSpeed = runSpeed;
         }
     }
@@ -159,6 +184,7 @@ public class PlayerController : MonoBehaviour
         if (!isCrouching)
         {
             isRunning = false;
+            playerAudioSource.WalkCadence();
             moveSpeed = walkSpeed;
         }
     }
@@ -166,6 +192,7 @@ public class PlayerController : MonoBehaviour
     private void Crouch()
     {
         moveSpeed = crouchMoveSpeed;
+        playerAudioSource.CrouchCadence();
         if (crouchingCoroutine != null)
         {
             StopCoroutine(crouchingCoroutine);
@@ -176,6 +203,7 @@ public class PlayerController : MonoBehaviour
     private void Stand()
     {
         moveSpeed = walkSpeed;
+        playerAudioSource.WalkCadence();
         if (crouchingCoroutine != null)
         {
             StopCoroutine(crouchingCoroutine);
