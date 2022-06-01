@@ -88,7 +88,7 @@ public class PatrolState : AbstractFMSState
                 timeMoving = 0;
             }
 
-            if (Vector3.Distance(navMeshAgent.transform.position, navMeshAgent.destination) < 1)
+            if (Vector3.Distance(navMeshAgent.transform.position, navMeshAgent.destination) < 1f)
                 fsm.EnterState(FSMStateType.IDLE, 1f);
         }
     }
