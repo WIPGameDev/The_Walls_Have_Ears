@@ -73,6 +73,7 @@ crashlytics-build.properties
 
 # ignore audio imported assets
 /[Aa]ssets/[Ss]oundAssets
+/[Aa]ssets/[Ss]oundAssets.meta
 
 NOT_Lonely/
 Assets/NOT_Lonely.meta
