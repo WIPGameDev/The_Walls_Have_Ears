@@ -39,7 +39,7 @@ public class PatrolState : AbstractFMSState
         if (EnteredState)
         {
 
-            globalIndex = 200;
+            globalIndex = 255;
 
             float storedDist = float.MaxValue;
 
@@ -79,17 +79,19 @@ public class PatrolState : AbstractFMSState
 
         NavMeshHit hit;
 
-        if (hiveMind.patrolPoints[floor][globalIndex].linkedPoints.Count == 1)
+        List<PatrolPoints> curFloorPatrolPoints = hiveMind.patrolPoints[floor];
+
+        if (curFloorPatrolPoints[globalIndex].linkedPoints.Count == 1)
         {
             localIndex = 0;
         }
         else
         {
-            if (hiveMind.patrolPoints[floor][globalIndex].linkedPoints.Count == 2)
+            if (curFloorPatrolPoints[globalIndex].linkedPoints.Count == 2)
             {
                 localIndex = 0;
 
-                if (hiveMind.patrolPoints[floor][globalIndex] != hiveMind.patrolPoints[floor][0])
+                if (curFloorPatrolPoints[previousIndex] == curFloorPatrolPoints[globalIndex].linkedPoints[0].GetComponent<PatrolPoints>())
                     localIndex = 1;
             }
             else
@@ -100,25 +102,25 @@ public class PatrolState : AbstractFMSState
                 {
                     byte foundIndex = 255;
 
-                    foundIndex = (byte)hiveMind.patrolPoints[floor][globalIndex].linkedPoints.IndexOf(hiveMind.patrolPoints[floor][previousIndex].gameObject);
+                    foundIndex = (byte)curFloorPatrolPoints[globalIndex].linkedPoints.IndexOf(curFloorPatrolPoints[previousIndex].gameObject);
                     do
                     {
-                        localIndex = (byte)rng.Next(hiveMind.patrolPoints[floor][globalIndex].linkedPoints.Count);
+                        localIndex = (byte)rng.Next(curFloorPatrolPoints[globalIndex].linkedPoints.Count);
                     } while (localIndex == foundIndex);
 
                 }
                 else
-                    localIndex = (byte)rng.Next(hiveMind.patrolPoints[floor][globalIndex].linkedPoints.Count);
+                    localIndex = (byte)rng.Next(curFloorPatrolPoints[globalIndex].linkedPoints.Count);
             }
         }
 
         previousIndex = globalIndex;
 
-        NavMesh.SamplePosition(hiveMind.patrolPoints[floor][globalIndex].linkedPoints[localIndex].transform.position,
+        NavMesh.SamplePosition(curFloorPatrolPoints[globalIndex].linkedPoints[localIndex].transform.position,
                out hit, 10, NavMesh.AllAreas);
         navMeshAgent.SetDestination(hit.position);
 
-        globalIndex = (byte)hiveMind.patrolPoints[floor].IndexOf(hiveMind.patrolPoints[floor][globalIndex].linkedPoints[localIndex].GetComponent<PatrolPoints>());
+        globalIndex = (byte)curFloorPatrolPoints.IndexOf(curFloorPatrolPoints[globalIndex].linkedPoints[localIndex].GetComponent<PatrolPoints>());
 
         timeMoving = 0;
 
