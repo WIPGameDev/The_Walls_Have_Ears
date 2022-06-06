@@ -287,6 +287,7 @@ public class GameController : MonoBehaviour
         {
             color.a = 0f;
             alphaStartValue = 0f;
+            fadeScreen.SetActive(true);
         }
         else
         {
@@ -295,7 +296,6 @@ public class GameController : MonoBehaviour
         }
 
         screenImage.color = color;
-        fadeScreen.SetActive(true);
 
         while (color.a != alphaTarget)
         {
@@ -303,6 +303,10 @@ public class GameController : MonoBehaviour
             color.a = Mathf.Lerp(alphaStartValue, alphaTarget, currentFadeTime);
             screenImage.color = color;
             yield return new WaitForEndOfFrame();
+        }
+        if (alphaTarget == 0)
+        {
+            fadeScreen.SetActive(false);
         }
     }
 

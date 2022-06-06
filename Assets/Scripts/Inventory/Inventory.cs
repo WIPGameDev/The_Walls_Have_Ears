@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Events;
 
 public class Inventory : MonoBehaviour
@@ -105,7 +106,8 @@ public class Inventory : MonoBehaviour
             Coroutine fading = StartCoroutine(gameController.Fading(1));
             yield return fading;
             Vector3 spawnPos = bombRecipe.SpawnRelativeToPlayer ? playerTransform.TransformPoint(bombRecipe.SpawnPosition) : bombRecipe.SpawnPosition;
-            Instantiate(bombRecipe.Prefab, spawnPos, Quaternion.identity);
+            GameObject bombInstance = Instantiate(bombRecipe.Prefab, spawnPos, Quaternion.identity);
+            SceneManager.MoveGameObjectToScene(bombInstance, SceneManager.GetSceneAt(1));
             yield return new WaitForSecondsRealtime(0.2f);
             fading = StartCoroutine(gameController.Fading(0));
             yield return fading;
@@ -119,7 +121,6 @@ public class Inventory : MonoBehaviour
     }
 
     /*
-    */
     private void OnGUI()
     {
         if (items != null)
@@ -133,4 +134,5 @@ public class Inventory : MonoBehaviour
             }
         }
     }
+    */
 }
