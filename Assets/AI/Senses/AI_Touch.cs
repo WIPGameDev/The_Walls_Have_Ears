@@ -9,16 +9,16 @@ public class AI_Touch : AI_Sense_Base
         weight = 1;
     }
 
-    private void OnCollisionStay(Collision collision)
+    private void OnTriggerStay(Collider other)
     {
         Debug.Log("Collision Stay");
 
-        if (collision.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player")
         {
             #region Detect location
             try
             {
-                hiveMind.SetDetection(new AISenseData(collision.gameObject, collision.contacts[0].point, weight));
+                hiveMind.SetDetection(new AISenseData(other.gameObject, other.transform.position, weight));
             }
             catch
             {
@@ -27,4 +27,23 @@ public class AI_Touch : AI_Sense_Base
             #endregion
         }
     }
+
+    //private void OnCollisionStay(Collision collision)
+    //{
+    //    Debug.Log("Collision Stay");
+
+    //    if (collision.gameObject.tag == "Player")
+    //    {
+    //        #region Detect location
+    //        try
+    //        {
+    //            hiveMind.SetDetection(new AISenseData(collision.gameObject, collision.contacts[0].point, weight));
+    //        }
+    //        catch
+    //        {
+    //            Debug.LogError("Hive mind does not exist for AI_Touch in " + gameObject.name);
+    //        }
+    //        #endregion
+    //    }
+    //}
 }

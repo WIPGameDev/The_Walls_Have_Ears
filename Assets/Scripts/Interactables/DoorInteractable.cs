@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class DoorInteractable : LockableInteractable
 {
@@ -11,6 +12,9 @@ public class DoorInteractable : LockableInteractable
     [SerializeField] private Transform closeTransform;
     [SerializeField] private float rotationSpeed = 10f;
     [SerializeField] private float moveSpeed = 10f;
+
+    [SerializeField] protected UnityEvent OpenEvent;
+    [SerializeField] protected UnityEvent CloseEvent;
 
     private Coroutine movingCoroutine;
 

@@ -13,4 +13,9 @@ public abstract class InteractableObject : Interactable, ISaveable
     public abstract ObjectSaveData GetSaveData();
 
     public abstract void LoadSaveData(ObjectSaveData objectSaveData);
+
+    public void RegenerateID ()
+    {
+        objectSceneID = Guid.NewGuid().ToString();
+    }
 }

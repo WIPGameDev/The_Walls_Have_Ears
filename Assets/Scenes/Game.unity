@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311992, g: 0.38074034, b: 0.35872713, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1189,6 +1189,82 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 745490725}
   m_CullTransparentMesh: 1
+--- !u!1 &769214566
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 769214567}
+  - component: {fileID: 769214569}
+  - component: {fileID: 769214568}
+  m_Layer: 5
+  m_Name: FadeScreen
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &769214567
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 769214566}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1526007409}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &769214568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 769214566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &769214569
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 769214566}
+  m_CullTransparentMesh: 1
 --- !u!1 &771438520
 GameObject:
   m_ObjectHideFlags: 0
@@ -1242,6 +1318,10 @@ MonoBehaviour:
   loadingScreen: {fileID: 729264356}
   pauseMenu: {fileID: 913124058}
   saveAndLoadMenu: {fileID: 516235624}
+  fadeScreen: {fileID: 769214566}
+  fadeInTime: 1
+  fadeOutTime: 1
+  pauseOnFade: 1
   OnGameStart:
     m_PersistentCalls:
       m_Calls: []
@@ -1281,6 +1361,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbbf88bbc77ec8f42a5a48b18a85325c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameController: {fileID: 771438522}
+  bombRecipe: {fileID: 11400000, guid: 736a22318fee610439a7aa0a725444b4, type: 2}
+  itemCollected:
+    m_PersistentCalls:
+      m_Calls: []
+  itemRemoved:
+    m_PersistentCalls:
+      m_Calls: []
+  itemUsed:
+    m_PersistentCalls:
+      m_Calls: []
+  craftingBomb:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &913124058
 GameObject:
   m_ObjectHideFlags: 0
@@ -1758,10 +1852,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1302496352, guid: 9105085a7ec30a846be42d9d8d76edbb, type: 3}
-      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6139241622456310944, guid: 9105085a7ec30a846be42d9d8d76edbb, type: 3}
       propertyPath: m_Name
       value: Player
@@ -2046,6 +2136,7 @@ RectTransform:
   - {fileID: 729264357}
   - {fileID: 913124059}
   - {fileID: 516235625}
+  - {fileID: 769214567}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
