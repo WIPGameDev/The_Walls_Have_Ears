@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public enum GameState
 {
@@ -13,6 +14,7 @@ public enum GameState
     PLAYING,
     EXITING,
     LOADING,
+    FADING,
     PAUSED
 }
 
@@ -26,13 +28,21 @@ public class GameController : MonoBehaviour
     [SerializeField] private string currentScene;
     [SerializeField] private string nextScene;
 
+    [Header("Player")]
     [SerializeField] private GameObject player;
     [SerializeField] private Inventory playerInventory;
 
+    [Header("UI")]
     [SerializeField] private GameObject loadingScreen;
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private GameObject saveAndLoadMenu;
+    [Header("Fade")]
+    [SerializeField] private GameObject fadeScreen;
+    [SerializeField] private float fadeInTime;
+    [SerializeField] private float fadeOutTime;
+    [SerializeField] private bool pauseOnFade;
 
+    [Header("Events")]
     public UnityEvent OnGameStart;
     public UnityEvent OnGameLoading;
 
@@ -51,6 +61,7 @@ public class GameController : MonoBehaviour
     public string NextScene { get => nextScene; }
     public GameObject LoadingScreen { get => loadingScreen; }
     public GameObject PauseMenu { get => pauseMenu; }
+    public GameState GameState { get => gameState; set => gameState = value; }
 
     void Awake()
     {
@@ -236,6 +247,16 @@ public class GameController : MonoBehaviour
         gameState = GameState.PLAYING;
     }
 
+    public void FadeOut ()
+    {
+        StartCoroutine(Fading(1));
+    }
+
+    public void FadeIn ()
+    {
+        StartCoroutine(Fading(0));
+    }
+
     public void ExitGame()
     {
         Application.Quit(0);
@@ -251,6 +272,41 @@ public class GameController : MonoBehaviour
         if (SceneManager.sceneCount > 1)
         {
             currentScene = SceneManager.GetSceneAt(1).name;
+        }
+    }
+
+    public IEnumerator Fading (float alphaTarget)
+    {
+        float fadeSmoothing = alphaTarget > 0 ? fadeOutTime : fadeInTime;
+        Image screenImage = fadeScreen.GetComponent<Image>();
+        Color color = Color.black;
+        float alphaStartValue;
+        float currentFadeTime = 0f;
+
+        if (alphaTarget > 0)
+        {
+            color.a = 0f;
+            alphaStartValue = 0f;
+            fadeScreen.SetActive(true);
+        }
+        else
+        {
+            color.a = 1f;
+            alphaStartValue = 1f;
+        }
+
+        screenImage.color = color;
+
+        while (color.a != alphaTarget)
+        {
+            currentFadeTime += Time.unscaledDeltaTime * fadeSmoothing;
+            color.a = Mathf.Lerp(alphaStartValue, alphaTarget, currentFadeTime);
+            screenImage.color = color;
+            yield return new WaitForEndOfFrame();
+        }
+        if (alphaTarget == 0)
+        {
+            fadeScreen.SetActive(false);
         }
     }
 

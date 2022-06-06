@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b376d6f2def175444b07ccffc0084cee, type: 3}
-  m_Name: Test2Item
+  m_Name: Comp3Item
   m_EditorClassIdentifier: 
-  itemName: Test2
+  itemName: Comp3
   uses: 1
-  limitedUses: 1
+  limitedUses: 0

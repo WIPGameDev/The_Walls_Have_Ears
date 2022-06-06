@@ -2,10 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 public class Inventory : MonoBehaviour
 {
+    [SerializeField] private GameController gameController;
     [SerializeField] private Dictionary<string, InventoryItem> items;
+    [SerializeField] private ItemRecipe bombRecipe;
+
+    [SerializeField] private UnityEvent itemCollected;
+    [SerializeField] private UnityEvent itemRemoved;
+    [SerializeField] private UnityEvent itemUsed;
+    [SerializeField] private UnityEvent craftingBomb;
+
+    private Coroutine craftingCoroutine;
 
     public Dictionary<string, InventoryItem> Items { get => items; set => items = value; }
 
@@ -18,7 +29,19 @@ public class Inventory : MonoBehaviour
     {
         if (newItem != null)
         {
-            items.TryAdd(newItem.ItemName, newItem);
+            if (items.TryAdd(newItem.ItemName, newItem))
+            {
+                itemCollected.Invoke();
+                if (bombRecipe != null && bombRecipe.Contains(newItem))
+                {
+                    bombRecipe.SetCollected(newItem);
+                    if (bombRecipe.RecipeCompleted())
+                    {
+                        craftingBomb.Invoke();
+                        craftingCoroutine = StartCoroutine(Crafting());
+                    }
+                }
+            }
         }
     }
 
@@ -26,6 +49,7 @@ public class Inventory : MonoBehaviour
     {
         if (removeItem != null)
         {
+            itemRemoved.Invoke();
             items.Remove(removeItem.ItemName);
         }
     }
@@ -60,9 +84,40 @@ public class Inventory : MonoBehaviour
                     RemoveItem(usedItem);
                 }
             }
+            itemUsed.Invoke();
             return true;
         }
         return false;
+    }
+
+
+    private IEnumerator Crafting ()
+    {
+        Transform playerTransform = FindObjectOfType<PlayerController>().transform;
+        if (playerTransform != null)
+        {
+            gameController.GameState = GameState.FADING;
+            Time.timeScale = 0f;
+            foreach (InventoryItem item in bombRecipe.ComponentItems)
+            {
+                bombRecipe.ResetCollected();
+                RemoveItem(item);
+            }
+            Coroutine fading = StartCoroutine(gameController.Fading(1));
+            yield return fading;
+            Vector3 spawnPos = bombRecipe.SpawnRelativeToPlayer ? playerTransform.TransformPoint(bombRecipe.SpawnPosition) : bombRecipe.SpawnPosition;
+            GameObject bombInstance = Instantiate(bombRecipe.Prefab, spawnPos, Quaternion.identity);
+            SceneManager.MoveGameObjectToScene(bombInstance, SceneManager.GetSceneAt(1));
+            yield return new WaitForSecondsRealtime(0.2f);
+            fading = StartCoroutine(gameController.Fading(0));
+            yield return fading;
+            Time.timeScale = 1f;
+            gameController.GameState = GameState.PLAYING;
+        }
+        else
+        {
+            Debug.LogError("No gameobject with playercontroller found.");
+        }
     }
 
     /*
