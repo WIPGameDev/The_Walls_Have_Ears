@@ -25,6 +25,8 @@ public class GameController : MonoBehaviour
 
     [SerializeField] private GameState gameState = GameState.PLAYING;
 
+    [SerializeField] private string mainMenuScene = "MainMenu";
+
     [SerializeField] private string currentScene;
     [SerializeField] private string nextScene;
 
@@ -73,7 +75,14 @@ public class GameController : MonoBehaviour
         UpdateScenes();
         if (Application.isEditor)
         {
-            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.lockState = CursorLockMode.Confined;
+            if (GameObject.Find("StartMarker") != null)
+            {
+                Transform marker = GameObject.Find("StartMarker").transform;
+                player.transform.SetPositionAndRotation(marker.position, marker.rotation);
+                player.SetActive(true);
+                gameState = GameState.PLAYING;
+            }
         }
         else
         {
@@ -121,15 +130,16 @@ public class GameController : MonoBehaviour
 
     public void LoadMainMenu()
     {
-        //nextScene = "MainMenu";
-        //StartCoroutine(LoadingMainMenu(currentScene, nextScene));
+        gameState = GameState.MENU;
+        nextScene = mainMenuScene;
+        StartCoroutine(LoadingMainMenu(currentScene, nextScene));
         Cursor.lockState = CursorLockMode.Confined;
     }
 
     public void StartNewGame()
     {
-        //nextScene = "EntryArea";
-        //StartCoroutine(LoadingLevel("MainMenu", "EntryArea", "StartMarker"));
+        nextScene = "The House";
+        StartCoroutine(LoadingLevel(currentScene, nextScene, "StartMarker"));
     }
 
     public void LoadLevel(string levelName, string markerName)

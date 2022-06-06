@@ -1310,7 +1310,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9517fbdd121b46f4f9767927a372deda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameState: 1
+  gameState: 0
+  mainMenuScene: MainMenu
   currentScene: 
   nextScene: 
   player: {fileID: 1302496351}
@@ -1855,6 +1856,10 @@ PrefabInstance:
     - target: {fileID: 6139241622456310944, guid: 9105085a7ec30a846be42d9d8d76edbb, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 6139241622456310944, guid: 9105085a7ec30a846be42d9d8d76edbb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6139241622456310947, guid: 9105085a7ec30a846be42d9d8d76edbb, type: 3}
       propertyPath: m_RootOrder
