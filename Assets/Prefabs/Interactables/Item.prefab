@@ -131,7 +131,7 @@ MonoBehaviour:
   interactionEvent:
     m_PersistentCalls:
       m_Calls: []
-  objectSceneID: ed8f5b8d-c3bb-43f9-b4fc-8ed90444e9d7
+  objectSceneID: 
   inventoryItem: {fileID: 0}
   collisionSound: {fileID: 0}
 --- !u!82 &2016427494853127413
