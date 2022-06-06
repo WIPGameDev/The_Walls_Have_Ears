@@ -36,6 +36,12 @@ public class PatrolState : AbstractFMSState
     {
         EnteredState = base.EnterState();
 
+        if (hiveMind.patrolPoints.Count == 0)
+        {
+            Debug.LogError("No patrol points are present in hivemind");
+            return false;
+        }
+
         if (EnteredState)
         {
 

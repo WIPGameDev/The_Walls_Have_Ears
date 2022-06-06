@@ -62,6 +62,12 @@ public class HiveMind : MonoBehaviour
 
     public Dictionary<sbyte, List<PatrolPoints>> patrolPoints = new Dictionary<sbyte, List<PatrolPoints>>();
 
+    [SerializeField]
+    List<GameObject> possibleSpawnPoints = new List<GameObject>();
+
+    [SerializeField]
+    GameObject alienPrefab;
+
     private void OnEnable()
     {
         sbyte[][] count = new sbyte[4][];
@@ -79,39 +85,72 @@ public class HiveMind : MonoBehaviour
 
     private void Start()
     {
-        fsm = GameObject.FindGameObjectWithTag("Alien").GetComponent<FiniteStateMachine>();
+        try
+        {
+            fsm = GameObject.FindGameObjectWithTag("Alien").GetComponent<FiniteStateMachine>();
+        }
+        catch
+        {
+
+        }
     }
 
-    Vector3 DetectedLocation 
+    Vector3 DetectedLocation
     {
         set
         {
-            if (fsm != null)
+            if (fsm == null)
             {
-                if (fsm.CurrentState != null && fsm.CurrentState.StateType != FSMStateType.CHASE)
-                {
-                    if (fsm.FSMStates.ContainsKey(FSMStateType.INVESTIGATE))
-                    {
-                        try
-                        {
-                            InvestigateState InvState = fsm.FSMStates[FSMStateType.INVESTIGATE] as InvestigateState;
-                            InvState.InvestigativePoint = value;
+                GameObject go = GameObject.FindGameObjectWithTag("Alien");
 
-                            fsm.EnterState(InvState);
-                        }
-                        catch
+                if (go == null)
+                {
+                    GameObject closestSpawn = null;
+                    float dist = -1;
+
+                    foreach (GameObject spawn in possibleSpawnPoints)
+                    {
+                        float newDist = Vector3.Distance(spawn.transform.position, transform.position);
+
+                        if (newDist > dist)
                         {
-                            Debug.LogError("Hive mind cannot find investigative state");
+                            dist = newDist;
+                            closestSpawn = spawn;
                         }
                     }
-                    else
-                        Debug.LogError("FSM Doesn't contain investigative state");
+
+                    if (closestSpawn != null)
+                    {
+                        fsm = Instantiate(alienPrefab, closestSpawn.transform).GetComponent<FiniteStateMachine>();
+                    }
                 }
                 else
-                    Debug.LogError("FSM current state is null or is already in chase");
+                {
+                    fsm = go.GetComponent<FiniteStateMachine>();
+                }
+            }
+
+            if (fsm.CurrentState != null && fsm.CurrentState.StateType != FSMStateType.CHASE)
+            {
+                if (fsm.FSMStates.ContainsKey(FSMStateType.INVESTIGATE))
+                {
+                    try
+                    {
+                        InvestigateState InvState = fsm.FSMStates[FSMStateType.INVESTIGATE] as InvestigateState;
+                        InvState.InvestigativePoint = value;
+
+                        fsm.EnterState(InvState);
+                    }
+                    catch
+                    {
+                        Debug.LogError("Hive mind cannot find investigative state");
+                    }
+                }
+                else
+                    Debug.LogError("FSM Doesn't contain investigative state");
             }
             else
-                Debug.LogError("Hivemind FSM reference is null");
+                Debug.LogError("FSM current state is null or is already in chase");
         }
     }
 
