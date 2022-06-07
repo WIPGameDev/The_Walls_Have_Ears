@@ -13,6 +13,11 @@ public class VisionCone : MonoBehaviour
 
     protected float halfAngle = 10f;
 
+    private void Start()
+    {
+        CreateMesh();
+    }
+
     private void OnEnable()
     {
         if (meshFilter == null)
