@@ -13,6 +13,9 @@ public class AI_Sense_Base : MonoBehaviour
     protected FiniteStateMachine fsm;
     protected GameObject Player;
 
+    [Header("Base")]
+    public sbyte floor = 0;
+
     protected virtual void Start()
     {
         if (Alien == null)

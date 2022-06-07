@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Sound : MonoBehaviour
 {
+    [Header("Child")]
     [SerializeField]
     float maxAge = 0.3f;
 

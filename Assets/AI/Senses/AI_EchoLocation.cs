@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AI_EchoLocation : AI_Sense_Base
 {
+    [Header("Child")]
     [SerializeField]
     float scanInterval = 1f;
 

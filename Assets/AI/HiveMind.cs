@@ -69,6 +69,13 @@ public class HiveMind : MonoBehaviour
     [SerializeField]
     GameObject alienPrefab;
 
+    GameObject alien;
+
+    Dictionary<sbyte, List<AI_Sense_Base>> AISenses;
+
+    [SerializeField]
+    sbyte currentFloor;
+
     private void OnEnable()
     {
         sbyte[][] count = new sbyte[4][];
@@ -88,12 +95,32 @@ public class HiveMind : MonoBehaviour
     {
         try
         {
-            fsm = GameObject.FindGameObjectWithTag("Alien").GetComponent<FiniteStateMachine>();
+            alien = GameObject.FindGameObjectWithTag("Alien");
+            fsm = alien.GetComponent<FiniteStateMachine>();
         }
-        catch
+        catch { }
+        try
         {
+            AI_Sense_Base[] foundSenses = GameObject.FindObjectsOfType<AI_Sense_Base>();
 
+            foreach (AI_Sense_Base sense in foundSenses)
+            {
+                sbyte floor = sense.floor;
+
+                if (AISenses.ContainsKey(floor))
+                    AISenses[floor].Add(sense);
+                else
+                {
+                    AISenses.Add(floor, new List<AI_Sense_Base>());
+
+                    AISenses[floor].Add(sense);
+                }
+
+                if (floor != currentFloor)
+                    sense.enabled = false;
+            }
         }
+        catch { }
     }
 
     Vector3 DetectedLocation
@@ -129,7 +156,7 @@ public class HiveMind : MonoBehaviour
 
                             closestSpawn.transform.position = hit.position;
 
-                            GameObject alien = Instantiate(alienPrefab, closestSpawn.transform);
+                            alien = Instantiate(alienPrefab, closestSpawn.transform);
 
                             fsm = alien.GetComponent<FiniteStateMachine>();
                         }
@@ -204,5 +231,29 @@ public class HiveMind : MonoBehaviour
         }
 
         return false;
+    }
+
+    public sbyte CurrentFloor
+    {
+        get
+        {
+            return currentFloor;
+        }
+        set
+        {
+            foreach (AI_Sense_Base sense in AISenses[currentFloor])
+            {
+                sense.enabled = false;
+            }
+
+            currentFloor = value;
+
+            foreach (AI_Sense_Base sense in AISenses[currentFloor])
+            {
+                sense.enabled = true;
+            }
+
+            alien.GetComponent<PatrolState>().floor = currentFloor;
+        }
     }
 }
