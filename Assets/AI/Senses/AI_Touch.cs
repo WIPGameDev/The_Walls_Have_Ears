@@ -11,8 +11,6 @@ public class AI_Touch : AI_Sense_Base
 
     private void OnTriggerStay(Collider other)
     {
-        Debug.Log("Collision Stay");
-
         if (other.gameObject.tag == "Player")
         {
             #region Detect location

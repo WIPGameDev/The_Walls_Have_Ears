@@ -35,7 +35,6 @@ public class AI_Sense_Base : MonoBehaviour
             }
             catch
             {
-                //Debug.LogError(name + " Can not find hive mind");
                 print(name + " Can not find hive mind");
             }
         }
