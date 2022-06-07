@@ -1362,7 +1362,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameController: {fileID: 771438522}
-  bombRecipe: {fileID: 11400000, guid: 736a22318fee610439a7aa0a725444b4, type: 2}
+  bombRecipe: {fileID: 11400000, guid: 09fd70fe87da01f44a80397d3ba2b6a8, type: 2}
   itemCollected:
     m_PersistentCalls:
       m_Calls: []
