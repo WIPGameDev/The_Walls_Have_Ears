@@ -23,4 +23,9 @@ public class AlienAniManiger : MonoBehaviour
             ani.SetBool("isMoving", (navMeshAgent.velocity.magnitude > 0));
         }
     }
+
+    public void StartAttacking()
+    {
+        ani.SetTrigger("isAttacking");
+    }
 }

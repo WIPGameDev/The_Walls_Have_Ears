@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Assets.FSM.States
 {
@@ -27,7 +28,15 @@ namespace Assets.FSM.States
 
             Player.SendMessage("Attacked");
 
-            //FINISH THIS, trigger an attack (ani or whatever)
+            NavMeshAgent nma = fsm.gameObject.GetComponent<NavMeshAgent>();
+
+            nma.transform.LookAt(Player.transform);
+
+            nma.isStopped = true;
+
+            fsm.gameObject.GetComponent<AlienAniManiger>().StartAttacking();
+
+            fsm.enabled = false;
 
             return EnteredState;
         }
@@ -37,6 +46,8 @@ namespace Assets.FSM.States
             if (EnteredState)
             {
                 Debug.Log("Updating attack state");
+
+
             }
         }
 
