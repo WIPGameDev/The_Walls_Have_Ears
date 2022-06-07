@@ -6,12 +6,15 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/GuilleTestScene 1.unity
-    guid: 6219010aeacc50d40ad0e5a1953d32e1
+    path: Assets/Scenes/Game.unity
+    guid: c3e9d556b0c70584e832bf3ef635e38d
+  - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: c563fd0c496d1a14589e82a89d243b26
   - enabled: 1
     path: Assets/Scenes/The House.unity
     guid: 3b272a413befb4e41acde77424cc3a65
   - enabled: 1
-    path: Assets/Scenes/GuilleTestScene 2.unity
-    guid: 31fb03d981fbd29409bc6c768dcbc46a
+    path: Assets/Scenes/Credits.unity
+    guid: c028020ce56279c48a63aad0ea502c9b
   m_configObjects: {}
