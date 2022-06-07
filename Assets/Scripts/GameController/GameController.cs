@@ -134,8 +134,11 @@ public class GameController : MonoBehaviour
     public void LoadMainMenu()
     {
         gameState = GameState.MENU;
+        pauseMenu.SetActive(false);
+        saveAndLoadMenu.SetActive(false);
         nextScene = mainMenuScene;
         StartCoroutine(LoadingMainMenu(currentScene, nextScene));
+        Time.timeScale = 1f;
         Cursor.lockState = CursorLockMode.Confined;
     }
 
