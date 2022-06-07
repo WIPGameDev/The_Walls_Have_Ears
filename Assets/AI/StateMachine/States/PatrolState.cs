@@ -82,39 +82,48 @@ public class PatrolState : AbstractFMSState
         localIndex = 255;
 
         NavMeshHit hit;
+        Animator anim = new Animator();
 
         List<PatrolPoints> curFloorPatrolPoints = hiveMind.patrolPoints[floor];
 
-        if (curFloorPatrolPoints[globalIndex].linkedPoints.Count == 1)
+        if (previousIndex == 255)
         {
-            localIndex = 0;
+            System.Random rng = new System.Random();
+            localIndex = (byte)rng.Next(curFloorPatrolPoints[globalIndex].linkedPoints.Count);
         }
         else
         {
-            if (curFloorPatrolPoints[globalIndex].linkedPoints.Count == 2)
+            if (curFloorPatrolPoints[globalIndex].linkedPoints.Count == 1)
             {
                 localIndex = 0;
-
-                if (curFloorPatrolPoints[previousIndex] == curFloorPatrolPoints[globalIndex].linkedPoints[0].GetComponent<PatrolPoints>())
-                    localIndex = 1;
             }
             else
             {
-                System.Random rng = new System.Random();
-
-                if (previousIndex != 255)
+                if (curFloorPatrolPoints[globalIndex].linkedPoints.Count == 2)
                 {
-                    byte foundIndex = 255;
+                    localIndex = 0;
 
-                    foundIndex = (byte)curFloorPatrolPoints[globalIndex].linkedPoints.IndexOf(curFloorPatrolPoints[previousIndex].gameObject);
-                    do
-                    {
-                        localIndex = (byte)rng.Next(curFloorPatrolPoints[globalIndex].linkedPoints.Count);
-                    } while (localIndex == foundIndex);
-
+                    if (curFloorPatrolPoints[previousIndex] == curFloorPatrolPoints[globalIndex].linkedPoints[0].GetComponent<PatrolPoints>())
+                        localIndex = 1;
                 }
                 else
-                    localIndex = (byte)rng.Next(curFloorPatrolPoints[globalIndex].linkedPoints.Count);
+                {
+                    System.Random rng = new System.Random();
+
+                    if (previousIndex != 255)
+                    {
+                        byte foundIndex = 255;
+
+                        foundIndex = (byte)curFloorPatrolPoints[globalIndex].linkedPoints.IndexOf(curFloorPatrolPoints[previousIndex].gameObject);
+                        do
+                        {
+                            localIndex = (byte)rng.Next(curFloorPatrolPoints[globalIndex].linkedPoints.Count);
+                        } while (localIndex == foundIndex);
+
+                    }
+                    else
+                        localIndex = (byte)rng.Next(curFloorPatrolPoints[globalIndex].linkedPoints.Count);
+                }
             }
         }
 
