@@ -8,8 +8,8 @@ OcclusionCullingSettings:
     smallestOccluder: 5
     smallestHole: 0.25
     backfaceThreshold: 100
-  m_SceneGUID: 00000000000000000000000000000000
-  m_OcclusionCullingData: {fileID: 0}
+  m_SceneGUID: c3e9d556b0c70584e832bf3ef635e38d
+  m_OcclusionCullingData: {fileID: 36300000, guid: eb8885110f39a4b42bda2bf159e9c493, type: 2}
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
@@ -1541,7 +1541,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 100
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -1952,6 +1952,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 563249728, guid: 9105085a7ec30a846be42d9d8d76edbb, type: 3}
+      propertyPath: m_Lens.FarClipPlane
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 563249728, guid: 9105085a7ec30a846be42d9d8d76edbb, type: 3}
+      propertyPath: m_Lens.m_SensorSize.x
+      value: 1.772397
+      objectReference: {fileID: 0}
     - target: {fileID: 374164669634783444, guid: 9105085a7ec30a846be42d9d8d76edbb, type: 3}
       propertyPath: m_Layer
       value: 8
