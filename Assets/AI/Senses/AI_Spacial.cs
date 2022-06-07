@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class AI_Spacial : AI_Sense_Base
 {
+    [Header("Child")]
     [SerializeField]
     float Radius = 2;
 

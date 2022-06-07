@@ -6,6 +6,7 @@ public class AI_Sight : AI_Sense_Base
 {
     NavMeshAgent navMeshAgent;
 
+    [Header("Child")]
     [SerializeField]
     float Distance = 10f;
 
@@ -125,6 +126,17 @@ public class AI_Sight : AI_Sense_Base
                 }
             }
         }
+        else
+        {
+            blindTimer -= Time.deltaTime;
+
+            if (blindTimer <= 0)
+            {
+                blindTimer = 0;
+
+                ifBlinded = false;
+            }
+        }
     }
 
     void Scan()
@@ -215,12 +227,10 @@ public class AI_Sight : AI_Sense_Base
         }
     }
 
-    public void SetBlind(bool Blind)
-    {
-        ifBlinded = Blind;
-    }
     public void SetBlind(float Duration)
     {
+        blindTimer += Duration;
 
+        ifBlinded = true;
     }
 }

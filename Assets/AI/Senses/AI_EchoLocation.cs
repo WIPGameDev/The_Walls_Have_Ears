@@ -4,17 +4,13 @@ using UnityEngine;
 
 public class AI_EchoLocation : AI_Sense_Base
 {
+    [Header("Child")]
     [SerializeField]
     float scanInterval = 1f;
 
     float curTime;
 
-    bool? numScan = null; //FINISH THIS, Maybe too fancy
-
     bool ifClicking = false;
-
-    Vector3 loggedLocation = new Vector3();
-
     protected override void Start()
     {
         base.Start();
@@ -34,8 +30,6 @@ public class AI_EchoLocation : AI_Sense_Base
         {
             if (curTime >= scanInterval)
             {
-                Debug.Log("Start echo-scan");
-
                 ifClicking = true;
 
                 curTime = 0;
@@ -54,10 +48,7 @@ public class AI_EchoLocation : AI_Sense_Base
 
     private void OnEnable()
     {
-        //Set defaults
         ifClicking = false;
-
-        numScan = null;
     }
 
     void Scan()
@@ -68,82 +59,11 @@ public class AI_EchoLocation : AI_Sense_Base
             if (hit.collider.gameObject != Player && hit.collider.gameObject != gameObject)
                 return;
 
-            Debug.Log("End scan");
-
             ifClicking = false;
 
             fsm.EnterState(FSMStateType.CHASE);
 
             this.enabled = false;
-        }
-
-
-    }
-
-    #region Old Scan
-    //void Scan()
-    //{
-    //    RaycastHit hit;
-    //    if (Physics.Linecast(gameObject.transform.position, Player.transform.position, out hit))
-    //    {
-    //        if (hit.collider.gameObject != Player && hit.collider.gameObject != gameObject)
-    //            return;
-    //    }
-
-    //    if (numScan is null)
-    //    {
-    //        if (Player != null)
-    //        {
-    //            loggedLocation = Player.transform.position;
-
-    //            numScan = false;
-    //        }
-    //        else
-    //        {
-    //            Debug.LogError("Player does not exist within " + gameObject.name);
-
-    //            this.enabled = false;
-    //        }
-    //    }
-    //    else if (numScan == false)
-    //    {
-    //        CheckIfMoved();
-
-    //        numScan = true;
-    //    }
-    //    else
-    //    {
-    //        CheckIfMoved();
-
-    //        numScan = null;
-
-    //        ifClicking = false;
-
-    //        Debug.Log("End scan");
-    //    }
-    //}
-    #endregion
-
-    void CheckIfMoved()
-    {
-        try
-        {
-            if (loggedLocation != Player.transform.position)
-            {
-                Debug.Log("End scan");
-
-                numScan = null;
-
-                ifClicking = false;
-
-                fsm.EnterState(FSMStateType.CHASE);
-
-                this.enabled = false;
-            }
-        }
-        catch
-        {
-            Debug.LogError("Error in checking if player has moved in " + gameObject.name);
         }
     }
 }

@@ -13,6 +13,9 @@ public class AI_Sense_Base : MonoBehaviour
     protected FiniteStateMachine fsm;
     protected GameObject Player;
 
+    [Header("Base")]
+    public sbyte floor = 0;
+
     protected virtual void Start()
     {
         if (Alien == null)
@@ -35,7 +38,6 @@ public class AI_Sense_Base : MonoBehaviour
             }
             catch
             {
-                //Debug.LogError(name + " Can not find hive mind");
                 print(name + " Can not find hive mind");
             }
         }
