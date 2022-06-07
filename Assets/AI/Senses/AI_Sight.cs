@@ -6,6 +6,7 @@ public class AI_Sight : AI_Sense_Base
 {
     NavMeshAgent navMeshAgent;
 
+    [Header("Child")]
     [SerializeField]
     float Distance = 10f;
 

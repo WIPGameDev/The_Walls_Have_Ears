@@ -6,6 +6,7 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class AI_Hearing : AI_Sense_Base
 {
+    [Header("Child")]
     public float Radius;
     
     Collider[] Colliders = new Collider[10];

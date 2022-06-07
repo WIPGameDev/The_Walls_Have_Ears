@@ -7,7 +7,7 @@ using UnityEngine.AI;
 public class PatrolState : AbstractFMSState
 {
     [SerializeField]
-    sbyte floor = 0;
+    public sbyte floor = 0;
     
     byte localIndex;
     
