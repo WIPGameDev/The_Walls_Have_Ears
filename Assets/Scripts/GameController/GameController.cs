@@ -15,6 +15,7 @@ public enum GameState
     EXITING,
     LOADING,
     FADING,
+    GAMEOVER,
     PAUSED
 }
 
@@ -26,6 +27,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameState gameState = GameState.PLAYING;
 
     [SerializeField] private string mainMenuScene = "MainMenu";
+    [SerializeField] private string creditsScene = "Credits";
 
     [SerializeField] private string currentScene;
     [SerializeField] private string nextScene;
@@ -58,6 +60,7 @@ public class GameController : MonoBehaviour
     public UnityEvent OnGamePauseResume;
 
     public UnityEvent OnGameOver;
+    public UnityEvent OnGameCompleted;
 
     public string CurrentScene { get => currentScene; }
     public string NextScene { get => nextScene; }
@@ -131,8 +134,19 @@ public class GameController : MonoBehaviour
     public void LoadMainMenu()
     {
         gameState = GameState.MENU;
+        pauseMenu.SetActive(false);
+        saveAndLoadMenu.SetActive(false);
         nextScene = mainMenuScene;
         StartCoroutine(LoadingMainMenu(currentScene, nextScene));
+        Time.timeScale = 1f;
+        Cursor.lockState = CursorLockMode.Confined;
+    }
+
+    public void LoadCredits ()
+    {
+        gameState = GameState.MENU;
+        nextScene = creditsScene;
+        StartCoroutine(LoadingCredits(currentScene, nextScene));
         Cursor.lockState = CursorLockMode.Confined;
     }
 
@@ -267,6 +281,15 @@ public class GameController : MonoBehaviour
         StartCoroutine(Fading(0));
     }
 
+    public void ResetFadeScreen()
+    {
+        Color color = Color.black;
+        color.a = 0f;
+        Image screenImage = fadeScreen.GetComponent<Image>();
+        screenImage.color = color;
+        fadeScreen.SetActive(false);
+    }
+
     public void ExitGame()
     {
         Application.Quit(0);
@@ -274,7 +297,19 @@ public class GameController : MonoBehaviour
 
     public void GameOver()
     {
+        FadeOut();
+        Invoke("PauseGame", 3f);
+        player.SetActive(false);
+        gameState = GameState.GAMEOVER;
+    }
 
+    public void GameCompleted ()
+    {
+        OnGameCompleted.Invoke();
+        FadeOut();
+        player.SetActive(false);
+        gameState = GameState.GAMEOVER;
+        Invoke("LoadCredits", 2f);
     }
 
     public void UpdateScenes()
@@ -329,6 +364,15 @@ public class GameController : MonoBehaviour
         gameState = GameState.MENU;
     }
 
+    private IEnumerator LoadingCredits(string currentScene, string targetScene)
+    {
+        gameState = GameState.LOADING;
+        Coroutine loadingScene = StartCoroutine(LoadingScene(currentScene, targetScene));
+        yield return loadingScene;
+        UpdateScenes();
+        gameState = GameState.MENU;
+    }
+
     private IEnumerator LoadingSaveGameScene (string currentScene, string targetScene)
     {
         gameState = GameState.LOADING;
@@ -342,6 +386,7 @@ public class GameController : MonoBehaviour
 
     private IEnumerator LoadingLevel(string currentScene, string targetScene, string targetMarker)
     {
+        ResetFadeScreen();
         gameState = GameState.LOADING;
         UpdateSceneSaveData();
         Coroutine loadingScene = StartCoroutine(LoadingScene(currentScene, targetScene));
@@ -362,6 +407,7 @@ public class GameController : MonoBehaviour
 
     private IEnumerator LoadingScene(string currentScene, string targetScene)
     {
+        ResetFadeScreen();
         LoadingScreen.SetActive(true);
         if (player != null)
             player.SetActive(false);
