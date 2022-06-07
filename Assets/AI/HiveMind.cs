@@ -3,6 +3,7 @@ using Assets.FSM.States;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public struct AISenseData
 {
@@ -121,7 +122,17 @@ public class HiveMind : MonoBehaviour
 
                     if (closestSpawn != null)
                     {
-                        fsm = Instantiate(alienPrefab, closestSpawn.transform).GetComponent<FiniteStateMachine>();
+                        NavMeshHit hit;
+
+                        if (NavMesh.SamplePosition(closestSpawn.transform.position, out hit, 1, 1))
+                        {
+
+                            closestSpawn.transform.position = hit.position;
+
+                            GameObject alien = Instantiate(alienPrefab, closestSpawn.transform);
+
+                            fsm = alien.GetComponent<FiniteStateMachine>();
+                        }
                     }
                 }
                 else

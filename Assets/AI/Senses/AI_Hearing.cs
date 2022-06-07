@@ -62,13 +62,8 @@ public class AI_Hearing : AI_Sense_Base
                     if (navAgent.path.corners.Length <= 1 || CalculatePathCost(navAgent.path) < Radius)
                         hiveMind.SetDetection(new AISenseData(Colliders[i].gameObject, hit.position, weight));
                 }
-                else
-                    Debug.Log(Colliders[count].gameObject.name + " couldn't find location on nav mesh");
             }
-            catch
-            {
-                Debug.LogError("Error in hearing detection");
-            }
+            catch { }
         }
     }
 

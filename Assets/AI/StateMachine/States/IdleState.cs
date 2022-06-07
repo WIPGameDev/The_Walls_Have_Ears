@@ -10,11 +10,6 @@ namespace Assets.FSM.States
     [CreateAssetMenu(fileName = "IdleState", menuName = "AI FSM State/States/Idle", order = 1)]
     public class IdleState : AbstractFMSState
     {
-        [SerializeField]
-        float idleDuration = 3f;
-        
-        float totalDuration;
-
         public override void OnEnable()
         {
             base.OnEnable();
@@ -25,33 +20,16 @@ namespace Assets.FSM.States
         {
             EnteredState = base.EnterState();
 
-            if (EnteredState)
-            {
-                Debug.Log("Entered idle state");
-                totalDuration = 0f;
-            }
-
             return EnteredState;
         }
 
         public override void UpdateState()
         {
-            if (EnteredState)
-            {
-                totalDuration += Time.deltaTime;
-
-                Debug.Log("Updating idle state");
-
-                //if (totalDuration >= idleDuration)
-                //    _fsm.EnterState(FSMStateType.PATROL);
-            }
         }
 
         public override bool ExitState()
         {
             base.ExitState();
-
-            Debug.Log("Exit idle state");
 
             return true;
         }

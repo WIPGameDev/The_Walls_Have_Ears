@@ -47,8 +47,6 @@ namespace Assets.FSM.States
 
             if (EnteredState)
             {
-                Debug.Log("Entered investigative state");
-
                 #region Set defaults
                 ifSearchingAround = false;
 
@@ -86,8 +84,6 @@ namespace Assets.FSM.States
         {
             if (EnteredState)
             {
-                Debug.Log("Updating investigative state");
-
                 #region not searching 
                 if (!ifSearchingAround)
                 {
@@ -218,8 +214,6 @@ namespace Assets.FSM.States
         public override bool ExitState()
         {
             base.ExitState();
-
-            Debug.Log("Exit investigative state");
 
             if (echoLocation != null)
                 echoLocation.enabled = false;

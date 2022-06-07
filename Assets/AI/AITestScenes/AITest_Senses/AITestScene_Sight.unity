@@ -1015,6 +1015,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4324355986443400187, guid: 08581adbcbfdddc44b0c625d9bf101a1, type: 3}
+      propertyPath: alienPrefab
+      value: 
+      objectReference: {fileID: 7198931855525904769, guid: 6afbcc4786b536641a01a8a76deecad8, type: 3}
+    - target: {fileID: 4324355986443400187, guid: 08581adbcbfdddc44b0c625d9bf101a1, type: 3}
       propertyPath: possibleSpawnPoints.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -1041,15 +1045,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3394043489629722964, guid: a3561c481b703b141985194e73783888, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7.99
+      value: -6.89
       objectReference: {fileID: 0}
     - target: {fileID: 3394043489629722964, guid: a3561c481b703b141985194e73783888, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.72
+      value: 0.79
       objectReference: {fileID: 0}
     - target: {fileID: 3394043489629722964, guid: a3561c481b703b141985194e73783888, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5.76
+      value: -4.28
       objectReference: {fileID: 0}
     - target: {fileID: 3394043489629722964, guid: a3561c481b703b141985194e73783888, type: 3}
       propertyPath: m_LocalRotation.w

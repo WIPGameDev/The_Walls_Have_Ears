@@ -72,8 +72,6 @@ public class PatrolState : AbstractFMSState
                 out hit, 10, NavMesh.AllAreas);
 
             navMeshAgent.SetDestination(hit.position);
-
-            Debug.Log("Entered patrol state");
         }
 
         return EnteredState;
@@ -137,8 +135,6 @@ public class PatrolState : AbstractFMSState
     {
         if (EnteredState)
         {
-            Debug.Log("Updating patrol state");
-
             timeMoving += Time.deltaTime;
 
             if (timeMoving >= MaxMovementTime)
@@ -155,8 +151,6 @@ public class PatrolState : AbstractFMSState
     public override bool ExitState()
     {
         base.ExitState();
-
-        Debug.Log("Exit patrol state");
 
         return true;
     }
