@@ -36,6 +36,12 @@ public class PatrolState : AbstractFMSState
     {
         EnteredState = base.EnterState();
 
+        if (hiveMind.patrolPoints.Count == 0)
+        {
+            Debug.LogError("No patrol points are present in hivemind");
+            return false;
+        }
+
         if (EnteredState)
         {
 
@@ -66,8 +72,6 @@ public class PatrolState : AbstractFMSState
                 out hit, 10, NavMesh.AllAreas);
 
             navMeshAgent.SetDestination(hit.position);
-
-            Debug.Log("Entered patrol state");
         }
 
         return EnteredState;
@@ -131,8 +135,6 @@ public class PatrolState : AbstractFMSState
     {
         if (EnteredState)
         {
-            Debug.Log("Updating patrol state");
-
             timeMoving += Time.deltaTime;
 
             if (timeMoving >= MaxMovementTime)
@@ -149,8 +151,6 @@ public class PatrolState : AbstractFMSState
     public override bool ExitState()
     {
         base.ExitState();
-
-        Debug.Log("Exit patrol state");
 
         return true;
     }
