@@ -71,6 +71,8 @@ public class HiveMind : MonoBehaviour
 
     GameObject alien;
 
+    Animator animator;
+
     Dictionary<sbyte, List<AI_Sense_Base>> AISenses;
 
     [SerializeField]
@@ -97,6 +99,7 @@ public class HiveMind : MonoBehaviour
         {
             alien = GameObject.FindGameObjectWithTag("Alien");
             fsm = alien.GetComponent<FiniteStateMachine>();
+            animator = alien.GetComponent<Animator>();
         }
         catch { }
         try
@@ -198,6 +201,8 @@ public class HiveMind : MonoBehaviour
         {
             primarySense = Sense;
             DetectedLocation = primarySense.Location;
+            
+            animator.SetTrigger("Roar");
         }
         else
         {

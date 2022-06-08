@@ -87,15 +87,11 @@ namespace Assets.FSM.States
                 #region not searching 
                 if (!ifSearchingAround)
                 {
-                    fsm.SetLabel(Vector3.Distance(navMeshAgent.transform.position, navMeshAgent.destination).ToString());
                     if (Vector3.Distance(navMeshAgent.transform.position, investigativePoint) < 1f)
                     {
-                        fsm.SetLabel("Enters if statement");
-
                         ifSearchingAround = true;
 
                         FindSearchAreas();
-                        fsm.SetLabel("Found search areas");
 
                         System.Random rng = new System.Random();
 
@@ -150,7 +146,8 @@ namespace Assets.FSM.States
                                 if (!hiveMind.NextCheck())
                                 {
                                     navMeshAgent.isStopped = true;
-                                    fsm.EnterState(FSMStateType.IDLE);
+                                    fsm.EnterState(FSMStateType.PATROL);
+                                    navMeshAgent.gameObject.GetComponent<Animator>().speed = 1;
                                 }
                             }
                         }
@@ -162,13 +159,6 @@ namespace Assets.FSM.States
 
         private void FindSearchAreas()
         {
-            fsm.SetLabel("Entered function to find search areas");
-            
-            if (SearchLocations == null)
-                fsm.SetLabel("Search locations is null");
-            else
-                fsm.SetLabel(SearchLocations.Count().ToString());
-
             #region old random locations
             //for (int i = 1; i <= numberOfSearchAreas; i++)
             //{
@@ -193,19 +183,14 @@ namespace Assets.FSM.States
                 Vector3 randomLocation = new Vector3(rng.Next(2, (int)searchDistance), 0, rng.Next(2, (int)searchDistance));
 
                 randomLocation += investigativePoint;
-                //fsm.SetLabel("In for loop");
 
                 NavMeshHit hit;
                 if (NavMesh.SamplePosition(randomLocation, out hit, searchDistance, 1))
                 {
-                    //fsm.SetLabel(randomLocation.ToString());
                     SearchLocations.Add(hit.position);
-                    fsm.SetLabel("found search location");
                 }
             }
             #endregion
-
-            fsm.SetLabel("Number of search locations " + SearchLocations.Count);
 
             if (SearchLocations.Count != numberOfChecks)
                 numberOfChecks = Convert.ToSByte(SearchLocations.Count / 1.5f);

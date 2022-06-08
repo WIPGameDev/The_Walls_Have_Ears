@@ -147,22 +147,12 @@ public class AI_Sight : AI_Sense_Base
         {
             GameObject obj = Colliders[i].gameObject;
 
-            tMesh.text = obj.name;
-
             if (IsInSight(obj))
             {
-                if (hiveMind == null)
-                    tMesh.text = "hiveMind is null";
-                else
-                {
-                    NavMeshHit hit;
-                    //NavMesh.SamplePosition(obj.transform.position, out hit, 1, 1);
-                    hiveMind.SetDetection(new AISenseData(obj, Player.transform.position, weight));
-                    tMesh.text = "true";
-                }
+                NavMeshHit hit;
+                //NavMesh.SamplePosition(obj.transform.position, out hit, 1, 1);
+                hiveMind.SetDetection(new AISenseData(obj, hit.position, weight));
             }
-            else
-                tMesh.text = "false";
         }
     } 
 
@@ -200,32 +190,32 @@ public class AI_Sight : AI_Sense_Base
         vc.HalfAngle = halfAngle;
     }
 
-    // private void OnDrawGizmos()
-    // {
-    //     if (ifDebugging)
-    //     {
-    //         if (!Application.isPlaying)
-    //         {
-    //             Gizmos.color = DebugColour;
-    //             Gizmos.DrawMesh(vc.CreateMesh(), gameObject.transform.position, gameObject.transform.rotation);
-    //         }
-    //
-    //
-    //         int count = Physics.OverlapSphereNonAlloc(gameObject.transform.position, Distance, Colliders, detectLayer, QueryTriggerInteraction.Collide);
-    //
-    //         for (int i = 0; i < count; i++)
-    //         {
-    //             if (IsInSight(Colliders[i].gameObject))
-    //                 Gizmos.color = new Color(0, 1, 0, 0.2f);
-    //             else
-    //                 Gizmos.color = new Color(1, 0, 0, 0.2f);
-    //
-    //             float radius = Colliders[i].gameObject.GetComponent<MeshFilter>().sharedMesh.bounds.size.x * 0.75f;
-    //
-    //             Gizmos.DrawSphere(Colliders[i].gameObject.transform.position, radius);
-    //         }
-    //     }
-    // }
+    private void OnDrawGizmos()
+    {
+        if (ifDebugging)
+        {
+            if (!Application.isPlaying)
+            {
+                Gizmos.color = DebugColour;
+                Gizmos.DrawMesh(vc.CreateMesh(), gameObject.transform.position, gameObject.transform.rotation);
+            }
+
+
+            int count = Physics.OverlapSphereNonAlloc(gameObject.transform.position, Distance, Colliders, detectLayer, QueryTriggerInteraction.Collide);
+
+            for (int i = 0; i < count; i++)
+            {
+                if (IsInSight(Colliders[i].gameObject))
+                    Gizmos.color = new Color(0, 1, 0, 0.2f);
+                else
+                    Gizmos.color = new Color(1, 0, 0, 0.2f);
+
+                float radius = Colliders[i].gameObject.GetComponent<MeshFilter>().sharedMesh.bounds.size.x * 0.75f;
+
+                Gizmos.DrawSphere(Colliders[i].gameObject.transform.position, radius);
+            }
+        }
+    }
 
     public void SetBlind(float Duration)
     {

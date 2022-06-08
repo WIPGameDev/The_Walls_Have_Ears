@@ -34,8 +34,6 @@ namespace Assets.FSM
         AbstractFMSState previousState;
         #endregion
 
-        TextMeshPro tMesh;
-
         public void Awake()
         {
             currentState = null;
@@ -54,8 +52,6 @@ namespace Assets.FSM
                 state.SetHiveMind(hiveMind); 
                 fsmStates.Add(state.StateType, state);
             }
-
-            tMesh = GetComponentInChildren<TextMeshPro>();
         }
 
         private void Start()
@@ -83,10 +79,6 @@ namespace Assets.FSM
                         ReEnterState(previousState);
                     }
                 }
-            }
-            else
-            {
-                SetLabel("No current state");
             }
         }
 
@@ -180,21 +172,6 @@ namespace Assets.FSM
             {
                 return fsmStates;
             }
-        }
-
-        public void SetLabel(string text)
-        {
-            try
-            {
-                tMesh.text = text;
-            }
-            catch
-            {
-            }
-        }
-        public void AddLavel(string text)
-        {
-            tMesh.text += text;
         }
     }
 }

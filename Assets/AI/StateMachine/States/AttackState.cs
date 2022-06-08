@@ -38,6 +38,8 @@ namespace Assets.FSM.States
 
             fsm.enabled = false;
 
+            navMeshAgent.gameObject.GetComponent<Animator>().speed = 1;
+
             return EnteredState;
         }
 
