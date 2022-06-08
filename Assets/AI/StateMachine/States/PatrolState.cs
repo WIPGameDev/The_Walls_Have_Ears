@@ -45,7 +45,7 @@ public class PatrolState : AbstractFMSState
         if (EnteredState)
         {
 
-            globalIndex = 255;
+            globalIndex = 0;
 
             float storedDist = float.MaxValue;
 

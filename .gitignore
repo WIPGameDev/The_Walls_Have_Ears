@@ -85,6 +85,5 @@ crashlytics-build.properties
 
 NOT_Lonely/
 Assets/NOT_Lonely.meta
-Assets/AI/Assets/
-Assets/3D Assets/
-.idea/
+3D Assets/
+Assets/AI/Assets
