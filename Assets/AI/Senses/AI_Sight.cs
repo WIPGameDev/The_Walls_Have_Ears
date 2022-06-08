@@ -149,9 +149,7 @@ public class AI_Sight : AI_Sense_Base
 
             if (IsInSight(obj))
             {
-                NavMeshHit hit;
-                //NavMesh.SamplePosition(obj.transform.position, out hit, 1, 1);
-                hiveMind.SetDetection(new AISenseData(obj, hit.position, weight));
+                hiveMind.SetDetection(new AISenseData(obj, Player.transform.position, weight));
             }
         }
     } 

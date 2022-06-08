@@ -17,4 +17,4 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   MaxMovementTime: 5
-  waitTime: 0.2
+  waitTime: 1
