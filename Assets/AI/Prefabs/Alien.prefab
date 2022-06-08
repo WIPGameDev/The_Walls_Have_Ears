@@ -2755,6 +2755,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbedc9d31579b48418378ef2998b2dfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  walkingSpeed: 3.5
+  runningSpeed: 10
   concreteSteps:
   - {fileID: 8300000, guid: 58eb48f8536c7b04690b14ac8ecf65ea, type: 3}
   - {fileID: 8300000, guid: 891ecaaf2ce8f1c48be4fdb8aef10c63, type: 3}

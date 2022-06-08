@@ -52,8 +52,6 @@ namespace Assets.FSM.States
 
                 SearchLocations.Clear();
 
-                navMeshAgent.isStopped = false;
-
                 if (echoLocation == null)
                 {
                     try
@@ -145,7 +143,6 @@ namespace Assets.FSM.States
                             {
                                 if (!hiveMind.NextCheck())
                                 {
-                                    navMeshAgent.isStopped = true;
                                     fsm.EnterState(FSMStateType.PATROL);
                                     navMeshAgent.gameObject.GetComponent<Animator>().speed = 1;
                                 }
