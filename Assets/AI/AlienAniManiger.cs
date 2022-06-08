@@ -39,6 +39,8 @@ public class AlienAniManiger : MonoBehaviour
         ani = GetComponent<Animator>();
         navMeshAgent = GetComponent<NavMeshAgent>();
 
+        navMeshAgent.speed = walkingSpeed;
+
         walkingAniSpeed = walkingSpeed / 3.5f;
         runningAniSpeed = runningSpeed / 3.5f;
     }
