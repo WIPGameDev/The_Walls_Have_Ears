@@ -79,6 +79,10 @@ crashlytics-build.properties
 /[Aa]ssets/[Aa]rtAssets
 /[Aa]ssets/[Aa]rtAssets.meta
 
+# ignore art imported assets
+/[Aa]ssets/[Tt]oolbag
+/[Aa]ssets/[Tt]oolbag.meta
+
 NOT_Lonely/
 Assets/NOT_Lonely.meta
 3D Assets/
