@@ -41,6 +41,8 @@ public class AI_Sight : AI_Sense_Base
 
     VisionCone vc;
 
+    TextMeshPro tMesh;
+
     [Header("Turning variables")]
     public float turnTime = 1f;
     public float rotationHalfAngle = 15;
@@ -66,6 +68,8 @@ public class AI_Sight : AI_Sense_Base
         base.Start();
 
         defaultRotation = gameObject.transform.rotation;
+
+        tMesh = GetComponentInChildren<TextMeshPro>();
 
         vc = GetComponentInChildren<VisionCone>();
         
@@ -145,9 +149,7 @@ public class AI_Sight : AI_Sense_Base
 
             if (IsInSight(obj))
             {
-                NavMeshHit hit;
-                NavMesh.SamplePosition(obj.transform.position, out hit, 1, 1);
-                hiveMind.SetDetection(new AISenseData(obj, hit.position, weight));
+                hiveMind.SetDetection(new AISenseData(obj, Player.transform.position, weight));
             }
         }
     } 

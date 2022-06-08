@@ -45,4 +45,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   possibleSpawnPoints: []
-  alienPrefab: {fileID: 3740632146939395209, guid: 44b56011328e81741a525f3796da77f6, type: 3}
+  alienPrefab: {fileID: 7198931855525904769, guid: 6afbcc4786b536641a01a8a76deecad8, type: 3}
+  currentFloor: 0

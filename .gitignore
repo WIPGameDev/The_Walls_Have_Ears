@@ -85,31 +85,5 @@ crashlytics-build.properties
 
 NOT_Lonely/
 Assets/NOT_Lonely.meta
-Assets/AI/Assets/Monster.meta
-Assets/AI/Assets/Monster/Animation.meta
-Assets/AI/Assets/Monster/Animation/Alien Idle.anim
-Assets/AI/Assets/Monster/Animation/Alien Idle.anim.meta
-Assets/AI/Assets/Monster/Animation/Alien Running.anim
-Assets/AI/Assets/Monster/Animation/Alien Running.anim.meta
-Assets/AI/Assets/Monster/Animation/Alien Walking.anim
-Assets/AI/Assets/Monster/Animation/Alien Walking.anim.meta
-Assets/AI/Assets/Monster/Animation/AniAlienController.controller
-Assets/AI/Assets/Monster/Animation/AniAlienController.controller.meta
-Assets/AI/Assets/Monster/Animation/AniController_Alien.controller
-Assets/AI/Assets/Monster/Animation/AniController_Alien.controller.meta
-Assets/AI/Assets/Monster/bruh monsta2@Orc Idle.fbm.meta
-Assets/AI/Assets/Monster/bruh monsta2@Orc Idle.fbm/Material.001_Base_color.png
-Assets/AI/Assets/Monster/bruh monsta2@Orc Idle.fbm/Material.001_Base_color.png.meta
-Assets/AI/Assets/Monster/bruh monsta2@Orc Idle.fbm/Material.001_Normal_OpenGL.png
-Assets/AI/Assets/Monster/bruh monsta2@Orc Idle.fbm/Material.001_Normal_OpenGL.png.meta
-Assets/AI/Assets/Monster/bruh monsta2@Orc Idle.fbm/Material.002_Base_color.png
-Assets/AI/Assets/Monster/bruh monsta2@Orc Idle.fbm/Material.002_Base_color.png.meta
-Assets/AI/Assets/Monster/bruh monsta2@Orc Idle.fbm/Material.002_Normal_OpenGL.png
-Assets/AI/Assets/Monster/bruh monsta2@Orc Idle.fbm/Material.002_Normal_OpenGL.png.meta
-Assets/AI/Assets/Monster/bruh monsta2@Orc Idle.fbx
-Assets/AI/Assets/Monster/bruh monsta2@Orc Idle.fbx.meta
-Assets/AI/Assets/Monster/Materials.meta
-Assets/AI/Assets/Monster/Materials/Material.001_Base_color.mat
-Assets/AI/Assets/Monster/Materials/Material.001_Base_color.mat.meta
-Assets/AI/Assets/Monster/Materials/Material.002_Base_color.mat
-Assets/AI/Assets/Monster/Materials/Material.002_Base_color.mat.meta
+3D Assets/
+Assets/AI/Assets
