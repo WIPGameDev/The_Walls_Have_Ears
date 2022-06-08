@@ -6,6 +6,15 @@ using UnityEngine.AI;
 [RequireComponent(typeof(Animator), typeof(NavMeshAgent))]
 public class AlienAniManiger : MonoBehaviour
 {
+    [Header("Movement")]
+    [SerializeField]
+    float walkingSpeed;
+
+    [SerializeField]
+    float runningSpeed;
+
+    float walkingAniSpeed, runningAniSpeed;
+
     [Header("Audio files")]
     [SerializeField]
     private AudioClip[] concreteSteps;
@@ -29,6 +38,9 @@ public class AlienAniManiger : MonoBehaviour
     {
         ani = GetComponent<Animator>();
         navMeshAgent = GetComponent<NavMeshAgent>();
+
+        walkingAniSpeed = walkingSpeed / 3.5f;
+        runningAniSpeed = runningSpeed / 3.5f;
     }
 
     void Update()
@@ -87,13 +99,13 @@ public class AlienAniManiger : MonoBehaviour
 
     private void IncreaseSpeed()
     {
-        GetComponent<NavMeshAgent>().speed = 10;
-        ani.speed = 3;
+        GetComponent<NavMeshAgent>().speed = runningSpeed;
+        ani.speed = runningAniSpeed;
     }
 
     private void DecreaseSpeed()
     {
-        GetComponent<NavMeshAgent>().speed = 3.5f;
-        ani.speed = 1;
+        GetComponent<NavMeshAgent>().speed = walkingSpeed;
+        ani.speed = walkingAniSpeed;
     }
 }
