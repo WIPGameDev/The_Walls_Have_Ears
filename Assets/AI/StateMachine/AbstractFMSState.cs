@@ -41,14 +41,11 @@ public abstract class AbstractFMSState : ScriptableObject
     {
         ExecutionState = ExecutionState.ACTIVE;
 
-        fsm.SetLabel("Entered" + " " + name);
-
         return (navMeshAgent != null);
     }
 
     public virtual bool ReEnterState(AbstractFMSState state)
     {
-        fsm.SetLabel("Re entered");
         return true;
     }
 
@@ -57,8 +54,6 @@ public abstract class AbstractFMSState : ScriptableObject
     public virtual bool ExitState()
     {
         ExecutionState = ExecutionState.COMPLETED;
-
-        fsm.SetLabel("Failed " + name);
 
         return true;
     }

@@ -6,9 +6,24 @@ using UnityEngine.AI;
 [RequireComponent(typeof(Animator), typeof(NavMeshAgent))]
 public class AlienAniManiger : MonoBehaviour
 {
+    [Header("Audio files")]
+    [SerializeField]
+    private AudioClip[] concreteSteps;
+
+    [SerializeField]
+    private AudioClip[] swingSFX;
+
+    [SerializeField]
+    private AudioClip roarClip;
+
+    private AudioSource audioSource;
 
     protected Animator ani;
     protected NavMeshAgent navMeshAgent;
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
 
     void Start()
     {
@@ -27,5 +42,58 @@ public class AlienAniManiger : MonoBehaviour
     public void StartAttacking()
     {
         ani.SetTrigger("isAttacking");
+    }
+
+    public void StartRoar()
+    {
+        ani.SetTrigger("Roar");
+    }
+
+    private void Step()
+    {
+        AudioClip clip = concreteSteps[UnityEngine.Random.Range(0, concreteSteps.Length)];
+
+        audioSource.volume = 0.2f;
+
+        audioSource.PlayOneShot(clip);
+    }
+
+    private void Swing()
+    {
+        AudioClip clip = swingSFX[UnityEngine.Random.Range(0, swingSFX.Length)];
+
+        audioSource.volume = 1f;
+
+        audioSource.PlayOneShot(clip);
+    }
+
+    private void Roar()
+    {
+        audioSource.volume = 1f;
+
+        audioSource.PlayOneShot(roarClip);
+    }
+
+    private void StopMovement()
+    {
+        GetComponent<NavMeshAgent>().isStopped = true;
+    }
+
+    private void StartMovement()
+    {
+        GetComponent<NavMeshAgent>().isStopped = false;
+    }
+
+
+    private void IncreaseSpeed()
+    {
+        GetComponent<NavMeshAgent>().speed = 10;
+        ani.speed = 3;
+    }
+
+    private void DecreaseSpeed()
+    {
+        GetComponent<NavMeshAgent>().speed = 3.5f;
+        ani.speed = 1;
     }
 }
